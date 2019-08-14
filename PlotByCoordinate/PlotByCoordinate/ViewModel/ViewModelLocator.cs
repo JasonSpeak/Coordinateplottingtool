@@ -1,32 +1,15 @@
-﻿/*
-  In App.xaml:
-  <Application.Resources>
-      <vm:ViewModelLocatorTemplate xmlns:vm="clr-namespace:PlotByCoordinate.ViewModel"
-                                   x:Key="Locator" />
-  </Application.Resources>
-  
-  In the View:
-  DataContext="{Binding Source={StaticResource Locator}, Path=ViewModelName}"
-*/
-
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using PlotByCoordinate.Model;
 
 namespace PlotByCoordinate.ViewModel
 {
-    /// <summary>
-    /// This class contains static references to all the view models in the
-    /// application and provides an entry point for the bindings.
-    /// <para>
-    /// See http://www.mvvmlight.net
-    /// </para>
-    /// </summary>
     public class ViewModelLocator
     {
         static ViewModelLocator()
         {
+            #region 默认时所注册的窗体
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             if (ViewModelBase.IsInDesignModeStatic)
@@ -37,16 +20,21 @@ namespace PlotByCoordinate.ViewModel
             {
                 SimpleIoc.Default.Register<IDataService, DataService>();
             }
+            #endregion
 
+            #region 注册窗体
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<CoordinateValueViewModel>();
+            #endregion
         }
 
-        /// <summary>
-        /// Gets the Main property.
-        /// </summary>
+        #region 特性
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
+        #endregion
+
+        #region 返回Datacontext属性
         public MainViewModel Main
         {
             get
@@ -54,12 +42,19 @@ namespace PlotByCoordinate.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
+        public CoordinateValueViewModel Corrdinate
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CoordinateValueViewModel>();
+            }
+        }
+        #endregion
 
-        /// <summary>
-        /// Cleans up all the resources.
-        /// </summary>
+        #region 清空资源
         public static void Cleanup()
         {
         }
+        #endregion
     }
 }

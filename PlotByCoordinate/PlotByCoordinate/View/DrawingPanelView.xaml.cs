@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
@@ -21,7 +22,32 @@ namespace PlotByCoordinate.View
     {
         public DrawingPanelView()
         {
+
             InitializeComponent();
+          
+
+        }
+    private void Window_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+
+            {
+
+                this.DragMove();
+
+            }
+
+        }
+
+        private void Path_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+
+            {
+
+                
+
+            }
         }
     }
 }
