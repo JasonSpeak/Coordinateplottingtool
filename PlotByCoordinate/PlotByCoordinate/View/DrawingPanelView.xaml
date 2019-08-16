@@ -10,7 +10,9 @@
         Title="DrawingPanelView" Height="600" Width="800"
         DataContext="{Binding Path=Corrdinate, Source={StaticResource Locator}}"
         >
-    <Grid>
+  
+
+    <Grid x:Name="grid">
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="12*"></RowDefinition>
@@ -27,40 +29,47 @@
             <Label Content="三角形" HorizontalAlignment="Center"></Label>
             <Label Content="P1" HorizontalAlignment="Left"></Label>
             <DockPanel>
-                <TextBox Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.TriangleX1}" ></TextBox>
-                <TextBox Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.TriangleY1}"></TextBox>
+                <TextBox Name="x1" Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.TriangleX1}" ></TextBox>
+                <TextBox Name="y1" Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.TriangleY1}"></TextBox>
             </DockPanel>
             <Label Content="P2" HorizontalAlignment="Left"></Label>
             <DockPanel>
-                <TextBox Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.TriangleX2}"></TextBox>
-                <TextBox Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.TriangleY2}"></TextBox>
+                <TextBox Name="x2" Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.TriangleX2}"></TextBox>
+                <TextBox Name="y2"  Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.TriangleY2}"></TextBox>
             </DockPanel>
             <Label Content="P3" HorizontalAlignment="Left"></Label>
             <DockPanel>
-                <TextBox Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.TriangleX3}"></TextBox>
-                <TextBox Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.TriangleY3}"></TextBox>
+                <TextBox Name="x3"  Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.TriangleX3}"></TextBox>
+                <TextBox  Name="y3" Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.TriangleY3}"></TextBox>
             </DockPanel>
+            <Button Content="绘制三角形" Margin="5" Click="Button_Click" Command="{Binding BeginPaint}"></Button>
             <Label Content="直线" HorizontalAlignment="Center"></Label>
             <Label Content="P1" HorizontalAlignment="Left"></Label>
             <DockPanel>
-                <TextBox Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.LineX1}"></TextBox>
-                <TextBox Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.LineY1}"></TextBox>
+                <TextBox Name="lx1" Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.LineX1}"></TextBox>
+                <TextBox Name="ly1" Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.LineY1}"></TextBox>
             </DockPanel>
             <Label Content="P2" HorizontalAlignment="Left"></Label>
             <DockPanel>
-                <TextBox Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.LineX2}"></TextBox>
-                <TextBox Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.LineY2}"></TextBox>
+                <TextBox Name="lx2" Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.LineX2}"></TextBox>
+                <TextBox Name="ly2" Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.LineY2}"></TextBox>
+                
             </DockPanel>
+            <Button Content="绘制直线" Margin="5" Click="Button_Click_1" Command="{Binding BeginPaint}"></Button>
         </StackPanel>
-        <Canvas Grid.Row="1" Grid.Column="0">
-            <Line X1="{Binding CoordinateValue.TriangleX1}" Y1="{Binding CoordinateValue.TriangleY1}" X2="{Binding CoordinateValue.TriangleX2}"
-                  Y2="{Binding CoordinateValue.TriangleY2}" Stroke="White" StrokeThickness="3"></Line>
-            <Line X1="{Binding CoordinateValue.TriangleX2}" Y1="{Binding CoordinateValue.TriangleY2}" X2="{Binding CoordinateValue.TriangleX3}"
-                  Y2="{Binding CoordinateValue.TriangleY3}" Stroke="White" StrokeThickness="3"></Line>
-            <Line X1="{Binding CoordinateValue.TriangleX3}" Y1="{Binding CoordinateValue.TriangleY3}" X2="{Binding CoordinateValue.TriangleX1}"
-                  Y2="{Binding CoordinateValue.TriangleY1}" Stroke="White" StrokeThickness="3"></Line>
-            <Line X1="{Binding CoordinateValue.LineX1}" Y1="{Binding CoordinateValue.LineY1}" X2="{Binding CoordinateValue.LineX2}"
-                  Y2="{Binding CoordinateValue.LineY2}" Stroke="White" StrokeThickness="3"></Line>
+        
+        <Canvas Grid.Row="1" Grid.Column="0" Name="canvas" >
+            <Path Stroke="White">
+                <Path.Data>
+                    <PathGeometry>
+                        <PathFigure IsClosed="True" StartPoint="200,200" x:Name="pathFigure"                                    
+                                    >
+                            <LineSegment Point="200,400"/>
+                            <LineSegment Point="400,200"/>
+                        </PathFigure>
+                    </PathGeometry>
+                </Path.Data>
+            </Path>
         </Canvas>
     </Grid>
 </Window>
