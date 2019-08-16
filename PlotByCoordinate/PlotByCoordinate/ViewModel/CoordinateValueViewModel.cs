@@ -12,12 +12,12 @@ using System.Windows.Media;
 
 namespace PlotByCoordinate.ViewModel
 {
-    public class CoordinateValueViewModel:ViewModelBase
+    public class CoordinateValueViewModel:ViewModelBase 
     {
 
         public CoordinateValueViewModel()
         {
-            CoordinateValue = new CoordinateValueModel();           
+            CoordinateValue = new CoordinateValueModel() {TriangleX1=200,TriangleY1=200,TriangleX2=200,TriangleY2=400,TriangleX3=400,TriangleY3=200 ,LineX1=100,LineY1=100,LineX2=500,LineY2=100};           
         }
 
         private CoordinateValueModel _coordinateValue;
@@ -48,6 +48,5 @@ namespace PlotByCoordinate.ViewModel
         {
             return true;
         }
-
     }
 }

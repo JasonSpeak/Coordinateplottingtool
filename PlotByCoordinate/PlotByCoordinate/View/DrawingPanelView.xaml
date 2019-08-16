@@ -2,17 +2,20 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" MouseMove="Window_MouseMove"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:local="clr-namespace:PlotByCoordinate.View"
+        xmlns:cov="clr-namespace:PlotByCoordinate.ViewModel"
         mc:Ignorable="d"
         WindowStyle="None" 
         AllowsTransparency="True"
         Title="DrawingPanelView" Height="600" Width="800"
         DataContext="{Binding Path=Corrdinate, Source={StaticResource Locator}}"
         >
-  
-
-    <Grid x:Name="grid">
+    <Window.Resources>
+        <cov:PointConverter x:Key="myPointConvent"></cov:PointConverter>
+    </Window.Resources>
+   
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="12*"></RowDefinition>
@@ -25,6 +28,7 @@
         <Border Grid.Row="0" Grid.Column="1" Background="#3448a1"/>
         <Border Grid.Row="1" Grid.Column="0" Background="#000000"/>
         <Border Grid.Row="1" Grid.Column="1" Background="#f1f1f1"/>
+
         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
             <Label Content="三角形" HorizontalAlignment="Center"></Label>
             <Label Content="P1" HorizontalAlignment="Left"></Label>
@@ -42,7 +46,7 @@
                 <TextBox Name="x3"  Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.TriangleX3}"></TextBox>
                 <TextBox  Name="y3" Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.TriangleY3}"></TextBox>
             </DockPanel>
-            <Button Content="绘制三角形" Margin="5" Click="Button_Click" Command="{Binding BeginPaint}"></Button>
+                        
             <Label Content="直线" HorizontalAlignment="Center"></Label>
             <Label Content="P1" HorizontalAlignment="Left"></Label>
             <DockPanel>
@@ -53,22 +57,129 @@
             <DockPanel>
                 <TextBox Name="lx2" Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.LineX2}"></TextBox>
                 <TextBox Name="ly2" Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.LineY2}"></TextBox>
-                
             </DockPanel>
-            <Button Content="绘制直线" Margin="5" Click="Button_Click_1" Command="{Binding BeginPaint}"></Button>
         </StackPanel>
-        
-        <Canvas Grid.Row="1" Grid.Column="0" Name="canvas" >
-            <Path Stroke="White">
+        <Canvas Grid.Row="1" Grid.Column="0" x:Name="canvas">
+           
+            <Path Stroke="White" StrokeThickness="2" Canvas.Left="0" Canvas.Top="0">
+           
                 <Path.Data>
-                    <PathGeometry>
-                        <PathFigure IsClosed="True" StartPoint="200,200" x:Name="pathFigure"                                    
-                                    >
-                            <LineSegment Point="200,400"/>
-                            <LineSegment Point="400,200"/>
-                        </PathFigure>
-                    </PathGeometry>
+                    <GeometryGroup>
+                        <LineGeometry  x:Name="elips">
+                            <LineGeometry.StartPoint>
+                                <MultiBinding Converter="{StaticResource myPointConvent}">
+                                    <Binding Path="CoordinateValue.TriangleX1"/>
+                                    <Binding Path="CoordinateValue.TriangleY1"/>
+                                </MultiBinding>
+                            </LineGeometry.StartPoint>
+                            <LineGeometry.EndPoint>
+                                <MultiBinding Converter="{StaticResource myPointConvent}">
+                                    <Binding Path="CoordinateValue.TriangleX1"/>
+                                    <Binding Path="CoordinateValue.TriangleY1"/>
+                                </MultiBinding>
+                            </LineGeometry.EndPoint>
+                        </LineGeometry>
+                        <LineGeometry  x:Name="elips1" >
+                            <LineGeometry.StartPoint>
+                                <MultiBinding Converter="{StaticResource myPointConvent}">
+                                    <Binding Path="CoordinateValue.TriangleX2"/>
+                                    <Binding Path="CoordinateValue.TriangleY2"/>
+                                </MultiBinding>
+                            </LineGeometry.StartPoint>
+                            <LineGeometry.EndPoint>
+                                <MultiBinding Converter="{StaticResource myPointConvent}">
+                                    <Binding Path="CoordinateValue.TriangleX2"/>
+                                    <Binding Path="CoordinateValue.TriangleY2"/>
+                                </MultiBinding>
+                            </LineGeometry.EndPoint>
+                        </LineGeometry>
+                        <LineGeometry  x:Name="elips2">
+                            <LineGeometry.StartPoint>
+                                <MultiBinding Converter="{StaticResource myPointConvent}">
+                                    <Binding Path="CoordinateValue.TriangleX3"/>
+                                    <Binding Path="CoordinateValue.TriangleY3"/>
+                                </MultiBinding>
+                            </LineGeometry.StartPoint>
+                            <LineGeometry.EndPoint>
+                                <MultiBinding Converter="{StaticResource myPointConvent}">
+                                    <Binding Path="CoordinateValue.TriangleX3"/>
+                                    <Binding Path="CoordinateValue.TriangleY3"/>
+                                </MultiBinding>
+                            </LineGeometry.EndPoint>
+                        </LineGeometry>
+                    </GeometryGroup>
                 </Path.Data>
+      
+                <Path.Triggers>
+                    <EventTrigger RoutedEvent="Path.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard >
+                                <PointAnimation 
+                                    Storyboard.TargetName="elips" Storyboard.TargetProperty="EndPoint"
+                                    Duration="0:0:2.5" 
+                                    RepeatBehavior="Forever"
+                       
+                                  From="{Binding Path=StartPoint,ElementName=canvas.elips}" To="{Binding Path=StartPoint,ElementName=elips1}">
+                                </PointAnimation>
+                                <PointAnimation 
+                                    Storyboard.TargetName="elips1" Storyboard.TargetProperty="EndPoint"
+                                     RepeatBehavior="Forever"
+                         
+                                    Duration="0:0:2.5"                                     
+                                    From="{Binding Path=StartPoint,ElementName=canvas.elips1}" To="{Binding Path=StartPoint,ElementName=elips2}">
+                                </PointAnimation>
+                                <PointAnimation 
+                                    Storyboard.TargetName="elips2" Storyboard.TargetProperty="EndPoint"
+                                     RepeatBehavior="Forever"
+                       
+                                    Duration="0:0:2.5"                                     
+                                    From="{Binding Path=StartPoint,ElementName=canvas.elips2}" To="{Binding Path=StartPoint,ElementName=elips}">
+                                </PointAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Path.Triggers>
+                <Path.RenderTransform>
+                    <TranslateTransform x:Name="tt"></TranslateTransform>
+                </Path.RenderTransform>
+            </Path>
+
+            <Path Stroke="White" StrokeThickness="2" Canvas.Left="0" Canvas.Top="0" >
+                <Path.Data>
+                    <LineGeometry  x:Name="line" >
+                        <LineGeometry.StartPoint>
+                            <MultiBinding Converter="{StaticResource myPointConvent}">
+                                <Binding Path="CoordinateValue.LineX1"/>
+                                <Binding Path="CoordinateValue.LineY1"/>
+                            </MultiBinding>
+                        </LineGeometry.StartPoint>
+                        <LineGeometry.EndPoint>
+                            <MultiBinding Converter="{StaticResource myPointConvent}">
+                                <Binding Path="CoordinateValue.LineX1"/>
+                                <Binding Path="CoordinateValue.LineY1"/>
+                            </MultiBinding>
+                        </LineGeometry.EndPoint>
+                    </LineGeometry>
+                </Path.Data>
+                <Path.Triggers>
+                    <EventTrigger RoutedEvent="Path.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard TargetName="line" TargetProperty="EndPoint">
+                                <PointAnimation Duration="0:0:2.5"     
+                                 RepeatBehavior="Forever"
+                         
+                                 From="{Binding Path=StartPoint,ElementName=line}">
+                                    <PointAnimation.To>
+                                        <MultiBinding Converter="{StaticResource myPointConvent}">
+                                            <Binding Path="CoordinateValue.LineX2"/>
+                                            <Binding Path="CoordinateValue.LineY2"/>
+                                        </MultiBinding>
+                                    </PointAnimation.To>
+                                </PointAnimation>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Path.Triggers>
             </Path>
         </Canvas>
     </Grid>

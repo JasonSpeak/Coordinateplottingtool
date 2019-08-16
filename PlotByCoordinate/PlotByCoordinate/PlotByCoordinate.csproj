@@ -77,6 +77,7 @@
     <Compile Include="Model\IDataService.cs" />
     <Compile Include="ViewModel\CoordinateValueViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\PointConverter.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="View\DrawingPanelView.xaml.cs">
       <DependentUpon>DrawingPanelView.xaml</DependentUpon>

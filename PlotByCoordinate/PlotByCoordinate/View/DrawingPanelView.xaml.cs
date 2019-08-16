@@ -20,93 +20,59 @@ namespace PlotByCoordinate.View
     /// </summary>
     public partial class DrawingPanelView : Window
     {
-        
-        
+
+
+       
         public DrawingPanelView()
         {
-
             InitializeComponent();
-           
 
+        
+            foreach (UIElement uiEle in canvas.Children)
+            {              
+                uiEle.MouseMove += new MouseEventHandler(Element_MouseMove);
+                uiEle.MouseLeftButtonDown += new MouseButtonEventHandler(Element_MouseLeftButtonDown);
+                uiEle.MouseLeftButtonUp += new MouseButtonEventHandler(Element_MouseLeftButtonUp);
             }
-    
-
-
-        private void Window_MouseMove(object sender, MouseEventArgs e)
-        {
-           
         }
 
+        bool isDragDropInEffect = false;
+        Point pos = new Point();
+
+        void Element_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragDropInEffect)
+            {
+                FrameworkElement currEle = sender as FrameworkElement;
+                double xPos = e.GetPosition(null).X - pos.X + (double)currEle.GetValue(Canvas.LeftProperty);
+                double yPos = e.GetPosition(null).Y - pos.Y + (double)currEle.GetValue(Canvas.TopProperty);
+                currEle.SetValue(Canvas.LeftProperty, xPos);
+                currEle.SetValue(Canvas.TopProperty, yPos);
+                pos = e.GetPosition(null);
+            }
+        }
+
+        void Element_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            FrameworkElement fEle = sender as FrameworkElement;
+            isDragDropInEffect = true;
+            pos = e.GetPosition(null);
+            fEle.CaptureMouse();
+            fEle.Cursor = Cursors.Hand;
+        }
+
+        void Element_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (isDragDropInEffect)
+            {
+                FrameworkElement ele = sender as FrameworkElement;
+                isDragDropInEffect = false;
+                ele.ReleaseMouseCapture();
+            }
+            
+        }
 
   
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //var canvas = new Canvas();                              
-            
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-            Content = grid;
-            
-            var points =
-                new List<Point>()
-                {
-                    new Point(Convert.ToDouble((this.lx1.Text)), Convert.ToDouble((this.ly1.Text))),
-                    new Point(Convert.ToDouble((this.lx2.Text)), Convert.ToDouble((this.ly2.Text))),
-               //     new Point(10, 10)
-                };
-            var sb = new Storyboard();
-         
-            for (int i = 0; i < points.Count - 1; i++)
-            {
-                var lineGeometry = new LineGeometry(points[i], points[i]);
-                var path =
-                    new Path()
-                    {
-                        Stroke = Brushes.White,
-                        StrokeThickness = 3,
-                        Data = lineGeometry
-                    };
-                this.canvas.Children.Add(path);
-                var animation =
-                    new PointAnimation(points[i], points[i + 1], new Duration(TimeSpan.FromMilliseconds(1000)))
-                    {
-                        BeginTime = TimeSpan.FromMilliseconds(i * 1010)
-                    };
-                sb.Children.Add(animation);
-                RegisterName("geometry" + i, lineGeometry);
-                Storyboard.SetTargetName(animation, "geometry" + i);
-                Storyboard.SetTargetProperty(animation, new PropertyPath(LineGeometry.EndPointProperty));
-               
-            }
-           
-            sb.Begin(this);
-            
-        }
-        static Point startPoint;
-        static Point endPoint;
-        static bool isCapture = false;
-        private void PathFigure_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            Window win = sender as Window;
-            startPoint = e.GetPosition(win);
-            isCapture = true;
-        }
-
-        private void PathFigure_MouseMove(object sender, MouseEventArgs e)
-        {
-            endPoint = e.GetPosition(sender as Window);
-            if (isCapture)
-            {
-                DrawRectangle(sender); 
-            }
-        }
-        private void DrawRectangle(object sender)
-        {
-        
-        }
     }
 }
