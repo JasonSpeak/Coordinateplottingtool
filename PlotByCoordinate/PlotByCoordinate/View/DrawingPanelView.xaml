@@ -10,7 +10,7 @@
         AllowsTransparency="True"
         Title="DrawingPanelView" Height="600" Width="800"
         DataContext="{Binding Path=Corrdinate, Source={StaticResource Locator}}"
-        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        
         >
     <Window.Resources>
         <cov:PointConverter x:Key="myPointConvent"></cov:PointConverter>

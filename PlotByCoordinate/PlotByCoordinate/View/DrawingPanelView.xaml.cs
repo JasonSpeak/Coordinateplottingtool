@@ -94,9 +94,6 @@ namespace PlotByCoordinate.View
             pathangle.BeginStoryboard(story2);
         }
 
-        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            this.DragMove();
-        }
+     
     }
 }
