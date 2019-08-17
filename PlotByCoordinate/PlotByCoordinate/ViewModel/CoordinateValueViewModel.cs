@@ -17,7 +17,7 @@ namespace PlotByCoordinate.ViewModel
 
         public CoordinateValueViewModel()
         {
-            CoordinateValue = new CoordinateValueModel() {TriangleX1=200,TriangleY1=200,TriangleX2=200,TriangleY2=400,TriangleX3=400,TriangleY3=200 ,LineX1=100,LineY1=100,LineX2=500,LineY2=100};           
+            CoordinateValue = new CoordinateValueModel();      
         }
 
         private CoordinateValueModel _coordinateValue;

@@ -27,13 +27,15 @@ namespace PlotByCoordinate.View
         {
             InitializeComponent();
 
-        
+            
             foreach (UIElement uiEle in canvas.Children)
             {              
                 uiEle.MouseMove += new MouseEventHandler(Element_MouseMove);
                 uiEle.MouseLeftButtonDown += new MouseButtonEventHandler(Element_MouseLeftButtonDown);
                 uiEle.MouseLeftButtonUp += new MouseButtonEventHandler(Element_MouseLeftButtonUp);
             }
+       
+            
         }
 
         bool isDragDropInEffect = false;
@@ -72,7 +74,29 @@ namespace PlotByCoordinate.View
             }
             
         }
+        private void DockPanel_LostFocus(object sender, RoutedEventArgs e)
+        {
+            pathangle.BeginStoryboard(story1);
+        }
 
-  
+        private void DockPanel_LostFocus_1(object sender, RoutedEventArgs e)
+        {
+            pathangle.BeginStoryboard(story1);
+        }
+
+        private void DockPanel_LostFocus_2(object sender, RoutedEventArgs e)
+        {
+            pathangle.BeginStoryboard(story1);
+        }
+
+        private void DockPanel_LostFocus_3(object sender, RoutedEventArgs e)
+        {
+            pathangle.BeginStoryboard(story2);
+        }
+
+        private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }

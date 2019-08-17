@@ -20,11 +20,11 @@ namespace PlotByCoordinate.Model
             get { return _lineX1; }
             set
             {
-                if (value < 0)
+                if (value < 0||value>640)
                 {
                     value = 0;
                 }
-                _lineX1 = value;
+                _lineX1 = (int)value;
                 RaisePropertyChanged(() => LineX1);
             }
         }
@@ -38,11 +38,11 @@ namespace PlotByCoordinate.Model
             get { return _lineY1; }
             set
             {
-                if (value < 0)
+                if (value < 0||value>550)
                 {
                     value = 0;
                 }
-                _lineY1 = value;
+                _lineY1 = (int)value;
                 RaisePropertyChanged(() => LineY1);
             }
         }
@@ -56,11 +56,11 @@ namespace PlotByCoordinate.Model
             get { return _lineX2; }
             set
             {
-                if (value < 0)
+                if (value < 0||value>640)
                 {
                     value = 0;
                 }
-                _lineX2 = value;
+                _lineX2 = (int)value;
                 RaisePropertyChanged(() => LineX2);
             }
         }
@@ -74,11 +74,11 @@ namespace PlotByCoordinate.Model
             get { return _lineY2; }
             set
             {
-                if (value < 0)
+                if (value < 0||value>550)
                 {
                     value = 0;
                 }
-                _lineY2 = value;
+                _lineY2 = (int)value;
                 RaisePropertyChanged(() => LineY2);
             }
         }
@@ -94,11 +94,11 @@ namespace PlotByCoordinate.Model
             get { return _triangleX1; }
             set
             {
-                if (value < 0)
+                if (value < 0||value > 640)
                 {
                     value = 0;
                 }
-                _triangleX1 = value;
+                _triangleX1 = (int)value;
                 RaisePropertyChanged(() => TriangleX1);
             }
         }
@@ -111,11 +111,11 @@ namespace PlotByCoordinate.Model
             get { return _triangleY1; }
             set
             {
-                if (value < 0)
+                if (value < 0||value>550)
                 {
                     value = 0;
                 }
-                _triangleY1 = value;
+                _triangleY1 = (int)value;
                 RaisePropertyChanged(() => TriangleY1);
             }
         }
@@ -128,11 +128,11 @@ namespace PlotByCoordinate.Model
             get { return _triangleX2; }
             set
             {
-                if (value < 0)
+                if (value < 0 ||value>640)
                 {
                     value = 0;
                 }
-                _triangleX2 = value;
+                _triangleX2 = (int)value;
                 RaisePropertyChanged(() => TriangleX2);
             }
         }
@@ -145,11 +145,11 @@ namespace PlotByCoordinate.Model
             get { return _triangleY2; }
             set
             {
-                if (value < 0)
+                if (value < 0||value>550)
                 {
                     value = 0;
                 }
-                _triangleY2 = value;
+                _triangleY2 = (int)value;
                 RaisePropertyChanged(() => TriangleY2);
             }
         }
@@ -162,11 +162,11 @@ namespace PlotByCoordinate.Model
             get { return _triangleX3; }
             set
             {
-                if (value < 0)
+                if (value < 0||value>640)
                 {
                     value = 0;
                 }
-                _triangleX3 = value;
+                _triangleX3 = (int)value;
                 RaisePropertyChanged(() => TriangleX3);
             }
         }
@@ -179,11 +179,11 @@ namespace PlotByCoordinate.Model
             get { return _triangleY3; }
             set
             {
-                if (value < 0)
+                if (value < 0||value>550)
                 {
                     value = 0;
                 }
-                _triangleY3 = value;
+                _triangleY3 = (int)value;
                 RaisePropertyChanged(() => TriangleY3);
             }
         }
