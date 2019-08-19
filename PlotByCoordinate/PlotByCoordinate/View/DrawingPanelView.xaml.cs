@@ -34,7 +34,8 @@ namespace PlotByCoordinate.View
                 uiEle.MouseLeftButtonDown += new MouseButtonEventHandler(Element_MouseLeftButtonDown);
                 uiEle.MouseLeftButtonUp += new MouseButtonEventHandler(Element_MouseLeftButtonUp);
             }
-       
+
+
             
         }
 
@@ -69,6 +70,8 @@ namespace PlotByCoordinate.View
             if (isDragDropInEffect)
             {
                 FrameworkElement ele = sender as FrameworkElement;
+        //        ele.SetValue(Canvas.LeftProperty,0.0);
+        //        ele.SetValue(Canvas.TopProperty, 0.0);
                 isDragDropInEffect = false;
                 ele.ReleaseMouseCapture();
             }

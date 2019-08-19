@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
-
+using PlotByCoordinate.View;
 namespace PlotByCoordinate.ViewModel
 {
     class PointConverter : IMultiValueConverter
@@ -14,8 +14,8 @@ namespace PlotByCoordinate.ViewModel
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             
-            Point point = new Point() { X=(int)values[0],Y=(int)values[1]};
-         
+            Point point = new Point() { X=(int)values[0], Y=(int)values[1]};
+           
             return point;
         }
 

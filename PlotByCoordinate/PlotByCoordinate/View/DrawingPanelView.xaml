@@ -4,16 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:local="clr-namespace:PlotByCoordinate.View"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:mvvm="http://www.galasoft.ch/mvvmlight"
         xmlns:cov="clr-namespace:PlotByCoordinate.ViewModel"
         mc:Ignorable="d"
-        WindowStyle="None" 
-        AllowsTransparency="True"
+ 
+
         Title="DrawingPanelView" Height="600" Width="800"
         DataContext="{Binding Path=Corrdinate, Source={StaticResource Locator}}"
         
         >
     <Window.Resources>
         <cov:PointConverter x:Key="myPointConvent"></cov:PointConverter>
+        <cov:PointConverterToView x:Key="MyPointConverterToView"></cov:PointConverterToView>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -31,8 +34,8 @@
         <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
             <Label Content="三角形" HorizontalAlignment="Center"></Label>
             <Label Content="P1" HorizontalAlignment="Left"></Label>
-            <DockPanel LostFocus="DockPanel_LostFocus_1"> 
-                <TextBox Margin="3" Name="x1" Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.TriangleX1}" ></TextBox>
+            <DockPanel LostFocus="DockPanel_LostFocus_1">
+                <TextBox Margin="3" Name="x1" Width="60" DockPanel.Dock="Left" Background="LightBlue" Text="{Binding CoordinateValue.TriangleX1 }" ></TextBox>
                 <TextBox Margin="3" Name="y1" Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.TriangleY1}" ></TextBox>
             </DockPanel>
             <Label Content="P2" HorizontalAlignment="Left"></Label>
@@ -57,8 +60,22 @@
                 <TextBox Margin="3" Name="ly2" Width="60" DockPanel.Dock="Right" Background="LightBlue" Text="{Binding CoordinateValue.LineY2}"></TextBox>
             </DockPanel>
         </StackPanel>
-        <Canvas Grid.Row="1" Grid.Column="0" x:Name="canvas">
-            <Path Stroke="White" StrokeThickness="2" Canvas.Left="0" Canvas.Top="0" x:Name="pathangle">
+        <Canvas Grid.Row="1" Margin="0,0,0,0" Grid.Column="0" x:Name="canvas" ClipToBounds="True">
+       
+            <Path Stroke="White" StrokeThickness="2"  Canvas.Left="0" Canvas.Top="0" x:Name="pathangle" >
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <i:InvokeCommandAction Command="{Binding MouseButtonDownCommand}" />
+
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <mvvm:EventToCommand Command="{Binding MouseLeftButtonUpCommand}"/>
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseMove">
+                        <mvvm:EventToCommand  Command="{Binding MouseMoveCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                
                 <Path.Data>
                     <GeometryGroup>
                         <LineGeometry  x:Name="elips">
@@ -133,7 +150,7 @@
                
             </Path>
 
-            <Path Stroke="White" StrokeThickness="2" Canvas.Left="0" Canvas.Top="0" >
+            <Path Stroke="White" StrokeThickness="2" Canvas.Left="0" Canvas.Top="0"  x:Name="pathline">
                 <Path.Data>
                     <LineGeometry  x:Name="line" >
                         <LineGeometry.StartPoint>

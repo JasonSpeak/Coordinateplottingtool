@@ -9,6 +9,7 @@ using GalaSoft.MvvmLight.Command;
 using System.Windows.Media.Animation;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Input;
 
 namespace PlotByCoordinate.ViewModel
 {
@@ -27,26 +28,55 @@ namespace PlotByCoordinate.ViewModel
             get { return _coordinateValue; }
             set { _coordinateValue = value; RaisePropertyChanged(() => CoordinateValue); }
         }
+        private ICommand mouseButtonDownCommand;
 
-        private RelayCommand beginPaint;
-
-        public RelayCommand BeginPaint
+        public ICommand MouseButtonDownCommand
         {
             get
             {
-                if (beginPaint == null) return new RelayCommand(() => ExecuteToPaint(), CanExcute);
-                return beginPaint;
+                return new DelegateCommand<>(win=>win+=(sender,e)=> 
+                {
+                    MessageBox.Show("aaa");
+                });
             }
-            set { beginPaint = value; }
+            set { mouseButtonDownCommand = value; }
         }
-        private void ExecuteToPaint()
-        {
 
-            
-        }
-        public bool CanExcute()
+
+        private RelayCommand mouseLeftButtonUp;
+
+        public RelayCommand MouseLeftButtonUp
         {
-            return true;
+            get
+            {
+
+                if (mouseLeftButtonUp == null)
+                    mouseLeftButtonUp = new RelayCommand(() => ExecuteMouseUp());
+                return mouseLeftButtonUp;
+            }
+            set { mouseLeftButtonUp = value; }
+        }
+        private void ExecuteMouseUp()
+        {
+           
+        }
+        private RelayCommand mouseMoveCommand;
+
+        public RelayCommand MouseMoveCommand
+        {
+            get
+            {
+
+                if (mouseMoveCommand == null)
+                    mouseMoveCommand = new RelayCommand(() => ExecutemouseMoveCommand());
+                return mouseMoveCommand;
+            }
+            set { mouseMoveCommand = value; }
+        }
+
+        private void ExecutemouseMoveCommand()
+        {
+           // MessageBox.Show("cccc");
         }
     }
 }
