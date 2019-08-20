@@ -14,7 +14,7 @@ namespace PlotByCoordinate.ViewModel
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             
-            Point point = new Point() { X=(int)values[0], Y=(int)values[1]};
+            Point point = new Point() { X=(double)values[0] , Y=(double)values[1] };
            
             return point;
         }

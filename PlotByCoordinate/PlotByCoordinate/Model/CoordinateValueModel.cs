@@ -13,68 +13,68 @@ namespace PlotByCoordinate.Model
         /// <summary>
         /// 直线点P1的x坐标
         /// </summary>
-        private int _lineX1;
+        private double _lineX1;
 
-        public int LineX1
+        public double LineX1
         {
             get { return _lineX1; }
             set
             {
-                if (value < 0||value>640)
+                if (value>640)
                 {
                     value = 0;
                 }
-                _lineX1 = (int)value;
+                _lineX1 = (double)value;
                 RaisePropertyChanged(() => LineX1);
             }
         }
         /// <summary>
         /// 直线点P1的y坐标
         /// </summary>
-        private int _lineY1;
+        private double _lineY1;
 
-        public int LineY1
+        public double LineY1
         {
             get { return _lineY1; }
             set
             {
-                if (value < 0||value>550)
+                if (value>550)
                 {
                     value = 0;
                 }
-                _lineY1 = (int)value;
+                _lineY1 = (double)value;
                 RaisePropertyChanged(() => LineY1);
             }
         }
         /// <summary>
         /// 直线点P2的x坐标
         /// </summary>
-        private int _lineX2;
+        private double _lineX2;
 
-        public int LineX2
+        public double LineX2
         {
             get { return _lineX2; }
             set
             {
-                if (value < 0||value>640)
+                if (value>640)
                 {
                     value = 0;
                 }
-                _lineX2 = (int)value;
+                _lineX2 = (double)value;
                 RaisePropertyChanged(() => LineX2);
             }
         }
         /// <summary>
         /// 直线点P1的y坐标
         /// </summary>
-        private int _lineY2;
+        private double _lineY2;
 
-        public int LineY2
+        public double LineY2
         {
             get { return _lineY2; }
             set
             {
-                if (value < 0||value>550)
+                if (value>550)
                 {
                     value = 0;
                 }
@@ -88,153 +88,181 @@ namespace PlotByCoordinate.Model
         /// <summary>
         /// 三角形点p1的x坐标
         /// </summary>
-        private int _triangleX1;
-        public int TriangleX1
+        private double _triangleX1;
+        public double TriangleX1
         {
             get { return _triangleX1; }
             set
             {
-                if (value < 0||value > 640)
+                if (value > 640)
                 {
                     value = 0;
                 }
-                _triangleX1 = (int)value;
+                _triangleX1 = (double)value;
                 RaisePropertyChanged(() => TriangleX1);
             }
         }
         /// <summary>
         /// 三角形点p1的y坐标
         /// </summary>
-        private int _triangleY1;
-        public int TriangleY1
+        private double _triangleY1;
+        public double TriangleY1
         {
             get { return _triangleY1; }
             set
             {
-                if (value < 0||value>550)
+                if (value>550)
                 {
                     value = 0;
                 }
-                _triangleY1 = (int)value;
+                _triangleY1 = (double)value;
                 RaisePropertyChanged(() => TriangleY1);
             }
         }
         /// <summary>
         /// 三角形点p2的x坐标
         /// </summary>
-        private int _triangleX2;
-        public int TriangleX2
+        private double _triangleX2;
+        public double TriangleX2
         {
             get { return _triangleX2; }
             set
             {
-                if (value < 0 ||value>640)
+                if (value>640)
                 {
                     value = 0;
                 }
-                _triangleX2 = (int)value;
+                _triangleX2 = (double)value;
                 RaisePropertyChanged(() => TriangleX2);
             }
         }
         /// <summary>
         /// 三角形点p2的y坐标
         /// </summary>
-        private int _triangleY2;
-        public int TriangleY2
+        private double _triangleY2;
+        public double TriangleY2
         {
             get { return _triangleY2; }
             set
             {
-                if (value < 0||value>550)
+                if (value>550)
                 {
                     value = 0;
                 }
-                _triangleY2 = (int)value;
+                _triangleY2 = (double)value;
                 RaisePropertyChanged(() => TriangleY2);
             }
         }
         /// <summary>
         /// 三角形点p3的x坐标
         /// </summary>
-        private int _triangleX3;
-        public int TriangleX3
+        private double _triangleX3;
+        public double TriangleX3
         {
             get { return _triangleX3; }
             set
             {
-                if (value < 0||value>640)
+                if (value>640)
                 {
                     value = 0;
                 }
-                _triangleX3 = (int)value;
+                _triangleX3 = (double)value;
                 RaisePropertyChanged(() => TriangleX3);
             }
         }
         /// <summary>
         /// 三角形点p3的y坐标
         /// </summary>
-        private int _triangleY3;
-        public int TriangleY3
+        private double _triangleY3;
+        public double TriangleY3
         {
             get { return _triangleY3; }
             set
             {
-                if (value < 0||value>550)
+                if (value>550)
                 {
                     value = 0;
                 }
-                _triangleY3 = (int)value;
+                _triangleY3 = (double)value;
                 RaisePropertyChanged(() => TriangleY3);
             }
         }
 
 
+        private double xPos;
 
-        private string _triangleP1;
-
-        public string TriangleP1
+        public double XPos
         {
-            get { return _triangleP1; }
+            get { return xPos; }
             set
             {
-                if (TriangleX1 == 0 && TriangleY1 == 0)
-                {
-                    value = "100,100";
-                }
-                _triangleP1 = value;
-                RaisePropertyChanged(() => TriangleP1);
+                xPos = value;
+                RaisePropertyChanged(() => XPos);
             }
         }
 
-        private string _triangleP2;
 
-        public string TriangleP2
+        private double yPos;
+
+        public double YPos
         {
-            get { return _triangleP2; }
+            get { return yPos; }
             set
             {
-                if (TriangleX2 == 0 && TriangleY2 == 0)
-                {
-                    value = "400,400";
-                }
-                _triangleP2 = value; RaisePropertyChanged(() => TriangleP2);
+                yPos = value;
+                RaisePropertyChanged(() => YPos);
             }
         }
 
-        private string _triangleP3;
 
-        public string TriangleP3
+        private double linexPos;
+
+        public double LineXPos
         {
-            get { return _triangleP3; }
+            get { return linexPos; }
             set
             {
-                if (TriangleX3 == 0 && TriangleY3 == 0)
-                {
-                    value = "400,450";
-                }
-                _triangleP3 = value; RaisePropertyChanged(() => TriangleP3);
+                linexPos = value;
+                RaisePropertyChanged(() => LineXPos);
             }
         }
+
+
+        private double lineyPos;
+
+        public double LineYPos
+        {
+            get { return lineyPos; }
+            set
+            {
+                lineyPos = value;
+                RaisePropertyChanged(() => LineYPos);
+            }
+        }
+
+        private string canSee;
+
+        public string CanSee
+        {
+            get { return canSee; }
+            set {
+                canSee = value;
+                RaisePropertyChanged(() => CanSee);
+            }
+        }
+        private string linecanSee;
+
+        public string LineCanSee
+        {
+            get { return linecanSee; }
+            set
+            {
+                linecanSee = value;
+                RaisePropertyChanged(() => LineCanSee);
+            }
+        }
+
+
         #endregion
     }
 }
