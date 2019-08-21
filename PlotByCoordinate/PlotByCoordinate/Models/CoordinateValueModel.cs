@@ -4,23 +4,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PlotByCoordinate.Model
 {
     public class CoordinateValueModel:ObservableObject
     {
-        #region 直线的坐标值
-        /// <summary>
-        /// 直线点P1的x坐标
-        /// </summary>
         private double _lineX1;
+        private double _lineY1;
+        private double _lineX2;
+        private double _lineY2;
+        private double _triangleX1;
+        private double _triangleY1;
+        private double _triangleX2;
+        private double _triangleY2;
+        private double _triangleX3;
+        private double _triangleY3;
+        private double _triangleXPos;
+        private double _triangleYPos;
+        private double _linexPos;
+        private double _lineyPos;
+        private Point[] _points;
 
         public double LineX1
         {
             get { return _lineX1; }
             set
             {
-                if (value>640)
+                if (value>640||value<0)
                 {
                     value = 0;
                 }
@@ -28,11 +39,6 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => LineX1);
             }
         }
-        /// <summary>
-        /// 直线点P1的y坐标
-        /// </summary>
-        private double _lineY1;
-
         public double LineY1
         {
             get { return _lineY1; }
@@ -46,11 +52,6 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => LineY1);
             }
         }
-        /// <summary>
-        /// 直线点P2的x坐标
-        /// </summary>
-        private double _lineX2;
-
         public double LineX2
         {
             get { return _lineX2; }
@@ -64,11 +65,6 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => LineX2);
             }
         }
-        /// <summary>
-        /// 直线点P1的y坐标
-        /// </summary>
-        private double _lineY2;
-
         public double LineY2
         {
             get { return _lineY2; }
@@ -81,14 +77,7 @@ namespace PlotByCoordinate.Model
                 _lineY2 = (int)value;
                 RaisePropertyChanged(() => LineY2);
             }
-        }
-        #endregion
-
-        #region 三角形的坐标值
-        /// <summary>
-        /// 三角形点p1的x坐标
-        /// </summary>
-        private double _triangleX1;
+        }     
         public double TriangleX1
         {
             get { return _triangleX1; }
@@ -102,10 +91,6 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => TriangleX1);
             }
         }
-        /// <summary>
-        /// 三角形点p1的y坐标
-        /// </summary>
-        private double _triangleY1;
         public double TriangleY1
         {
             get { return _triangleY1; }
@@ -119,10 +104,6 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => TriangleY1);
             }
         }
-        /// <summary>
-        /// 三角形点p2的x坐标
-        /// </summary>
-        private double _triangleX2;
         public double TriangleX2
         {
             get { return _triangleX2; }
@@ -135,11 +116,7 @@ namespace PlotByCoordinate.Model
                 _triangleX2 = (double)value;
                 RaisePropertyChanged(() => TriangleX2);
             }
-        }
-        /// <summary>
-        /// 三角形点p2的y坐标
-        /// </summary>
-        private double _triangleY2;
+        }     
         public double TriangleY2
         {
             get { return _triangleY2; }
@@ -152,11 +129,7 @@ namespace PlotByCoordinate.Model
                 _triangleY2 = (double)value;
                 RaisePropertyChanged(() => TriangleY2);
             }
-        }
-        /// <summary>
-        /// 三角形点p3的x坐标
-        /// </summary>
-        private double _triangleX3;
+        }      
         public double TriangleX3
         {
             get { return _triangleX3; }
@@ -170,10 +143,6 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => TriangleX3);
             }
         }
-        /// <summary>
-        /// 三角形点p3的y坐标
-        /// </summary>
-        private double _triangleY3;
         public double TriangleY3
         {
             get { return _triangleY3; }
@@ -187,82 +156,49 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => TriangleY3);
             }
         }
-
-
-        private double xPos;
-
-        public double XPos
+        public double TriangleXPos
         {
-            get { return xPos; }
+            get { return _triangleXPos; }
             set
             {
-                xPos = value;
-                RaisePropertyChanged(() => XPos);
+                _triangleXPos = value;
+                RaisePropertyChanged(() => TriangleXPos);
             }
         }
-
-
-        private double yPos;
-
-        public double YPos
+        public double TriangleYPos
         {
-            get { return yPos; }
+            get { return _triangleYPos; }
             set
             {
-                yPos = value;
-                RaisePropertyChanged(() => YPos);
+                _triangleYPos = value;
+                RaisePropertyChanged(() => TriangleYPos);
             }
-        }
-
-
-        private double linexPos;
-
+        }    
         public double LineXPos
         {
-            get { return linexPos; }
+            get { return _linexPos; }
             set
             {
-                linexPos = value;
+                _linexPos = value;
                 RaisePropertyChanged(() => LineXPos);
             }
         }
-
-
-        private double lineyPos;
-
         public double LineYPos
         {
-            get { return lineyPos; }
+            get { return _lineyPos; }
             set
             {
-                lineyPos = value;
+                _lineyPos = value;
                 RaisePropertyChanged(() => LineYPos);
             }
         }
+    
 
-        private string canSee;
-
-        public string CanSee
+        public Point[] Points
         {
-            get { return canSee; }
-            set {
-                canSee = value;
-                RaisePropertyChanged(() => CanSee);
-            }
-        }
-        private string linecanSee;
-
-        public string LineCanSee
-        {
-            get { return linecanSee; }
-            set
-            {
-                linecanSee = value;
-                RaisePropertyChanged(() => LineCanSee);
-            }
+            get { return _points; }
+            set { _points = value; RaisePropertyChanged(() => Points); }
         }
 
-
-        #endregion
     }
 }

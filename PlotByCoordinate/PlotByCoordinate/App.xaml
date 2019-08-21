@@ -5,12 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ignore="http://www.galasoft.ch/ignore"
-             StartupUri="/View/DrawingPanelView.xaml"
+             xmlns:vm1="clr-namespace:PlotByCoordinate.Converts"
+             StartupUri="/Views/DrawingPanelView.xaml"
              mc:Ignorable="d ignore">
     
     <Application.Resources>
         <!--Global View Model Locator-->
-        <vm:ViewModelLocator x:Key="Locator"
+        <vm1:ViewModelLocator x:Key="Locator"
                              d:IsDataSource="True" />
     </Application.Resources>
     
