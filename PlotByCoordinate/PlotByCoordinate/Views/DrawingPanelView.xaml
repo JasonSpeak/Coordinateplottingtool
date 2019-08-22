@@ -6,13 +6,27 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:local="clr-namespace:PlotByCoordinate.View"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="http://www.galasoft.ch/mvvmlight"
+    x:Name="win"
     Title="DrawingPanelView"
     Width="800"
     Height="600"
     DataContext="{Binding Path=Corrdinate, Source={StaticResource Locator}}"
     mc:Ignorable="d">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="SizeChanged">
+            <mvvm:EventToCommand Command="{Binding SizeChangedCommand}" PassEventArgsToCommand="True" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Style.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -39,57 +53,50 @@
             Grid.Row="1"
             Grid.Column="1"
             VerticalAlignment="Center">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="GotFocus">
+                    <mvvm:EventToCommand Command="{Binding GotFocusCommand}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <StackPanel x:Name="anglepanel">
                 <Label HorizontalAlignment="Center" Content="三角形" />
                 <Label HorizontalAlignment="Left" Content="P1" />
                 <DockPanel>
                     <TextBox
                         Name="x1"
-                        Width="60"
-                        Margin="3"
-                        Background="LightBlue"
                         DockPanel.Dock="Left"
+                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
                         Text="{Binding CoordinateValue.TriangleX1}" />
                     <TextBox
                         Name="y1"
-                        Width="60"
-                        Margin="3"
-                        Background="LightBlue"
                         DockPanel.Dock="Right"
+                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
                         Text="{Binding CoordinateValue.TriangleY1}" />
                 </DockPanel>
                 <Label HorizontalAlignment="Left" Content="P2" />
                 <DockPanel>
                     <TextBox
                         Name="x2"
-                        Width="60"
-                        Margin="3"
-                        Background="LightBlue"
                         DockPanel.Dock="Left"
+                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
                         Text="{Binding CoordinateValue.TriangleX2}" />
                     <TextBox
                         Name="y2"
-                        Width="60"
-                        Margin="3"
-                        Background="LightBlue"
                         DockPanel.Dock="Right"
+                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
                         Text="{Binding CoordinateValue.TriangleY2}" />
                 </DockPanel>
                 <Label HorizontalAlignment="Left" Content="P3" />
                 <DockPanel>
                     <TextBox
                         Name="x3"
-                        Width="60"
-                        Margin="3"
-                        Background="LightBlue"
                         DockPanel.Dock="Left"
+                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
                         Text="{Binding CoordinateValue.TriangleX3}" />
                     <TextBox
                         Name="ty3"
-                        Width="60"
-                        Margin="3"
-                        Background="LightBlue"
                         DockPanel.Dock="Right"
+                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
                         Text="{Binding CoordinateValue.TriangleY3}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="LostFocus">
@@ -105,34 +112,26 @@
                 <DockPanel>
                     <TextBox
                         Name="lx1"
-                        Width="60"
-                        Margin="3"
-                        Background="LightBlue"
                         DockPanel.Dock="Left"
+                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
                         Text="{Binding CoordinateValue.LineX1}" />
                     <TextBox
                         Name="ly1"
-                        Width="60"
-                        Margin="3"
-                        Background="LightBlue"
                         DockPanel.Dock="Right"
+                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
                         Text="{Binding CoordinateValue.LineY1}" />
                 </DockPanel>
                 <Label HorizontalAlignment="Left" Content="P2" />
                 <DockPanel>
                     <TextBox
                         Name="lx2"
-                        Width="60"
-                        Margin="3"
-                        Background="LightBlue"
                         DockPanel.Dock="Left"
+                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
                         Text="{Binding CoordinateValue.LineX2}" />
                     <TextBox
                         Name="ly2"
-                        Width="60"
-                        Margin="3"
-                        Background="LightBlue"
                         DockPanel.Dock="Right"
+                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
                         Text="{Binding CoordinateValue.LineY2}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="LostFocus">
@@ -147,15 +146,14 @@
             x:Name="canvas"
             Grid.Row="1"
             Grid.Column="0"
-            Margin="0,0,0,0"
-            ClipToBounds="True">
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Style="{DynamicResource ResourceKey=CanvasStyle}">
             <Path
                 x:Name="pathangle"
                 Canvas.Left="{Binding CoordinateValue.TriangleXPos}"
                 Canvas.Top="{Binding CoordinateValue.TriangleYPos}"
-                Stroke="White"
-                StrokeThickness="2"
-                Visibility="{Binding CoordinateValue.CanSee}">
+                Style="{DynamicResource ResourceKey=PathStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <mvvm:EventToCommand Command="{Binding MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
@@ -188,8 +186,7 @@
                 x:Name="pathline"
                 Canvas.Left="{Binding CoordinateValue.LineXPos}"
                 Canvas.Top="{Binding CoordinateValue.LineYPos}"
-                Stroke="White"
-                StrokeThickness="2">
+                Style="{DynamicResource ResourceKey=PathStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <mvvm:EventToCommand Command="{Binding MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />

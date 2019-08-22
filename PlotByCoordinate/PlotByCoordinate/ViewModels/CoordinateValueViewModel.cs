@@ -13,7 +13,6 @@ using System.Windows.Input;
 using System.Windows.Data;
 using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Controls;
-
 namespace PlotByCoordinate.ViewModel
 {
     public class CoordinateValueViewModel:ViewModelBase 
@@ -23,45 +22,21 @@ namespace PlotByCoordinate.ViewModel
         private CoordinateValueModel _coordinateValue;
         Point pos = new Point();
         Point[] points = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0) };
+
         public CoordinateValueViewModel()
         {
-            CoordinateValue = new CoordinateValueModel();
+            MouseLeftButtonDownCommand = new RelayCommand<MouseEventArgs>(OnLeftMouseDownCommandExecuted);
+            CoordinateValue = new CoordinateValueModel() {MaxX =550,MaxY=640};
         }
         
         public CoordinateValueModel CoordinateValue
         {
             get { return _coordinateValue; }
             set { _coordinateValue = value; RaisePropertyChanged(() => CoordinateValue); }
-        }       
-        private RelayCommand<MouseEventArgs> mouseLeftButtonDownCommand;
-        public RelayCommand<MouseEventArgs> MouseLeftButtonDownCommand
-        {
-            get
-            {
-                if (mouseLeftButtonDownCommand == null)
-                    mouseLeftButtonDownCommand = new RelayCommand<MouseEventArgs>
-                    (
-                        (e) =>
-                        {
-                            FrameworkElement ele = e.Source as FrameworkElement;
-                            ele.CaptureMouse();
-                            ele.Cursor = Cursors.Hand;
-                            pos = e.GetPosition(null);
-                            if (ele.Name == "pathangle")
-                            {
-                                isDragDropForPathangle = true;
-                            }
-                            if (ele.Name == "pathline")
-                            {
-                                isDragDropForPathline = true;
-                                Console.WriteLine("{0}", CoordinateValue.Points[2].Y);
-                            }
-                        }
-                     );
-                return mouseLeftButtonDownCommand;
-            }
-        
         }
+        
+        public RelayCommand<MouseEventArgs> MouseLeftButtonDownCommand { get; }
+
         private RelayCommand<MouseEventArgs> mouseMoveCommand;
         public RelayCommand<MouseEventArgs> MouseMoveCommand
         {
@@ -99,9 +74,9 @@ namespace PlotByCoordinate.ViewModel
                                     CoordinateValue.LineXPos = xPos;
                                     CoordinateValue.LineYPos = yPos;
                                     CoordinateValue.LineX1 = CoordinateValue.LineX1 + e.GetPosition(null).X - pos.X;
-                                    CoordinateValue.LineY1 = CoordinateValue.LineY1 + e.GetPosition(null).X - pos.X;
+                                    CoordinateValue.LineY1 = CoordinateValue.LineY1 + e.GetPosition(null).Y - pos.Y;
                                     CoordinateValue.LineX2 = CoordinateValue.LineX2 + e.GetPosition(null).X - pos.X;
-                                    CoordinateValue.LineY2 = CoordinateValue.LineY1 + e.GetPosition(null).X - pos.X;
+                                    CoordinateValue.LineY2 = CoordinateValue.LineY2 + e.GetPosition(null).Y - pos.Y;
                                     pos = e.GetPosition(null);
                                 }
 
@@ -166,9 +141,7 @@ namespace PlotByCoordinate.ViewModel
                                 points[1].Y = CoordinateValue.TriangleY2;
                                 points[2].X = CoordinateValue.TriangleX3;
                                 points[2].Y = CoordinateValue.TriangleY3;
-                                CoordinateValue.Points = points;
-                              
-
+                                CoordinateValue.Points = points;                             
                             }
                             if (ele.Name == "ly2")
                             {
@@ -185,7 +158,60 @@ namespace PlotByCoordinate.ViewModel
                 return lostFocusCommand;
             }
         }
+        private RelayCommand<RoutedEventArgs> gotFocusCommand;
+        public RelayCommand<RoutedEventArgs> GotFocusCommand
+        {
+            get
+            {
+                if (gotFocusCommand == null)
+                    gotFocusCommand = new RelayCommand<RoutedEventArgs>
+                    (
+                        (e) =>
+                        {
+                            TextBox ele = e.Source as TextBox;
+                            if(ele.Name!="x1")
+                            ele.Clear();
+                        }
+                     );
+                return gotFocusCommand;
+            }
+        }
+        private RelayCommand<RoutedEventArgs> sizeChangedCommand;
+        public RelayCommand<RoutedEventArgs> SizeChangedCommand
+        {
+            get
+            {
+                if (sizeChangedCommand == null)
+                    sizeChangedCommand = new RelayCommand<RoutedEventArgs>
+                    (
+                        (e) =>
+                        {
+                            FrameworkElement ele = e.Source as FrameworkElement;
+                            if (ele.Name == "win")
+                            {
+                                CoordinateValue.MaxX = (ele.Width) / 5 * 4;
+                                CoordinateValue.MaxY = (ele.Height) / 12 * 11;
+                            }
+                        }
+                     );
+                return sizeChangedCommand;
+            }
+        }
         
-            
+        private void OnLeftMouseDownCommandExecuted(MouseEventArgs args)
+        {
+            FrameworkElement ele = args.Source as FrameworkElement;
+            ele.CaptureMouse();
+            ele.Cursor = Cursors.Hand;
+            pos = args.GetPosition(null);
+            if (ele.Name == "pathangle")
+            {
+                isDragDropForPathangle = true;
+            }
+            if (ele.Name == "pathline")
+            {
+                isDragDropForPathline = true;
+            }
+        }
     }
 }

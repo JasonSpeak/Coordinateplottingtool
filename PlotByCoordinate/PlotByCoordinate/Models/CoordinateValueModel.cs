@@ -24,14 +24,16 @@ namespace PlotByCoordinate.Model
         private double _triangleYPos;
         private double _linexPos;
         private double _lineyPos;
-        private Point[] _points;
+        private double maxX;
+        private double maxY;
+        private Point[] _points;  
 
         public double LineX1
         {
             get { return _lineX1; }
             set
             {
-                if (value>640||value<0)
+                if (value>MaxX||value<0)
                 {
                     value = 0;
                 }
@@ -39,12 +41,13 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => LineX1);
             }
         }
+
         public double LineY1
         {
             get { return _lineY1; }
             set
             {
-                if (value>550)
+                if (value>MaxY || value < 0)
                 {
                     value = 0;
                 }
@@ -52,12 +55,13 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => LineY1);
             }
         }
+
         public double LineX2
         {
             get { return _lineX2; }
             set
             {
-                if (value>640)
+                if (value>MaxX || value < 0)
                 {
                     value = 0;
                 }
@@ -65,25 +69,27 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => LineX2);
             }
         }
+
         public double LineY2
         {
             get { return _lineY2; }
             set
             {
-                if (value>550)
+                if (value>MaxY || value < 0)
                 {
                     value = 0;
                 }
                 _lineY2 = (int)value;
                 RaisePropertyChanged(() => LineY2);
             }
-        }     
+        }
+
         public double TriangleX1
         {
             get { return _triangleX1; }
             set
             {
-                if (value > 640)
+                if (value > MaxX || value < 0)
                 {
                     value = 0;
                 }
@@ -91,12 +97,13 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => TriangleX1);
             }
         }
+
         public double TriangleY1
         {
             get { return _triangleY1; }
             set
             {
-                if (value>550)
+                if (value>MaxY || value < 0)
                 {
                     value = 0;
                 }
@@ -104,38 +111,41 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => TriangleY1);
             }
         }
+
         public double TriangleX2
         {
             get { return _triangleX2; }
             set
             {
-                if (value>640)
+                if (value>MaxX || value < 0)
                 {
                     value = 0;
                 }
                 _triangleX2 = (double)value;
                 RaisePropertyChanged(() => TriangleX2);
             }
-        }     
+        }
+
         public double TriangleY2
         {
             get { return _triangleY2; }
             set
             {
-                if (value>550)
+                if (value>MaxY || value < 0)
                 {
                     value = 0;
                 }
                 _triangleY2 = (double)value;
                 RaisePropertyChanged(() => TriangleY2);
             }
-        }      
+        }
+
         public double TriangleX3
         {
             get { return _triangleX3; }
             set
             {
-                if (value>640)
+                if (value>MaxX || value < 0)
                 {
                     value = 0;
                 }
@@ -143,12 +153,13 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => TriangleX3);
             }
         }
+
         public double TriangleY3
         {
             get { return _triangleY3; }
             set
             {
-                if (value>550)
+                if (value>MaxY || value < 0)
                 {
                     value = 0;
                 }
@@ -156,6 +167,7 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => TriangleY3);
             }
         }
+
         public double TriangleXPos
         {
             get { return _triangleXPos; }
@@ -165,6 +177,7 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => TriangleXPos);
             }
         }
+
         public double TriangleYPos
         {
             get { return _triangleYPos; }
@@ -173,7 +186,8 @@ namespace PlotByCoordinate.Model
                 _triangleYPos = value;
                 RaisePropertyChanged(() => TriangleYPos);
             }
-        }    
+        }
+
         public double LineXPos
         {
             get { return _linexPos; }
@@ -192,13 +206,24 @@ namespace PlotByCoordinate.Model
                 RaisePropertyChanged(() => LineYPos);
             }
         }
-    
-
         public Point[] Points
         {
             get { return _points; }
             set { _points = value; RaisePropertyChanged(() => Points); }
         }
+   
 
+        public double MaxX
+        {
+            get { return maxX; }
+            set { maxX = value; RaisePropertyChanged(() => MaxX); }
+        }
+
+
+        public double MaxY
+        {
+            get { return maxY; }
+            set { maxY = value; RaisePropertyChanged(() => MaxY); }
+        }
     }
 }
