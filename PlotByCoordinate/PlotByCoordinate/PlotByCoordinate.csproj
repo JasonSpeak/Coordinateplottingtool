@@ -77,6 +77,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Models\CoordinateValueModel.cs" />
+    <Compile Include="Models\LineCoordModel.cs" />
+    <Compile Include="Models\TriangleCoordModel.cs" />
     <Compile Include="ViewModels\CoordinateValueViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\DrawingPanelView.xaml.cs">

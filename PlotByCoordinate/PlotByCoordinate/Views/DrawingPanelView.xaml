@@ -27,6 +27,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Modifiers="Ctrl" Key="B" Command= "{Binding KeyDownCommand}" />
+    </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -53,11 +56,6 @@
             Grid.Row="1"
             Grid.Column="1"
             VerticalAlignment="Center">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="GotFocus">
-                    <mvvm:EventToCommand Command="{Binding GotFocusCommand}" PassEventArgsToCommand="True" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
             <StackPanel x:Name="anglepanel">
                 <Label HorizontalAlignment="Center" Content="三角形" />
                 <Label HorizontalAlignment="Left" Content="P1" />
@@ -66,12 +64,12 @@
                         Name="x1"
                         DockPanel.Dock="Left"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleX1}" />
+                        Text="{Binding CoordinateValue.TriangleX1, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="y1"
                         DockPanel.Dock="Right"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleY1}" />
+                        Text="{Binding CoordinateValue.TriangleY1, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
                 <Label HorizontalAlignment="Left" Content="P2" />
                 <DockPanel>
@@ -79,12 +77,12 @@
                         Name="x2"
                         DockPanel.Dock="Left"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleX2}" />
+                        Text="{Binding CoordinateValue.TriangleX2, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="y2"
                         DockPanel.Dock="Right"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleY2}" />
+                        Text="{Binding CoordinateValue.TriangleY2, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
                 <Label HorizontalAlignment="Left" Content="P3" />
                 <DockPanel>
@@ -92,17 +90,12 @@
                         Name="x3"
                         DockPanel.Dock="Left"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleX3}" />
+                        Text="{Binding CoordinateValue.TriangleX3, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="ty3"
                         DockPanel.Dock="Right"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleY3}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="LostFocus">
-                                <mvvm:EventToCommand Command="{Binding LostFocusCommand}" PassEventArgsToCommand="True" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                        Text="{Binding CoordinateValue.TriangleY3, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
                 </DockPanel>
             </StackPanel>
@@ -114,12 +107,12 @@
                         Name="lx1"
                         DockPanel.Dock="Left"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.LineX1}" />
+                        Text="{Binding CoordinateValue.LineX1, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="ly1"
                         DockPanel.Dock="Right"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.LineY1}" />
+                        Text="{Binding CoordinateValue.LineY1, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
                 <Label HorizontalAlignment="Left" Content="P2" />
                 <DockPanel>
@@ -127,17 +120,12 @@
                         Name="lx2"
                         DockPanel.Dock="Left"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.LineX2}" />
+                        Text="{Binding CoordinateValue.LineX2, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="ly2"
                         DockPanel.Dock="Right"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.LineY2}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="LostFocus">
-                                <mvvm:EventToCommand Command="{Binding LostFocusCommand}" PassEventArgsToCommand="True" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
+                        Text="{Binding CoordinateValue.LineY2, UpdateSourceTrigger=PropertyChanged}">
                     </TextBox>
                 </DockPanel>
             </StackPanel>
