@@ -11,19 +11,16 @@ namespace PlotByCoordinate.ViewModel
     public class CoordinateValueViewModel : ViewModelBase
     {
         private bool isDragDropForPathangle = false;
+        Point pointOfMouseDown = new Point();
         private bool isDragDropForPathline = false;
-        private CoordinateValueModel _coordinateValue;
-        private TriangleCoordModel _triangleCoord;
-        private LineCoordModel _lineCoord;
-
-        Point pos = new Point();
-        Point[] points = { new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0) };
-        
+        private TriangleCoordModel triangleCoord;
+        private LineCoordModel lineCoord;
+        private InputLimitsModel inputLimits;
         public CoordinateValueViewModel()
         {
-            CoordinateValue = new CoordinateValueModel() { MaxX = 550, MaxY = 640 };
+            InputLimits = new InputLimitsModel() { MaxX = 550, MaxY = 640 };
             TriangleCoord = new TriangleCoordModel();
-            LineCoord = new LineCoordModel();
+            LineCoord = new LineCoordModel();         
             KeyDownCommand = new RelayCommand(OnKeyDownCommandExecuted);
             SizeChangedCommand = new RelayCommand<RoutedEventArgs>(OnSizeChangedCommandExecuted);
             MouseLeftButtonDownCommand = new RelayCommand<MouseEventArgs>(OnLeftMouseDownCommandExecuted);
@@ -31,23 +28,11 @@ namespace PlotByCoordinate.ViewModel
             MouseMoveCommand = new RelayCommand<MouseEventArgs>(OnMouseMoveCommandExecuted);
         }
 
-        public CoordinateValueModel CoordinateValue
-        {
-            get { return _coordinateValue; }
-            set { _coordinateValue = value; RaisePropertyChanged(() => CoordinateValue); }
-        }
+        public InputLimitsModel InputLimits { get; }
 
-        public TriangleCoordModel TriangleCoord
-        {
-            get { return _triangleCoord; }
-            set { _triangleCoord = value; RaisePropertyChanged(() => CoordinateValue); }
-        }
-        
-        public LineCoordModel LineCoord
-        {
-            get { return _lineCoord; }
-            set { _lineCoord = value; RaisePropertyChanged(() => LineCoord); }
-        }
+        public TriangleCoordModel TriangleCoord{ get; }
+
+        public LineCoordModel LineCoord{ get; }
 
         public RelayCommand KeyDownCommand { get; }
 
@@ -60,32 +45,26 @@ namespace PlotByCoordinate.ViewModel
         public RelayCommand<MouseEventArgs> MouseMoveCommand { get; }
 
         private void OnKeyDownCommandExecuted()
-        {          
-            CoordinateValue.TriangleXPos = 0;
-            CoordinateValue.TriangleYPos = 0;
-            CoordinateValue.LineXPos = 0;
-            CoordinateValue.LineYPos = 0;
-            points[0].X = CoordinateValue.TriangleX1;
-            points[0].Y = CoordinateValue.TriangleY1;
-            points[1].X = CoordinateValue.TriangleX2;
-            points[1].Y = CoordinateValue.TriangleY2;
-            points[2].X = CoordinateValue.TriangleX3;
-            points[2].Y = CoordinateValue.TriangleY3;
-            points[3].X = CoordinateValue.LineX1;
-            points[3].Y = CoordinateValue.LineY1;
-            points[4].X = CoordinateValue.LineX2;
-            points[4].Y = CoordinateValue.LineY2;
-            CoordinateValue.Points = points;           
+        {
+            TriangleCoord.TriangleXPos = 0;
+            TriangleCoord.TriangleYPos = 0;
+            LineCoord.LineXPos = 0;
+            LineCoord.LineYPos = 0;     
+            TriangleCoord.RaisePropertyChanged(()=>TriangleCoord.FirstPoint);
+            TriangleCoord.RaisePropertyChanged(() => TriangleCoord.SecondPoint);
+            TriangleCoord.RaisePropertyChanged(() => TriangleCoord.ThirdPoint);
+            LineCoord.RaisePropertyChanged(() => LineCoord.StartPoint);
+            LineCoord.RaisePropertyChanged(() => LineCoord.EndPoint);   
         }
 
         private void OnSizeChangedCommandExecuted(RoutedEventArgs args)
         {
-
             FrameworkElement ele = args.Source as FrameworkElement;
+            
             if (ele.Name == "win")
             {
-                CoordinateValue.MaxX = (ele.Width) / 5 * 4;
-                CoordinateValue.MaxY = (ele.Height) / 12 * 11;
+                InputLimits.MaxX = ele.Width / 5 * 4;
+                InputLimits.MaxY = ele.Height / 12 * 11;
             }
         }
 
@@ -94,7 +73,7 @@ namespace PlotByCoordinate.ViewModel
             FrameworkElement ele = args.Source as FrameworkElement;
             ele.CaptureMouse();
             ele.Cursor = Cursors.Hand;
-            pos = args.GetPosition(null);
+            pointOfMouseDown = args.GetPosition(null);
             if (ele.Name == "pathangle")
             {
                 isDragDropForPathangle = true;
@@ -123,7 +102,6 @@ namespace PlotByCoordinate.ViewModel
                 {
                     isDragDropForPathline = false;
                     ele.ReleaseMouseCapture();
-                    Console.WriteLine("{0}", TriangleCoord.FirstPoint.X);
                 }
 
             }
@@ -137,32 +115,37 @@ namespace PlotByCoordinate.ViewModel
             {
                 if (isDragDropForPathangle)
                 {
-                    double xPos = args.GetPosition(null).X - pos.X + (double)CoordinateValue.TriangleXPos;
-                    double yPos = args.GetPosition(null).Y - pos.Y + (double)CoordinateValue.TriangleYPos;
-                    CoordinateValue.TriangleXPos = xPos;
-                    CoordinateValue.TriangleYPos = yPos;                             
-                    CoordinateValue.TriangleX1 = CoordinateValue.TriangleX1 + args.GetPosition(null).X - pos.X;
-                    CoordinateValue.TriangleY1 = CoordinateValue.TriangleY1 + args.GetPosition(null).Y - pos.Y;
-                    CoordinateValue.TriangleX2 = CoordinateValue.TriangleX2 + args.GetPosition(null).X - pos.X;
-                    CoordinateValue.TriangleY2 = CoordinateValue.TriangleY2 + args.GetPosition(null).Y - pos.Y;
-                    CoordinateValue.TriangleX3 = CoordinateValue.TriangleX3 + args.GetPosition(null).X - pos.X;
-                    CoordinateValue.TriangleY3 = CoordinateValue.TriangleY3 + args.GetPosition(null).Y - pos.Y;
-                    pos = args.GetPosition(null);
+                    double xPos = args.GetPosition(null).X - pointOfMouseDown.X + (double)TriangleCoord.TriangleXPos;
+                    double yPos = args.GetPosition(null).Y - pointOfMouseDown.Y + (double)TriangleCoord.TriangleYPos;
+                    TriangleCoord.TriangleXPos = xPos;
+                    TriangleCoord.TriangleYPos = yPos;                   
+                    TriangleCoord.FirstPoint.X= TriangleCoord.FirstPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
+                    TriangleCoord.FirstPoint.Y= TriangleCoord.FirstPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
+                    TriangleCoord.SecondPoint.X= TriangleCoord.SecondPoint.X+ args.GetPosition(null).X - pointOfMouseDown.X;
+                    TriangleCoord.SecondPoint.Y= TriangleCoord.SecondPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
+                    TriangleCoord.ThirdPoint.X = TriangleCoord.ThirdPoint.X+ args.GetPosition(null).X - pointOfMouseDown.X;
+                    TriangleCoord.ThirdPoint.Y=TriangleCoord.ThirdPoint.Y+ args.GetPosition(null).Y - pointOfMouseDown.Y;
+                    TriangleCoord.RaisePropertyChanged(() => TriangleCoord.FirstPoint);
+                    TriangleCoord.RaisePropertyChanged(() => TriangleCoord.SecondPoint);
+                    TriangleCoord.RaisePropertyChanged(() => TriangleCoord.ThirdPoint);
+                    pointOfMouseDown = args.GetPosition(null);
                 }
             }
             if (ele.Name == "pathline")
             {
                 if (isDragDropForPathline)
                 {
-                    double xPos = args.GetPosition(null).X - pos.X + (double)CoordinateValue.LineXPos;
-                    double yPos = args.GetPosition(null).Y - pos.Y + (double)CoordinateValue.LineYPos;
-                    CoordinateValue.LineXPos = xPos;
-                    CoordinateValue.LineYPos = yPos;
-                    CoordinateValue.LineX1 = CoordinateValue.LineX1 + args.GetPosition(null).X - pos.X;
-                    CoordinateValue.LineY1 = CoordinateValue.LineY1 + args.GetPosition(null).Y - pos.Y;
-                    CoordinateValue.LineX2 = CoordinateValue.LineX2 + args.GetPosition(null).X - pos.X;
-                    CoordinateValue.LineY2 = CoordinateValue.LineY2 + args.GetPosition(null).Y - pos.Y;
-                    pos = args.GetPosition(null);
+                    double xPos = args.GetPosition(null).X - pointOfMouseDown.X + (double)LineCoord.LineXPos;
+                    double yPos = args.GetPosition(null).Y - pointOfMouseDown.Y + (double)LineCoord.LineYPos;
+                    LineCoord.LineXPos = xPos;
+                    LineCoord.LineYPos = yPos;
+                    LineCoord.StartPoint.X= LineCoord.StartPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
+                    LineCoord.StartPoint.Y= LineCoord.StartPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
+                    LineCoord.EndPoint.X= LineCoord.EndPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
+                    LineCoord.EndPoint.Y = LineCoord.EndPoint.Y+ args.GetPosition(null).Y - pointOfMouseDown.Y;
+                    LineCoord.RaisePropertyChanged(() => LineCoord.StartPoint);
+                    LineCoord.RaisePropertyChanged(() => LineCoord.EndPoint);
+                    pointOfMouseDown = args.GetPosition(null);
                 }
 
             }                 

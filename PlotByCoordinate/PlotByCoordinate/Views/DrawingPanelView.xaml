@@ -2,7 +2,7 @@
     x:Class="PlotByCoordinate.View.DrawingPanelView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:cov="clr-namespace:PlotByCoordinate.ViewModel"
+    xmlns:cov="clr-namespace:PlotByCoordinate.Converts"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:local="clr-namespace:PlotByCoordinate.View"
@@ -25,10 +25,15 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources/Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <cov:DotToPoint x:Key="covToPoint" />
+            <cov:MyPointToPoint x:Key="MyPointcovPoint" />
         </ResourceDictionary>
     </Window.Resources>
     <Window.InputBindings>
-        <KeyBinding Modifiers="Ctrl" Key="B" Command= "{Binding KeyDownCommand}" />
+        <KeyBinding
+            Key="B"
+            Command="{Binding KeyDownCommand}"
+            Modifiers="Ctrl" />
     </Window.InputBindings>
     <Grid>
         <Grid.RowDefinitions>
@@ -64,12 +69,12 @@
                         Name="x1"
                         DockPanel.Dock="Left"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleX1, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoord.FirstPoint.X, Converter={StaticResource covToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="y1"
                         DockPanel.Dock="Right"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleY1, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoord.FirstPoint.Y, Converter={StaticResource covToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
                 <Label HorizontalAlignment="Left" Content="P2" />
                 <DockPanel>
@@ -77,12 +82,12 @@
                         Name="x2"
                         DockPanel.Dock="Left"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleX2, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoord.SecondPoint.X, Converter={StaticResource covToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="y2"
                         DockPanel.Dock="Right"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleY2, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoord.SecondPoint.Y, Converter={StaticResource covToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
                 <Label HorizontalAlignment="Left" Content="P3" />
                 <DockPanel>
@@ -90,13 +95,12 @@
                         Name="x3"
                         DockPanel.Dock="Left"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleX3, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoord.ThirdPoint.X, Converter={StaticResource covToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="ty3"
                         DockPanel.Dock="Right"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.TriangleY3, UpdateSourceTrigger=PropertyChanged}">
-                    </TextBox>
+                        Text="{Binding TriangleCoord.ThirdPoint.Y, Converter={StaticResource covToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
             </StackPanel>
             <StackPanel x:Name="linepanel">
@@ -107,12 +111,12 @@
                         Name="lx1"
                         DockPanel.Dock="Left"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.LineX1, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding LineCoord.StartPoint.X, Converter={StaticResource covToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="ly1"
                         DockPanel.Dock="Right"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.LineY1, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding LineCoord.StartPoint.Y, Converter={StaticResource covToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
                 <Label HorizontalAlignment="Left" Content="P2" />
                 <DockPanel>
@@ -120,13 +124,12 @@
                         Name="lx2"
                         DockPanel.Dock="Left"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.LineX2, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding LineCoord.EndPoint.X, Converter={StaticResource covToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="ly2"
                         DockPanel.Dock="Right"
                         Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding CoordinateValue.LineY2, UpdateSourceTrigger=PropertyChanged}">
-                    </TextBox>
+                        Text="{Binding LineCoord.EndPoint.Y, Converter={StaticResource covToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
             </StackPanel>
         </StackPanel>
@@ -139,8 +142,8 @@
             Style="{DynamicResource ResourceKey=CanvasStyle}">
             <Path
                 x:Name="pathangle"
-                Canvas.Left="{Binding CoordinateValue.TriangleXPos}"
-                Canvas.Top="{Binding CoordinateValue.TriangleYPos}"
+                Canvas.Left="{Binding TriangleCoord.TriangleXPos}"
+                Canvas.Top="{Binding TriangleCoord.TriangleYPos}"
                 Style="{DynamicResource ResourceKey=PathStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -157,23 +160,23 @@
                     <GeometryGroup>
                         <LineGeometry
                             x:Name="elips"
-                            StartPoint="{Binding CoordinateValue.Points[0]}"
-                            EndPoint="{Binding CoordinateValue.Points[1]}" />
+                            StartPoint="{Binding TriangleCoord.FirstPoint, Converter={StaticResource MyPointcovPoint}}"
+                            EndPoint="{Binding TriangleCoord.SecondPoint, Converter={StaticResource MyPointcovPoint}}" />
                         <LineGeometry
                             x:Name="elips1"
-                            StartPoint="{Binding CoordinateValue.Points[1]}"
-                            EndPoint="{Binding CoordinateValue.Points[2]}" />
+                            StartPoint="{Binding TriangleCoord.SecondPoint, Converter={StaticResource MyPointcovPoint}}"
+                            EndPoint="{Binding TriangleCoord.ThirdPoint, Converter={StaticResource MyPointcovPoint}}" />
                         <LineGeometry
                             x:Name="elips2"
-                            StartPoint="{Binding CoordinateValue.Points[2]}"
-                            EndPoint="{Binding CoordinateValue.Points[0]}" />
+                            StartPoint="{Binding TriangleCoord.ThirdPoint, Converter={StaticResource MyPointcovPoint}}"
+                            EndPoint="{Binding TriangleCoord.FirstPoint, Converter={StaticResource MyPointcovPoint}}" />
                     </GeometryGroup>
                 </Path.Data>
             </Path>
             <Path
                 x:Name="pathline"
-                Canvas.Left="{Binding CoordinateValue.LineXPos}"
-                Canvas.Top="{Binding CoordinateValue.LineYPos}"
+                Canvas.Left="{Binding LineCoord.LineXPos}"
+                Canvas.Top="{Binding LineCoord.LineYPos}"
                 Style="{DynamicResource ResourceKey=PathStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -189,8 +192,8 @@
                 <Path.Data>
                     <LineGeometry
                         x:Name="line"
-                        StartPoint="{Binding CoordinateValue.Points[3], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                        EndPoint="{Binding CoordinateValue.Points[4], UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        StartPoint="{Binding LineCoord.StartPoint, Converter={StaticResource MyPointcovPoint}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        EndPoint="{Binding LineCoord.EndPoint, Converter={StaticResource MyPointcovPoint}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </Path.Data>
             </Path>
         </Canvas>

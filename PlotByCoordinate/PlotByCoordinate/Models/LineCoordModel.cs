@@ -8,62 +8,41 @@ using System.Windows;
 
 namespace PlotByCoordinate.Models
 {
-    public class LineCoordModel:ObservableObject
+    public class LineCoordModel : ObservableObject
     {
-        private Point _startPoint;
-        private Point _endPoint;
-        private double _lineX1;
-        private double _lineY1;
-        private double _lineX2;
-        private double _lineY2;
+        private MyPointModel _startPoint;
+        private MyPointModel _endPoint;
         private double _linexPos;
         private double _lineyPos;
 
-        public Point StartPoint
+        public LineCoordModel()
+        {
+            StartPoint = new MyPointModel();
+            EndPoint = new MyPointModel();
+        }
+
+        public MyPointModel StartPoint
         {
             get { return _startPoint; }
-            set { _startPoint = value; RaisePropertyChanged(() => StartPoint);}
+            set { _startPoint = value;  }
         }
-       
-        public Point EndPoint
+
+        public MyPointModel EndPoint
         {
             get { return _endPoint; }
-            set { _endPoint = value; RaisePropertyChanged(() => EndPoint);}
+            set { _endPoint = value;  }
         }
-        
+
         public double LineXPos
         {
             get { return _linexPos; }
-            set{ _linexPos = value; RaisePropertyChanged(() => LineXPos); }
+            set { _linexPos = value; }
         }
-        
+
         public double LineYPos
         {
             get { return _lineyPos; }
-            set { _lineyPos = value; RaisePropertyChanged(() => LineYPos);}
+            set { _lineyPos = value;}
         }
-        public double LineX1
-        {
-            get { return _lineX1; }
-            set { _lineX1 = (double)value;RaisePropertyChanged(() => LineX1); }
-        }
-
-        public double LineY1
-        {
-            get { return _lineY1; }
-            set{ _lineY1 = (double)value;RaisePropertyChanged(() => LineY1);}
-        }
-
-        public double LineX2
-        {
-            get { return _lineX2; }
-            set { _lineX2 = (double)value; RaisePropertyChanged(() => LineX2);}
-        }
-
-        public double LineY2
-        {
-            get { return _lineY2; }
-            set { _lineY2 = (int)value; RaisePropertyChanged(() => LineY2);}
-        }
-    }
+    }   
 }
