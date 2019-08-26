@@ -79,9 +79,10 @@
     <Compile Include="Converts\DotToPoint.cs" />
     <Compile Include="Converts\MyPointToPoint.cs" />
     <Compile Include="Models\InputLimitsModel.cs" />
-    <Compile Include="Models\LineCoordModel.cs" />
+    <Compile Include="Models\LineCoordinateModel.cs" />
     <Compile Include="Models\MyPointModel.cs" />
-    <Compile Include="Models\TriangleCoordModel.cs" />
+    <Compile Include="Models\RespectToWindowModel.cs" />
+    <Compile Include="Models\TriangleCoordinateModel.cs" />
     <Compile Include="ViewModels\CoordinateValueViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\DrawingPanelView.xaml.cs">

@@ -1,38 +1,42 @@
-﻿using GalaSoft.MvvmLight;
-using PlotByCoordinate.Model;
-using GalaSoft.MvvmLight.Command;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
+using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using PlotByCoordinate.Models;
-using System;
 
-namespace PlotByCoordinate.ViewModel
+namespace PlotByCoordinate.ViewModels
 {
     public class CoordinateValueViewModel : ViewModelBase
     {
-        private bool isDragDropForPathangle = false;
-        Point pointOfMouseDown = new Point();
-        private bool isDragDropForPathline = false;
-        private TriangleCoordModel triangleCoord;
-        private LineCoordModel lineCoord;
-        private InputLimitsModel inputLimits;
+        private bool isDragDropForPathTriangle;
+        private bool isDragDropForPathLine;
+        private bool isDragDropForWindow;
+        private Point pointOfMouseDown;
+
+
         public CoordinateValueViewModel()
         {
-            InputLimits = new InputLimitsModel() { MaxX = 550, MaxY = 640 };
-            TriangleCoord = new TriangleCoordModel();
-            LineCoord = new LineCoordModel();         
+            InputLimits = new InputLimitsModel() { MaxX = 550, MaxY = 640};
+            RespectToWindow=new RespectToWindowModel(){ TheWindowState = "最大化" , OptionForm = "F1M11,11L1,11 1,1 11,1z M11,0L1,0 0,0 0,1 0,11 0,12 1,12 11,12 12,12 12,11 12,1 12,0z"};
+            TriangleCoordinate = new TriangleCoordinateModel();
+            LineCoordinate = new LineCoordinateModel();         
             KeyDownCommand = new RelayCommand(OnKeyDownCommandExecuted);
             SizeChangedCommand = new RelayCommand<RoutedEventArgs>(OnSizeChangedCommandExecuted);
             MouseLeftButtonDownCommand = new RelayCommand<MouseEventArgs>(OnLeftMouseDownCommandExecuted);
             MouseLeftButtonUpCommand = new RelayCommand<MouseEventArgs>(OnLeftMouseUpCommandExecuted);
             MouseMoveCommand = new RelayCommand<MouseEventArgs>(OnMouseMoveCommandExecuted);
+            MinWindowCommand = new RelayCommand<Window>(OnMinWindowCommandExecute);
+            MaximizeOrRestoreCommand=new RelayCommand<Window>(OnMaximizeOrRestoreCommandExecute);
+            CloseCommand=new RelayCommand<Window>(OnCloseCommand);
         }
+
+        public RespectToWindowModel RespectToWindow { get; }
 
         public InputLimitsModel InputLimits { get; }
 
-        public TriangleCoordModel TriangleCoord{ get; }
+        public TriangleCoordinateModel TriangleCoordinate{ get; }
 
-        public LineCoordModel LineCoord{ get; }
+        public LineCoordinateModel LineCoordinate{ get; }
 
         public RelayCommand KeyDownCommand { get; }
 
@@ -44,63 +48,78 @@ namespace PlotByCoordinate.ViewModel
 
         public RelayCommand<MouseEventArgs> MouseMoveCommand { get; }
 
+        public RelayCommand<Window> MinWindowCommand { get;  }
+
+        public RelayCommand<Window> MaximizeOrRestoreCommand { get; }
+
+        public RelayCommand<Window> CloseCommand { get; }
+
         private void OnKeyDownCommandExecuted()
         {
-            TriangleCoord.TriangleXPos = 0;
-            TriangleCoord.TriangleYPos = 0;
-            LineCoord.LineXPos = 0;
-            LineCoord.LineYPos = 0;     
-            TriangleCoord.RaisePropertyChanged(()=>TriangleCoord.FirstPoint);
-            TriangleCoord.RaisePropertyChanged(() => TriangleCoord.SecondPoint);
-            TriangleCoord.RaisePropertyChanged(() => TriangleCoord.ThirdPoint);
-            LineCoord.RaisePropertyChanged(() => LineCoord.StartPoint);
-            LineCoord.RaisePropertyChanged(() => LineCoord.EndPoint);   
+            TriangleCoordinate.TriangleXPos = 0;
+            TriangleCoordinate.TriangleYPos = 0;
+            LineCoordinate.LineXPos = 0;
+            LineCoordinate.LineYPos = 0;
+            TriangleCoordinate.RaisePropertyChanged(()=>TriangleCoordinate.FirstPoint);
+            TriangleCoordinate.RaisePropertyChanged(() => TriangleCoordinate.SecondPoint);
+            TriangleCoordinate.RaisePropertyChanged(() => TriangleCoordinate.ThirdPoint);
+            LineCoordinate.RaisePropertyChanged(() => LineCoordinate.StartPoint);
+            LineCoordinate.RaisePropertyChanged(() => LineCoordinate.EndPoint);   
         }
 
         private void OnSizeChangedCommandExecuted(RoutedEventArgs args)
         {
-            FrameworkElement ele = args.Source as FrameworkElement;
-            
-            if (ele.Name == "win")
-            {
-                InputLimits.MaxX = ele.Width / 5 * 4;
-                InputLimits.MaxY = ele.Height / 12 * 11;
-            }
+            if (!(args.Source is FrameworkElement ele)) return;
+            InputLimits.MaxX = ele.Width / 5 * 4;
+            InputLimits.MaxY = ele.Height / 12 * 11;
         }
 
         private void OnLeftMouseDownCommandExecuted(MouseEventArgs args)
         {
-            FrameworkElement ele = args.Source as FrameworkElement;
+            var ele = args.Source as FrameworkElement;
+            if (ele == null) return;
             ele.CaptureMouse();
-            ele.Cursor = Cursors.Hand;
             pointOfMouseDown = args.GetPosition(null);
-            if (ele.Name == "pathangle")
+            switch (ele.Name)
             {
-                isDragDropForPathangle = true;
-            }
-            if (ele.Name == "pathline")
-            {
-                isDragDropForPathline = true;
+                case "PathTriangle":
+                    isDragDropForPathTriangle = true;
+                    break;
+                case "PathLine":
+                    isDragDropForPathLine = true;
+                    break;
+                case "Win":
+                    isDragDropForWindow = true;
+                    break;
             }
         }
 
         private void OnLeftMouseUpCommandExecuted(MouseEventArgs args)
         {
 
-            FrameworkElement ele = args.Source as FrameworkElement;
-            if (ele.Name == "pathangle")
+            var ele = args.Source as FrameworkElement;
+            if (ele != null && ele.Name == "PathTriangle")
             {
-                if (isDragDropForPathangle)
+                if (isDragDropForPathTriangle)
                 {
-                    isDragDropForPathangle = false;
+                    isDragDropForPathTriangle = false;
                     ele.ReleaseMouseCapture();
                 }
             }
-            if (ele.Name == "pathline")
+            if (ele != null && ele.Name == "PathLine")
             {
-                if (isDragDropForPathline)
+                if (isDragDropForPathLine)
                 {
-                    isDragDropForPathline = false;
+                    isDragDropForPathLine = false;
+                    ele.ReleaseMouseCapture();
+                }
+
+            }
+            if (ele != null && ele.Name == "Win")
+            {
+                if (isDragDropForPathLine)
+                {
+                    isDragDropForWindow = false;
                     ele.ReleaseMouseCapture();
                 }
 
@@ -109,47 +128,87 @@ namespace PlotByCoordinate.ViewModel
 
         private void OnMouseMoveCommandExecuted(MouseEventArgs args)
         {
-           
-            FrameworkElement ele = args.Source as FrameworkElement;
-            if (ele.Name == "pathangle")
+            var ele = args.Source as FrameworkElement;
+            if (ele == null) return;
+            switch (ele.Name)
             {
-                if (isDragDropForPathangle)
+                case "PathTriangle":
                 {
-                    double xPos = args.GetPosition(null).X - pointOfMouseDown.X + (double)TriangleCoord.TriangleXPos;
-                    double yPos = args.GetPosition(null).Y - pointOfMouseDown.Y + (double)TriangleCoord.TriangleYPos;
-                    TriangleCoord.TriangleXPos = xPos;
-                    TriangleCoord.TriangleYPos = yPos;                   
-                    TriangleCoord.FirstPoint.X= TriangleCoord.FirstPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
-                    TriangleCoord.FirstPoint.Y= TriangleCoord.FirstPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
-                    TriangleCoord.SecondPoint.X= TriangleCoord.SecondPoint.X+ args.GetPosition(null).X - pointOfMouseDown.X;
-                    TriangleCoord.SecondPoint.Y= TriangleCoord.SecondPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
-                    TriangleCoord.ThirdPoint.X = TriangleCoord.ThirdPoint.X+ args.GetPosition(null).X - pointOfMouseDown.X;
-                    TriangleCoord.ThirdPoint.Y=TriangleCoord.ThirdPoint.Y+ args.GetPosition(null).Y - pointOfMouseDown.Y;
-                    TriangleCoord.RaisePropertyChanged(() => TriangleCoord.FirstPoint);
-                    TriangleCoord.RaisePropertyChanged(() => TriangleCoord.SecondPoint);
-                    TriangleCoord.RaisePropertyChanged(() => TriangleCoord.ThirdPoint);
-                    pointOfMouseDown = args.GetPosition(null);
+                    if (isDragDropForPathTriangle)
+                    {
+                        var xPos = args.GetPosition(null).X - pointOfMouseDown.X +
+                                      TriangleCoordinate.TriangleXPos;
+                        var yPos = args.GetPosition(null).Y - pointOfMouseDown.Y +
+                                      TriangleCoordinate.TriangleYPos;
+                        TriangleCoordinate.TriangleXPos = xPos;
+                        TriangleCoordinate.TriangleYPos = yPos;
+                        TriangleCoordinate.FirstPoint.X =
+                            TriangleCoordinate.FirstPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
+                        TriangleCoordinate.FirstPoint.Y =
+                            TriangleCoordinate.FirstPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
+                        TriangleCoordinate.SecondPoint.X =
+                            TriangleCoordinate.SecondPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
+                        TriangleCoordinate.SecondPoint.Y =
+                            TriangleCoordinate.SecondPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
+                        TriangleCoordinate.ThirdPoint.X =
+                            TriangleCoordinate.ThirdPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
+                        TriangleCoordinate.ThirdPoint.Y =
+                            TriangleCoordinate.ThirdPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
+                        TriangleCoordinate.RaisePropertyChanged(() => TriangleCoordinate.FirstPoint);
+                        TriangleCoordinate.RaisePropertyChanged(() => TriangleCoordinate.SecondPoint);
+                        TriangleCoordinate.RaisePropertyChanged(() => TriangleCoordinate.ThirdPoint);
+                        pointOfMouseDown = args.GetPosition(null);
+                    }
+                    break;
+                }
+                case "PathLine":
+                {
+                    if (isDragDropForPathLine)
+                    {
+                        var xPos = args.GetPosition(null).X - pointOfMouseDown.X + LineCoordinate.LineXPos;
+                        var yPos = args.GetPosition(null).Y - pointOfMouseDown.Y + LineCoordinate.LineYPos;
+                        LineCoordinate.LineXPos = xPos;
+                        LineCoordinate.LineYPos = yPos;
+                        LineCoordinate.StartPoint.X =
+                            LineCoordinate.StartPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
+                        LineCoordinate.StartPoint.Y =
+                            LineCoordinate.StartPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
+                        LineCoordinate.EndPoint.X = LineCoordinate.EndPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
+                        LineCoordinate.EndPoint.Y = LineCoordinate.EndPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
+                        LineCoordinate.RaisePropertyChanged(() => LineCoordinate.StartPoint);
+                        LineCoordinate.RaisePropertyChanged(() => LineCoordinate.EndPoint);
+                        pointOfMouseDown = args.GetPosition(null);
+                    }
+                    break;
                 }
             }
-            if (ele.Name == "pathline")
-            {
-                if (isDragDropForPathline)
-                {
-                    double xPos = args.GetPosition(null).X - pointOfMouseDown.X + (double)LineCoord.LineXPos;
-                    double yPos = args.GetPosition(null).Y - pointOfMouseDown.Y + (double)LineCoord.LineYPos;
-                    LineCoord.LineXPos = xPos;
-                    LineCoord.LineYPos = yPos;
-                    LineCoord.StartPoint.X= LineCoord.StartPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
-                    LineCoord.StartPoint.Y= LineCoord.StartPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
-                    LineCoord.EndPoint.X= LineCoord.EndPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
-                    LineCoord.EndPoint.Y = LineCoord.EndPoint.Y+ args.GetPosition(null).Y - pointOfMouseDown.Y;
-                    LineCoord.RaisePropertyChanged(() => LineCoord.StartPoint);
-                    LineCoord.RaisePropertyChanged(() => LineCoord.EndPoint);
-                    pointOfMouseDown = args.GetPosition(null);
-                }
+        }
 
-            }                 
-        }       
-        
+        private void OnMinWindowCommandExecute(Window args)
+        {
+            args.WindowState = WindowState.Minimized;
+        }
+
+        private void OnMaximizeOrRestoreCommandExecute(Window args)
+        {
+            if (RespectToWindow.TheWindowState == "最大化")
+            {
+                RespectToWindow.OptionForm = "F1M11,8L9,8 9,4 9,3 8,3 4,3 4,1 11,1z M8,11L1,11 1,4 3,4 4,4 8,4 8,8 8,9z M11,0L4,0 3,0 3,1 3,3 1,3 0,3 0,4 0,11 0,12 1,12 8,12 9,12 9,11 9,9 11,9 12,9 12,8 12,1 12,0z";
+                args.WindowState = WindowState.Maximized;
+                RespectToWindow.TheWindowState = "向下还原";
+            }
+            else if (RespectToWindow.TheWindowState == "向下还原")
+            {
+                RespectToWindow.OptionForm =
+                    "F1M11,11L1,11 1,1 11,1z M11,0L1,0 0,0 0,1 0,11 0,12 1,12 11,12 12,12 12,11 12,1 12,0z";
+                args.WindowState = WindowState.Normal;
+                RespectToWindow.TheWindowState = "最大化";
+            }
+        }
+
+        private void OnCloseCommand(Window args)
+        {
+            args.Close();
+        }
     }
 }

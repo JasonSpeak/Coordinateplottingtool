@@ -1,10 +1,7 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Ioc;
+﻿using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
-using PlotByCoordinate.Model;
-using PlotByCoordinate.ViewModel;
 
-namespace PlotByCoordinate.Converts
+namespace PlotByCoordinate.ViewModels
 {
     public class ViewModelLocator
     {
@@ -13,15 +10,9 @@ namespace PlotByCoordinate.Converts
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);                  
             SimpleIoc.Default.Register<CoordinateValueViewModel>();
         } 
-        public CoordinateValueViewModel Corrdinate
-        {
-            get
-            {
-                return ServiceLocator.Current.GetInstance<CoordinateValueViewModel>();
-            }
-        }
-        public static void Cleanup()
-        {
-        }
+        public CoordinateValueViewModel Coordinate => ServiceLocator.Current.GetInstance<CoordinateValueViewModel>();
+
+        public static void Cleanup() {}
+
     }
 }

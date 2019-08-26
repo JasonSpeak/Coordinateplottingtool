@@ -13,4 +13,21 @@
         <Setter Property="Stroke" Value="White"/>
         <Setter Property="StrokeThickness" Value="3"/>
     </Style>
+    <Style x:Key="ButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Background" Value="#3448a1"/>
+        
+    </Style>
+    <Style x:Key="PathStyleForButton" TargetType="Path">
+        <Setter Property="Width" Value="12"/>
+        <Setter Property="Height" Value="12"/>
+        <Setter Property="Fill" Value="#FF9AA4D0"/>
+    </Style>
+    <Style x:Key="PathClose" TargetType="Path">
+        <Setter Property="Width" Value="11.707"/>
+        <Setter Property="Height" Value="11.707"/>
+        <Setter Property="Fill" Value="#FF9AA4D0"/>
+    </Style>
 </ResourceDictionary>

@@ -1,17 +1,17 @@
 ﻿<Application x:Class="PlotByCoordinate.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:vm="clr-namespace:PlotByCoordinate.ViewModel"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:ignore="http://www.galasoft.ch/ignore"
              xmlns:vm1="clr-namespace:PlotByCoordinate.Converts"
+             xmlns:viewModels="clr-namespace:PlotByCoordinate.ViewModels"
              StartupUri="/Views/DrawingPanelView.xaml"
              mc:Ignorable="d ignore">
 
     <Application.Resources>
         <ResourceDictionary>
-            <vm1:ViewModelLocator
+            <viewModels:ViewModelLocator
                 x:Key="Locator"
                 d:IsDataSource="True" />
             <ResourceDictionary.MergedDictionaries>
