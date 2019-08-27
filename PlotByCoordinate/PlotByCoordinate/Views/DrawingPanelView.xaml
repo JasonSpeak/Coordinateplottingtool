@@ -4,7 +4,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cov="clr-namespace:PlotByCoordinate.Converts"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="http://www.galasoft.ch/mvvmlight"
     x:Name="Win"
@@ -13,19 +15,9 @@
     Height="600"
     AllowsTransparency="True"
     DataContext="{Binding Path=Coordinate, Source={StaticResource Locator}}"
+    Style="{DynamicResource WindowStyle}"
     WindowStyle="None"
     mc:Ignorable="d">
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="SizeChanged">
-            <mvvm:EventToCommand Command="{Binding SizeChangedCommand}" PassEventArgsToCommand="True" />
-        </i:EventTrigger>
-        <i:EventTrigger EventName="MouseLeftButtonUp">
-            <mvvm:EventToCommand Command="{Binding MouseLeftButtonUpCommand}" PassEventArgsToCommand="True" />
-        </i:EventTrigger>
-        <i:EventTrigger EventName="MouseLeftButtonDown">
-            <mvvm:EventToCommand Command="{Binding MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -67,119 +59,148 @@
             Grid.Row="0"
             Grid.Column="1"
             HorizontalAlignment="Right"
+            IsHitTestVisible="True"
             Orientation="Horizontal">
             <Button
                 Margin="0,0,5,0"
                 Command="{Binding MinWindowCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
                 ToolTip="最小化">
                 <Canvas>
                     <Path
                         Canvas.Left="-6"
                         Canvas.Top="-1"
-                        Data="F1M0,1L12.001,1 12.001,0 0,0z"
-                        Style="{DynamicResource ResourceKey=PathStyleForButton}" />
+                        Style="{StaticResource ResourceKey=PathStyleForMinWindow}" />
                 </Canvas>
             </Button>
             <Button
                 Margin="0,0,5,0"
                 Command="{Binding MaximizeOrRestoreCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
                 ToolTip="{Binding RespectToWindow.TheWindowState}">
                 <Canvas>
                     <Path
                         Canvas.Left="-6"
                         Canvas.Top="-5"
                         Data="{Binding RespectToWindow.OptionForm}"
-                        Style="{DynamicResource ResourceKey=PathStyleForButton}" />
+                        Style="{StaticResource ResourceKey=PathStyleForMaXWindow}" />
                 </Canvas>
             </Button>
             <Button
                 Margin="0,0,15,0"
                 Command="{Binding CloseCommand}"
-                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"
                 ToolTip="关闭">
                 <Canvas>
                     <Path
                         Canvas.Left="-6"
                         Canvas.Top="-5"
-                        Data="F1M11.706,0.706L11,0 5.852,5.146 0.706,0 -0.001,0.706 5.146,5.852 -0.001,11 0.706,11.706 5.852,6.56 11,11.706 11.706,11 6.56,5.852z"
-                        Style="{DynamicResource ResourceKey=PathClose}" />
+                        Style="{StaticResource ResourceKey=PathClose}" />
                 </Canvas>
             </Button>
         </StackPanel>
         <StackPanel
             Grid.Row="1"
             Grid.Column="1"
+            Width="110"
             VerticalAlignment="Center">
             <StackPanel x:Name="TrianglePanel">
-                <Label HorizontalAlignment="Center" Content="三角形" />
-                <Label HorizontalAlignment="Left" Content="P1" />
+                <DockPanel HorizontalAlignment="Center">
+                    <Path
+                        Width="21.153"
+                        Height="13.5"
+                        Data="F1M0,13.5L21.153,13.5 10.577,0z M10.577,2.433L18.073,12 3.082,12z"
+                        DockPanel.Dock="Left"
+                        Fill="#FF3448A1" />
+                    <Label Content="三角形" Foreground="#FF3448A1" />
+                </DockPanel>
                 <DockPanel>
                     <TextBox
                         Name="X1"
+                        Width="48"
+                        materialDesign:HintAssist.Hint="P1"
                         DockPanel.Dock="Left"
-                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding TriangleCoordinate.FirstPoint.X, Converter={StaticResource CovToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="Y1"
+                        Width="48"
+                        materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
-                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding TriangleCoordinate.FirstPoint.Y, Converter={StaticResource CovToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
-                <Label HorizontalAlignment="Left" Content="P2" />
                 <DockPanel>
                     <TextBox
                         Name="X2"
+                        Width="48"
+                        materialDesign:HintAssist.Hint="P2"
                         DockPanel.Dock="Left"
-                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding TriangleCoordinate.SecondPoint.X, Converter={StaticResource CovToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="Y2"
+                        Width="48"
+                        materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
-                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding TriangleCoordinate.SecondPoint.Y, Converter={StaticResource CovToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
-                <Label HorizontalAlignment="Left" Content="P3" />
                 <DockPanel>
                     <TextBox
                         Name="X3"
+                        Width="48"
+                        materialDesign:HintAssist.Hint="P3"
                         DockPanel.Dock="Left"
-                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding TriangleCoordinate.ThirdPoint.X, Converter={StaticResource CovToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="Ty3"
+                        Width="48"
+                        materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
-                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding TriangleCoordinate.ThirdPoint.Y, Converter={StaticResource CovToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
             </StackPanel>
-            <StackPanel x:Name="LinePanel">
-                <Label HorizontalAlignment="Center" Content="直线" />
-                <Label HorizontalAlignment="Left" Content="P1" />
+            <Label />
+            <Label />
+            <StackPanel x:Name="LinePanel" VerticalAlignment="Bottom">
+                <DockPanel HorizontalAlignment="Center">
+                    <Path
+                        Width="15.911"
+                        Height="12.662"
+                        Data="F1M0.911,12.662L0,11.471 14.999,0 15.911,1.191z"
+                        Fill="#FF3448A1" />
+                    <Label Content="直线" Foreground="#FF3448A1" />
+                </DockPanel>
                 <DockPanel>
                     <TextBox
                         Name="Lx1"
+                        Width="48"
+                        materialDesign:HintAssist.Hint="P1"
                         DockPanel.Dock="Left"
-                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
-                        Text="{Binding LineCoordinate.StartPoint.X, Converter={StaticResource CovToPoint}, UpdateSourceTrigger=PropertyChanged}" />
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding LineCoordinate.StartPoint.X, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="Ly1"
+                        Width="48"
+                        materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
-                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding LineCoordinate.StartPoint.Y, Converter={StaticResource CovToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
-                <Label HorizontalAlignment="Left" Content="P2" />
                 <DockPanel>
                     <TextBox
                         Name="Lx2"
+                        Width="48"
+                        materialDesign:HintAssist.Hint="P2"
                         DockPanel.Dock="Left"
-                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding LineCoordinate.EndPoint.X, Converter={StaticResource CovToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                     <TextBox
                         Name="Ly2"
+                        Width="48"
+                        materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
-                        Style="{DynamicResource ResourceKey=TextBoxStyle}"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding LineCoordinate.EndPoint.Y, Converter={StaticResource CovToPoint}, UpdateSourceTrigger=PropertyChanged}" />
                 </DockPanel>
             </StackPanel>
@@ -191,6 +212,17 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Style="{DynamicResource ResourceKey=CanvasStyle}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SizeChanged">
+                    <mvvm:EventToCommand Command="{Binding SizeChangedCommand}" PassEventArgsToCommand="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <Label Content="(0,0)" Foreground="Beige" />
+            <Label
+                Canvas.Left="{Binding InputLimits.MaxX}"
+                Canvas.Top="{Binding InputLimits.MaxY}"
+                Content="{Binding InputLimits.TheTipOfLimits}"
+                Foreground="Beige" />
             <Path
                 x:Name="PathTriangle"
                 Canvas.Left="{Binding TriangleCoordinate.TriangleXPos}"

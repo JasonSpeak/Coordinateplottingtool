@@ -3,7 +3,6 @@ using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
-using PlotByCoordinate.ViewModels;
 
 namespace PlotByCoordinate.Converts
 {
@@ -12,10 +11,10 @@ namespace PlotByCoordinate.Converts
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         { 
             var point = new Point();
-            var myPoint = (MyPointModel)value;
+            var myPoint = (CanvasPoint)value;
             if (myPoint == null) return point;
-            point.X = myPoint.X;
-            point.Y = myPoint.Y;
+            if (myPoint.X != null) point.X = (double) myPoint.X;
+            if (myPoint.Y != null) point.Y = (double) myPoint.Y;
             return point;
           
         }

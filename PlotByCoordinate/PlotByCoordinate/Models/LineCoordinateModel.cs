@@ -6,13 +6,13 @@ namespace PlotByCoordinate.Models
     {
         public LineCoordinateModel()
         {
-            StartPoint = new MyPointModel();
-            EndPoint = new MyPointModel();
+            StartPoint = new CanvasPoint();
+            EndPoint = new CanvasPoint();
         }
 
-        public MyPointModel StartPoint { get; set; }
+        public CanvasPoint StartPoint { get; set; }
 
-        public MyPointModel EndPoint { get; set; }
+        public CanvasPoint EndPoint { get; set; }
 
         public double LineXPos { get; set; }
 

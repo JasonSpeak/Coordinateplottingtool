@@ -80,7 +80,7 @@
     <Compile Include="Converts\MyPointToPoint.cs" />
     <Compile Include="Models\InputLimitsModel.cs" />
     <Compile Include="Models\LineCoordinateModel.cs" />
-    <Compile Include="Models\MyPointModel.cs" />
+    <Compile Include="Models\CanvasPoint.cs" />
     <Compile Include="Models\RespectToWindowModel.cs" />
     <Compile Include="Models\TriangleCoordinateModel.cs" />
     <Compile Include="ViewModels\CoordinateValueViewModel.cs" />

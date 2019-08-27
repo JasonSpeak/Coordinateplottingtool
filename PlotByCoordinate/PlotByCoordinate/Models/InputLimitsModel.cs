@@ -6,7 +6,14 @@ namespace PlotByCoordinate.Models
     {
         private double maxX;
         private double maxY;
-        
+        private string theTipOfLimits;
+
+        public string TheTipOfLimits
+        {
+            get => theTipOfLimits;
+            set { theTipOfLimits = value; RaisePropertyChanged(()=>TheTipOfLimits); }
+        }
+
         public double MaxX
         {
             get => maxX;

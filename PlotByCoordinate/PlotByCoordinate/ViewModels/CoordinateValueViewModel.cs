@@ -10,37 +10,19 @@ namespace PlotByCoordinate.ViewModels
     {
         private bool isDragDropForPathTriangle;
         private bool isDragDropForPathLine;
-        private bool isDragDropForWindow;
         private Point pointOfMouseDown;
-
-
-        public CoordinateValueViewModel()
-        {
-            InputLimits = new InputLimitsModel() { MaxX = 550, MaxY = 640};
-            RespectToWindow=new RespectToWindowModel(){ TheWindowState = "最大化" , OptionForm = "F1M11,11L1,11 1,1 11,1z M11,0L1,0 0,0 0,1 0,11 0,12 1,12 11,12 12,12 12,11 12,1 12,0z"};
-            TriangleCoordinate = new TriangleCoordinateModel();
-            LineCoordinate = new LineCoordinateModel();         
-            KeyDownCommand = new RelayCommand(OnKeyDownCommandExecuted);
-            SizeChangedCommand = new RelayCommand<RoutedEventArgs>(OnSizeChangedCommandExecuted);
-            MouseLeftButtonDownCommand = new RelayCommand<MouseEventArgs>(OnLeftMouseDownCommandExecuted);
-            MouseLeftButtonUpCommand = new RelayCommand<MouseEventArgs>(OnLeftMouseUpCommandExecuted);
-            MouseMoveCommand = new RelayCommand<MouseEventArgs>(OnMouseMoveCommandExecuted);
-            MinWindowCommand = new RelayCommand<Window>(OnMinWindowCommandExecute);
-            MaximizeOrRestoreCommand=new RelayCommand<Window>(OnMaximizeOrRestoreCommandExecute);
-            CloseCommand=new RelayCommand<Window>(OnCloseCommand);
-        }
 
         public RespectToWindowModel RespectToWindow { get; }
 
         public InputLimitsModel InputLimits { get; }
 
-        public TriangleCoordinateModel TriangleCoordinate{ get; }
+        public TriangleCoordinateModel TriangleCoordinate { get; }
 
-        public LineCoordinateModel LineCoordinate{ get; }
+        public LineCoordinateModel LineCoordinate { get; }
 
         public RelayCommand KeyDownCommand { get; }
 
-        public RelayCommand<RoutedEventArgs> SizeChangedCommand{ get;}
+        public RelayCommand<RoutedEventArgs> SizeChangedCommand { get; }
 
         public RelayCommand<MouseEventArgs> MouseLeftButtonDownCommand { get; }
 
@@ -48,11 +30,27 @@ namespace PlotByCoordinate.ViewModels
 
         public RelayCommand<MouseEventArgs> MouseMoveCommand { get; }
 
-        public RelayCommand<Window> MinWindowCommand { get;  }
+        public RelayCommand MinWindowCommand { get; }
 
-        public RelayCommand<Window> MaximizeOrRestoreCommand { get; }
+        public RelayCommand MaximizeOrRestoreCommand { get; }
 
-        public RelayCommand<Window> CloseCommand { get; }
+        public RelayCommand CloseCommand { get; }
+
+        public CoordinateValueViewModel()
+        {
+            InputLimits = new InputLimitsModel() { MaxX = 580, MaxY = 530,TheTipOfLimits = "(550,640)"};
+            RespectToWindow=new RespectToWindowModel(){ TheWindowState = "最大化" , OptionForm = "F1M11,11L1,11 1,1 11,1z M11,0L1,0 0,0 0,1 0,11 0,12 1,12 11,12 12,12 12,11 12,1 12,0z"};
+            TriangleCoordinate = new TriangleCoordinateModel();
+            LineCoordinate = new LineCoordinateModel();
+            KeyDownCommand = new RelayCommand(OnKeyDownCommandExecuted);
+            SizeChangedCommand = new RelayCommand<RoutedEventArgs>(OnSizeChangedCommandExecuted);
+            MouseLeftButtonDownCommand = new RelayCommand<MouseEventArgs>(OnLeftMouseDownCommandExecuted);
+            MouseLeftButtonUpCommand = new RelayCommand<MouseEventArgs>(OnLeftMouseUpCommandExecuted);
+            MouseMoveCommand = new RelayCommand<MouseEventArgs>(OnMouseMoveCommandExecuted);
+            MinWindowCommand = new RelayCommand(OnMinWindowCommandExecute);
+            MaximizeOrRestoreCommand=new RelayCommand(OnMaximizeOrRestoreCommandExecute);
+            CloseCommand=new RelayCommand(OnCloseCommand);
+        }
 
         private void OnKeyDownCommandExecuted()
         {
@@ -70,8 +68,9 @@ namespace PlotByCoordinate.ViewModels
         private void OnSizeChangedCommandExecuted(RoutedEventArgs args)
         {
             if (!(args.Source is FrameworkElement ele)) return;
-            InputLimits.MaxX = ele.Width / 5 * 4;
-            InputLimits.MaxY = ele.Height / 12 * 11;
+            InputLimits.MaxX = ele.Width -80;
+            InputLimits.MaxY = ele.Height -20;
+            InputLimits.TheTipOfLimits = $"({(ele.Width / 5 * 4):N1},{(ele.Height / 12 * 11):N1})";
         }
 
         private void OnLeftMouseDownCommandExecuted(MouseEventArgs args)
@@ -88,9 +87,7 @@ namespace PlotByCoordinate.ViewModels
                 case "PathLine":
                     isDragDropForPathLine = true;
                     break;
-                case "Win":
-                    isDragDropForWindow = true;
-                    break;
+
             }
         }
 
@@ -103,27 +100,18 @@ namespace PlotByCoordinate.ViewModels
                 if (isDragDropForPathTriangle)
                 {
                     isDragDropForPathTriangle = false;
-                    ele.ReleaseMouseCapture();
+                    
                 }
             }
-            if (ele != null && ele.Name == "PathLine")
+            else if (ele != null && ele.Name == "PathLine")
             {
                 if (isDragDropForPathLine)
                 {
                     isDragDropForPathLine = false;
-                    ele.ReleaseMouseCapture();
+                   
                 }
-
             }
-            if (ele != null && ele.Name == "Win")
-            {
-                if (isDragDropForPathLine)
-                {
-                    isDragDropForWindow = false;
-                    ele.ReleaseMouseCapture();
-                }
-
-            }
+            ele?.ReleaseMouseCapture();
         }
 
         private void OnMouseMoveCommandExecuted(MouseEventArgs args)
@@ -184,31 +172,35 @@ namespace PlotByCoordinate.ViewModels
             }
         }
 
-        private void OnMinWindowCommandExecute(Window args)
+        private void OnMinWindowCommandExecute()
         {
-            args.WindowState = WindowState.Minimized;
+            if (Application.Current.MainWindow == null) return;
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
-        private void OnMaximizeOrRestoreCommandExecute(Window args)
+        private void OnMaximizeOrRestoreCommandExecute()
         {
             if (RespectToWindow.TheWindowState == "最大化")
             {
                 RespectToWindow.OptionForm = "F1M11,8L9,8 9,4 9,3 8,3 4,3 4,1 11,1z M8,11L1,11 1,4 3,4 4,4 8,4 8,8 8,9z M11,0L4,0 3,0 3,1 3,3 1,3 0,3 0,4 0,11 0,12 1,12 8,12 9,12 9,11 9,9 11,9 12,9 12,8 12,1 12,0z";
-                args.WindowState = WindowState.Maximized;
+                if (Application.Current.MainWindow != null)
+                        Application.Current.MainWindow.WindowState = WindowState.Maximized;
                 RespectToWindow.TheWindowState = "向下还原";
             }
             else if (RespectToWindow.TheWindowState == "向下还原")
             {
                 RespectToWindow.OptionForm =
                     "F1M11,11L1,11 1,1 11,1z M11,0L1,0 0,0 0,1 0,11 0,12 1,12 11,12 12,12 12,11 12,1 12,0z";
-                args.WindowState = WindowState.Normal;
+                if (Application.Current.MainWindow != null)
+                        Application.Current.MainWindow.WindowState = WindowState.Normal;
                 RespectToWindow.TheWindowState = "最大化";
             }
         }
 
-        private void OnCloseCommand(Window args)
+        private void OnCloseCommand()
         {
-            args.Close();
+            if (Application.Current.MainWindow == null) return;
+            Application.Current.MainWindow.Close();
         }
     }
 }
