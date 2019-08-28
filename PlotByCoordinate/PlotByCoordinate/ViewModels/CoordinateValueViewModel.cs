@@ -38,8 +38,8 @@ namespace PlotByCoordinate.ViewModels
 
         public CoordinateValueViewModel()
         {
-            InputLimits = new InputLimitsModel() { MaxX = 580, MaxY = 530,TheTipOfLimits = "(550,640)"};
-            RespectToWindow=new RespectToWindowModel(){ TheWindowState = "最大化" , OptionForm = "F1M11,11L1,11 1,1 11,1z M11,0L1,0 0,0 0,1 0,11 0,12 1,12 11,12 12,12 12,11 12,1 12,0z"};
+            InputLimits = new InputLimitsModel();
+            RespectToWindow=new RespectToWindowModel();
             TriangleCoordinate = new TriangleCoordinateModel();
             LineCoordinate = new LineCoordinateModel();
             KeyDownCommand = new RelayCommand(OnKeyDownCommandExecuted);
@@ -54,6 +54,9 @@ namespace PlotByCoordinate.ViewModels
 
         private void OnKeyDownCommandExecuted()
         {
+            if (TriangleCoordinate.ThirdPoint.Y != null) TriangleCoordinate.HiddenOrVisibleOfTriangleImage = "Visible";
+            if (LineCoordinate.EndPoint.Y != null) LineCoordinate.HiddenOrVisibleOfLineImage = "Visible";
+            RespectToWindow.HiddenOrVisibleOfCoordinator = "Visible";
             TriangleCoordinate.TriangleXPos = 0;
             TriangleCoordinate.TriangleYPos = 0;
             LineCoordinate.LineXPos = 0;
@@ -68,9 +71,8 @@ namespace PlotByCoordinate.ViewModels
         private void OnSizeChangedCommandExecuted(RoutedEventArgs args)
         {
             if (!(args.Source is FrameworkElement ele)) return;
-            InputLimits.MaxX = ele.Width -80;
-            InputLimits.MaxY = ele.Height -20;
-            InputLimits.TheTipOfLimits = $"({(ele.Width / 5 * 4):N1},{(ele.Height / 12 * 11):N1})";
+            InputLimits.MaxX = ele.Width;
+            InputLimits.MaxY = ele.Height;
         }
 
         private void OnLeftMouseDownCommandExecuted(MouseEventArgs args)

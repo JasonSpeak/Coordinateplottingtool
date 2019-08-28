@@ -27,7 +27,6 @@
         <Setter Property="Height" Value="30" />
         <Setter Property="Margin" Value="5" />
         <Setter Property="Background" Value="#3448a1" />
-
     </Style>
     <Style x:Key="PathStyleForMinWindow" TargetType="Path">
         <Setter Property="Width" Value="12" />
@@ -45,6 +44,14 @@
         <Setter Property="Data" Value="F1M11.706,0.706L11,0 5.852,5.146 0.706,0 -0.001,0.706 5.146,5.852 -0.001,11 0.706,11.706 5.852,6.56 11,11.706 11.706,11 6.56,5.852z" />
         <Setter Property="Height" Value="11.707" />
         <Setter Property="Fill" Value="#FF9AA4D0" />
+    </Style>
+    <Style x:Key="ImageStyle" TargetType="Image">
+        <Setter Property="Width" Value="6"/>
+        <Setter Property="Height" Value="6"/>
+    </Style>
+    <Style x:Key="CoordinateStyle" TargetType="Label">
+        <Setter Property="Foreground" Value="#9D9999"/>
+        <Setter Property="Visibility" Value="{Binding RespectToWindow.HiddenOrVisibleOfCoordinator }"/>
     </Style>
 </ResourceDictionary>
 

@@ -4,10 +4,12 @@ namespace PlotByCoordinate.Models
 {
     public class LineCoordinateModel : ObservableObject
     {
-        public LineCoordinateModel()
+        private string hiddenOrVisibleOfLineImage;
+
+        public string HiddenOrVisibleOfLineImage
         {
-            StartPoint = new CanvasPoint();
-            EndPoint = new CanvasPoint();
+            get => hiddenOrVisibleOfLineImage;
+            set { hiddenOrVisibleOfLineImage = value; RaisePropertyChanged(()=> HiddenOrVisibleOfLineImage); }
         }
 
         public CanvasPoint StartPoint { get; set; }
@@ -17,5 +19,14 @@ namespace PlotByCoordinate.Models
         public double LineXPos { get; set; }
 
         public double LineYPos { get; set; }
+
+        public LineCoordinateModel()
+        {
+            HiddenOrVisibleOfLineImage = "Hidden";
+            StartPoint = new CanvasPoint();
+            EndPoint = new CanvasPoint();
+        }
+
+   
     }   
 }

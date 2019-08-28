@@ -1,20 +1,20 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using PlotByCoordinate.Models;
 
 namespace PlotByCoordinate.Converts
 {
-    public class DotToPoint : IValueConverter
+    class PointToImage:IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value?.ToString();
+            return (double?) value - 3;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            double.TryParse((string)value, out var myValue);
-            return myValue;
+            throw new NotImplementedException();
         }
     }
 }

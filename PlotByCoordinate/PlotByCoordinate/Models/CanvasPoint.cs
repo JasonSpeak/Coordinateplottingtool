@@ -1,20 +1,8 @@
-﻿using GalaSoft.MvvmLight;
-
-namespace PlotByCoordinate.Models
+﻿namespace PlotByCoordinate.Models
 {
-    public class CanvasPoint:ObservableObject
+    public class CanvasPoint
     {
-        private double? x;
-
-        public double? X
-        {
-            get => x;
-            set
-            {
-                x = value;
-                RaisePropertyChanged(()=>X);
-            }
-        }
+        public double? X { get; set; }
 
         public double? Y { get; set; }
     }
