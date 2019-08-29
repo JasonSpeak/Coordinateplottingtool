@@ -175,7 +175,6 @@
                     <Label Content="三角形" Foreground="#FF3448A1" />
                 </DockPanel>
                 <DockPanel>
-
                     <TextBox
                         Name="X1"
                         Width="48"
@@ -284,11 +283,6 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Style="{StaticResource ResourceKey=CanvasStyle}">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SizeChanged">
-                    <mvvm:EventToCommand Command="{Binding SizeChangedCommand}" PassEventArgsToCommand="True" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
             <Canvas.Background>
                 <DrawingBrush
                     TileMode="Tile"
@@ -424,6 +418,7 @@
                 x:Name="PathTriangle"
                 Canvas.Left="{Binding TriangleCoordinate.TriangleXPos}"
                 Canvas.Top="{Binding TriangleCoordinate.TriangleYPos}"
+                Cursor="Hand"
                 Style="{DynamicResource ResourceKey=PathStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
@@ -469,6 +464,7 @@
                 x:Name="PathLine"
                 Canvas.Left="{Binding LineCoordinate.LineXPos}"
                 Canvas.Top="{Binding LineCoordinate.LineYPos}"
+                Cursor="Hand"
                 Style="{DynamicResource ResourceKey=PathStyle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">

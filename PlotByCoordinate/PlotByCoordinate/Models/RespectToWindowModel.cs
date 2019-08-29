@@ -8,12 +8,6 @@ namespace PlotByCoordinate.Models
         private string optionForm;
         private string hiddenOrVisibleOfCoordinator;
 
-        public string HiddenOrVisibleOfCoordinator
-        {
-            get => hiddenOrVisibleOfCoordinator;
-            set { hiddenOrVisibleOfCoordinator = value; RaisePropertyChanged(()=> HiddenOrVisibleOfCoordinator); }
-        }
-
         public string TheWindowState
         {
             get => theWindowState;
@@ -24,6 +18,12 @@ namespace PlotByCoordinate.Models
         {
             get => optionForm;
             set { optionForm = value; RaisePropertyChanged(()=>OptionForm);}
+        }
+
+        public string HiddenOrVisibleOfCoordinator
+        {
+            get => hiddenOrVisibleOfCoordinator;
+            set { hiddenOrVisibleOfCoordinator = value; RaisePropertyChanged(() => HiddenOrVisibleOfCoordinator); }
         }
 
         public RespectToWindowModel()

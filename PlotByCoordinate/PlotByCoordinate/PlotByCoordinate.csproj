@@ -79,7 +79,6 @@
     </ApplicationDefinition>
     <Compile Include="Converts\LocalPointToPoint.cs" />
     <Compile Include="Converts\PointToImage.cs" />
-    <Compile Include="Models\InputLimitsModel.cs" />
     <Compile Include="Models\LineCoordinateModel.cs" />
     <Compile Include="Models\CanvasPoint.cs" />
     <Compile Include="Models\RespectToWindowModel.cs" />

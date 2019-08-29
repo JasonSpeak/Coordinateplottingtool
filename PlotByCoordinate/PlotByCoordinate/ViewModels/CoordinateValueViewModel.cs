@@ -14,15 +14,11 @@ namespace PlotByCoordinate.ViewModels
 
         public RespectToWindowModel RespectToWindow { get; }
 
-        public InputLimitsModel InputLimits { get; }
-
         public TriangleCoordinateModel TriangleCoordinate { get; }
 
         public LineCoordinateModel LineCoordinate { get; }
 
         public RelayCommand KeyDownCommand { get; }
-
-        public RelayCommand<RoutedEventArgs> SizeChangedCommand { get; }
 
         public RelayCommand<MouseEventArgs> MouseLeftButtonDownCommand { get; }
 
@@ -38,12 +34,10 @@ namespace PlotByCoordinate.ViewModels
 
         public CoordinateValueViewModel()
         {
-            InputLimits = new InputLimitsModel();
             RespectToWindow=new RespectToWindowModel();
             TriangleCoordinate = new TriangleCoordinateModel();
             LineCoordinate = new LineCoordinateModel();
             KeyDownCommand = new RelayCommand(OnKeyDownCommandExecuted);
-            SizeChangedCommand = new RelayCommand<RoutedEventArgs>(OnSizeChangedCommandExecuted);
             MouseLeftButtonDownCommand = new RelayCommand<MouseEventArgs>(OnLeftMouseDownCommandExecuted);
             MouseLeftButtonUpCommand = new RelayCommand<MouseEventArgs>(OnLeftMouseUpCommandExecuted);
             MouseMoveCommand = new RelayCommand<MouseEventArgs>(OnMouseMoveCommandExecuted);
@@ -57,31 +51,20 @@ namespace PlotByCoordinate.ViewModels
             if (TriangleCoordinate.ThirdPoint.Y != null) TriangleCoordinate.HiddenOrVisibleOfTriangleImage = "Visible";
             if (LineCoordinate.EndPoint.Y != null) LineCoordinate.HiddenOrVisibleOfLineImage = "Visible";
             RespectToWindow.HiddenOrVisibleOfCoordinator = "Visible";
-            TriangleCoordinate.TriangleXPos = 0;
-            TriangleCoordinate.TriangleYPos = 0;
-            LineCoordinate.LineXPos = 0;
-            LineCoordinate.LineYPos = 0;
-            TriangleCoordinate.RaisePropertyChanged(()=>TriangleCoordinate.FirstPoint);
-            TriangleCoordinate.RaisePropertyChanged(() => TriangleCoordinate.SecondPoint);
-            TriangleCoordinate.RaisePropertyChanged(() => TriangleCoordinate.ThirdPoint);
-            LineCoordinate.RaisePropertyChanged(() => LineCoordinate.StartPoint);
-            LineCoordinate.RaisePropertyChanged(() => LineCoordinate.EndPoint);   
-        }
-
-        private void OnSizeChangedCommandExecuted(RoutedEventArgs args)
-        {
-            if (!(args.Source is FrameworkElement ele)) return;
-            InputLimits.MaxX = ele.Width;
-            InputLimits.MaxY = ele.Height;
+            LineCoordinate.RestorationPathOfLine();
+            LineCoordinate.RaiseLinePointChange();
+            TriangleCoordinate.RestorationPathOfTriangle();
+            TriangleCoordinate.RaiseTrianglePointChange();
+            
         }
 
         private void OnLeftMouseDownCommandExecuted(MouseEventArgs args)
         {
-            var ele = args.Source as FrameworkElement;
-            if (ele == null) return;
-            ele.CaptureMouse();
+            var element = args.Source as FrameworkElement;
+            if (element == null) return;
+            element.CaptureMouse();
             pointOfMouseDown = args.GetPosition(null);
-            switch (ele.Name)
+            switch (element.Name)
             {
                 case "PathTriangle":
                     isDragDropForPathTriangle = true;
@@ -95,9 +78,8 @@ namespace PlotByCoordinate.ViewModels
 
         private void OnLeftMouseUpCommandExecuted(MouseEventArgs args)
         {
-
-            var ele = args.Source as FrameworkElement;
-            if (ele != null && ele.Name == "PathTriangle")
+            var element = args.Source as FrameworkElement;
+            if (element != null && element.Name == "PathTriangle")
             {
                 if (isDragDropForPathTriangle)
                 {
@@ -105,7 +87,7 @@ namespace PlotByCoordinate.ViewModels
                     
                 }
             }
-            else if (ele != null && ele.Name == "PathLine")
+            else if (element != null && element.Name == "PathLine")
             {
                 if (isDragDropForPathLine)
                 {
@@ -113,40 +95,20 @@ namespace PlotByCoordinate.ViewModels
                    
                 }
             }
-            ele?.ReleaseMouseCapture();
+            element?.ReleaseMouseCapture();
         }
 
         private void OnMouseMoveCommandExecuted(MouseEventArgs args)
         {
-            var ele = args.Source as FrameworkElement;
-            if (ele == null) return;
-            switch (ele.Name)
+            if (!(args.Source is FrameworkElement element)) return;
+            switch (element.Name)
             {
                 case "PathTriangle":
                 {
                     if (isDragDropForPathTriangle)
                     {
-                        var xPos = args.GetPosition(null).X - pointOfMouseDown.X +
-                                      TriangleCoordinate.TriangleXPos;
-                        var yPos = args.GetPosition(null).Y - pointOfMouseDown.Y +
-                                      TriangleCoordinate.TriangleYPos;
-                        TriangleCoordinate.TriangleXPos = xPos;
-                        TriangleCoordinate.TriangleYPos = yPos;
-                        TriangleCoordinate.FirstPoint.X =
-                            TriangleCoordinate.FirstPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
-                        TriangleCoordinate.FirstPoint.Y =
-                            TriangleCoordinate.FirstPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
-                        TriangleCoordinate.SecondPoint.X =
-                            TriangleCoordinate.SecondPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
-                        TriangleCoordinate.SecondPoint.Y =
-                            TriangleCoordinate.SecondPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
-                        TriangleCoordinate.ThirdPoint.X =
-                            TriangleCoordinate.ThirdPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
-                        TriangleCoordinate.ThirdPoint.Y =
-                            TriangleCoordinate.ThirdPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
-                        TriangleCoordinate.RaisePropertyChanged(() => TriangleCoordinate.FirstPoint);
-                        TriangleCoordinate.RaisePropertyChanged(() => TriangleCoordinate.SecondPoint);
-                        TriangleCoordinate.RaisePropertyChanged(() => TriangleCoordinate.ThirdPoint);
+                        TriangleCoordinate.TriangleMove(args.GetPosition(null),pointOfMouseDown);
+                        TriangleCoordinate.RaiseTrianglePointChange();
                         pointOfMouseDown = args.GetPosition(null);
                     }
                     break;
@@ -155,18 +117,8 @@ namespace PlotByCoordinate.ViewModels
                 {
                     if (isDragDropForPathLine)
                     {
-                        var xPos = args.GetPosition(null).X - pointOfMouseDown.X + LineCoordinate.LineXPos;
-                        var yPos = args.GetPosition(null).Y - pointOfMouseDown.Y + LineCoordinate.LineYPos;
-                        LineCoordinate.LineXPos = xPos;
-                        LineCoordinate.LineYPos = yPos;
-                        LineCoordinate.StartPoint.X =
-                            LineCoordinate.StartPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
-                        LineCoordinate.StartPoint.Y =
-                            LineCoordinate.StartPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
-                        LineCoordinate.EndPoint.X = LineCoordinate.EndPoint.X + args.GetPosition(null).X - pointOfMouseDown.X;
-                        LineCoordinate.EndPoint.Y = LineCoordinate.EndPoint.Y + args.GetPosition(null).Y - pointOfMouseDown.Y;
-                        LineCoordinate.RaisePropertyChanged(() => LineCoordinate.StartPoint);
-                        LineCoordinate.RaisePropertyChanged(() => LineCoordinate.EndPoint);
+                        LineCoordinate.LineMove(args.GetPosition(null),pointOfMouseDown);
+                        LineCoordinate.RaiseLinePointChange();
                         pointOfMouseDown = args.GetPosition(null);
                     }
                     break;

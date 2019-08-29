@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Documents;
 using GalaSoft.MvvmLight;
 
 namespace PlotByCoordinate.Models
@@ -9,13 +8,7 @@ namespace PlotByCoordinate.Models
     {
         private string hiddenOrVisibleOfTriangleImage;
 
-        public ObservableCollection<CanvasPoint> Points { get; }
-
-        public string HiddenOrVisibleOfTriangleImage
-        {
-            get => hiddenOrVisibleOfTriangleImage;
-            set { hiddenOrVisibleOfTriangleImage = value; RaisePropertyChanged(() => HiddenOrVisibleOfTriangleImage); }
-        }
+        public ObservableCollection<CanvasPoint> PointsOfTriangle { get; }
 
         public CanvasPoint FirstPoint { get; set; }
 
@@ -27,25 +20,44 @@ namespace PlotByCoordinate.Models
 
         public double TriangleYPos { get; set; }
 
+        public string HiddenOrVisibleOfTriangleImage
+        {
+            get => hiddenOrVisibleOfTriangleImage;
+            set { hiddenOrVisibleOfTriangleImage = value; RaisePropertyChanged(() => HiddenOrVisibleOfTriangleImage); }
+        }
+
         public TriangleCoordinateModel()
         {
             HiddenOrVisibleOfTriangleImage = "Hidden";
             FirstPoint = new CanvasPoint();
             SecondPoint = new CanvasPoint();
             ThirdPoint = new CanvasPoint();
-            Points = new ObservableCollection<CanvasPoint>()
+            PointsOfTriangle = new ObservableCollection<CanvasPoint>()
             {
                 FirstPoint, SecondPoint, ThirdPoint
             };
         }
 
-        public void Move(Point deltaPosition)
+        public void TriangleMove(Point positionOfControl ,Point mouseDownPosition)
         {
-            foreach (var point in Points)
+            foreach (var point in PointsOfTriangle)
             {
-                point.X += deltaPosition.X;
-                point.Y += deltaPosition.Y;
+                point.X += positionOfControl.X-mouseDownPosition.X;
+                point.Y += positionOfControl.Y-mouseDownPosition.Y;
             }
+        }
+
+        public void RaiseTrianglePointChange()
+        {
+            RaisePropertyChanged(() => FirstPoint);
+            RaisePropertyChanged(() => SecondPoint);
+            RaisePropertyChanged(() => ThirdPoint);
+        }
+
+        public void RestorationPathOfTriangle()
+        {
+            TriangleXPos = 0;
+            TriangleYPos = 0;
         }
     }
 }
