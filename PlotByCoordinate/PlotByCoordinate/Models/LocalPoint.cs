@@ -1,6 +1,6 @@
 ﻿namespace PlotByCoordinate.Models
 {
-    public class CanvasPoint
+    public class LocalPoint
     {
         public double? X { get; set; }
 

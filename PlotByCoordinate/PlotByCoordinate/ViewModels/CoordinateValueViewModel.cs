@@ -48,9 +48,11 @@ namespace PlotByCoordinate.ViewModels
 
         private void OnKeyDownCommandExecuted()
         {
-            if (TriangleCoordinate.ThirdPoint.Y != null) TriangleCoordinate.HiddenOrVisibleOfTriangleImage = "Visible";
-            if (LineCoordinate.EndPoint.Y != null) LineCoordinate.HiddenOrVisibleOfLineImage = "Visible";
-            RespectToWindow.HiddenOrVisibleOfCoordinator = "Visible";
+            if (TriangleCoordinate.ThirdPoint.Y != null)
+                TriangleCoordinate.ShowImageOfTriangle();
+            if(LineCoordinate.EndPoint.Y != null)
+                LineCoordinate.ShowImageOfLine();
+            RespectToWindow.ShowCoordinate();
             LineCoordinate.RestorationPathOfLine();
             LineCoordinate.RaiseLinePointChange();
             TriangleCoordinate.RestorationPathOfTriangle();
@@ -60,8 +62,7 @@ namespace PlotByCoordinate.ViewModels
 
         private void OnLeftMouseDownCommandExecuted(MouseEventArgs args)
         {
-            var element = args.Source as FrameworkElement;
-            if (element == null) return;
+            if (!(args.Source is FrameworkElement element)) return;
             element.CaptureMouse();
             pointOfMouseDown = args.GetPosition(null);
             switch (element.Name)
@@ -78,24 +79,29 @@ namespace PlotByCoordinate.ViewModels
 
         private void OnLeftMouseUpCommandExecuted(MouseEventArgs args)
         {
-            var element = args.Source as FrameworkElement;
-            if (element != null && element.Name == "PathTriangle")
+            if (!(args.Source is FrameworkElement element))return;
+            switch (element.Name)
             {
-                if (isDragDropForPathTriangle)
+                case "PathTriangle":
                 {
-                    isDragDropForPathTriangle = false;
-                    
+                    if (isDragDropForPathTriangle)
+                    {
+                        isDragDropForPathTriangle = false;
+
+                    }
+                    break;
+                }
+                case "PathLine":
+                {
+                    if (isDragDropForPathLine)
+                    {
+                        isDragDropForPathLine = false;
+
+                    }
+                    break;
                 }
             }
-            else if (element != null && element.Name == "PathLine")
-            {
-                if (isDragDropForPathLine)
-                {
-                    isDragDropForPathLine = false;
-                   
-                }
-            }
-            element?.ReleaseMouseCapture();
+            element.ReleaseMouseCapture();
         }
 
         private void OnMouseMoveCommandExecuted(MouseEventArgs args)
@@ -134,20 +140,17 @@ namespace PlotByCoordinate.ViewModels
 
         private void OnMaximizeOrRestoreCommandExecute()
         {
-            if (RespectToWindow.TheWindowState == "最大化")
+            if (Application.Current.MainWindow == null) return;
+            switch (RespectToWindow.TheWindowState)
             {
-                RespectToWindow.OptionForm = "F1M11,8L9,8 9,4 9,3 8,3 4,3 4,1 11,1z M8,11L1,11 1,4 3,4 4,4 8,4 8,8 8,9z M11,0L4,0 3,0 3,1 3,3 1,3 0,3 0,4 0,11 0,12 1,12 8,12 9,12 9,11 9,9 11,9 12,9 12,8 12,1 12,0z";
-                if (Application.Current.MainWindow != null)
-                        Application.Current.MainWindow.WindowState = WindowState.Maximized;
-                RespectToWindow.TheWindowState = "向下还原";
-            }
-            else if (RespectToWindow.TheWindowState == "向下还原")
-            {
-                RespectToWindow.OptionForm =
-                    "F1M11,11L1,11 1,1 11,1z M11,0L1,0 0,0 0,1 0,11 0,12 1,12 11,12 12,12 12,11 12,1 12,0z";
-                if (Application.Current.MainWindow != null)
-                        Application.Current.MainWindow.WindowState = WindowState.Normal;
-                RespectToWindow.TheWindowState = "最大化";
+                case "最大化":
+                    Application.Current.MainWindow.WindowState = WindowState.Maximized;
+                    RespectToWindow.TheWindowState = "向下还原";
+                    break;
+                case "向下还原":
+                    Application.Current.MainWindow.WindowState = WindowState.Normal;
+                    RespectToWindow.TheWindowState = "最大化";
+                    break;
             }
         }
 

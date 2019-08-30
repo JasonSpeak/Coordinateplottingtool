@@ -8,13 +8,13 @@ namespace PlotByCoordinate.Models
     {
         private string hiddenOrVisibleOfTriangleImage;
 
-        public ObservableCollection<CanvasPoint> PointsOfTriangle { get; }
+        public ObservableCollection<LocalPoint> PointsOfTriangle { get; }
 
-        public CanvasPoint FirstPoint { get; set; }
+        public LocalPoint FirstPoint { get; set; }
 
-        public CanvasPoint SecondPoint { get; set; }
+        public LocalPoint SecondPoint { get; set; }
 
-        public CanvasPoint ThirdPoint { get; set; }
+        public LocalPoint ThirdPoint { get; set; }
 
         public double TriangleXPos { get; set; }
 
@@ -23,16 +23,20 @@ namespace PlotByCoordinate.Models
         public string HiddenOrVisibleOfTriangleImage
         {
             get => hiddenOrVisibleOfTriangleImage;
-            set { hiddenOrVisibleOfTriangleImage = value; RaisePropertyChanged(() => HiddenOrVisibleOfTriangleImage); }
+            set
+            {
+                hiddenOrVisibleOfTriangleImage = value;
+                RaisePropertyChanged(() => HiddenOrVisibleOfTriangleImage);
+            }
         }
 
         public TriangleCoordinateModel()
         {
             HiddenOrVisibleOfTriangleImage = "Hidden";
-            FirstPoint = new CanvasPoint();
-            SecondPoint = new CanvasPoint();
-            ThirdPoint = new CanvasPoint();
-            PointsOfTriangle = new ObservableCollection<CanvasPoint>()
+            FirstPoint = new LocalPoint();
+            SecondPoint = new LocalPoint();
+            ThirdPoint = new LocalPoint();
+            PointsOfTriangle = new ObservableCollection<LocalPoint>()
             {
                 FirstPoint, SecondPoint, ThirdPoint
             };
@@ -58,6 +62,11 @@ namespace PlotByCoordinate.Models
         {
             TriangleXPos = 0;
             TriangleYPos = 0;
+        }
+
+        public void ShowImageOfTriangle()
+        {
+            HiddenOrVisibleOfTriangleImage = "Visible";
         }
     }
 }

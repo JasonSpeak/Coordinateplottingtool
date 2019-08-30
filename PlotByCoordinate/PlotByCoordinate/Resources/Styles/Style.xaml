@@ -1,0 +1,105 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="WindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome
+                    CaptionHeight="15"
+                    CornerRadius="5"
+                    GlassFrameThickness="1" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TextBoxStyle" TargetType="TextBox">
+        <Setter Property="Width" Value="60" />
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="Background" Value="LightBlue" />
+    </Style>
+    <Style x:Key="CanvasStyle" TargetType="Canvas">
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="ClipToBounds" Value="true" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <DrawingBrush
+                    TileMode="Tile"
+                    Viewport="0,0,10,10"
+                    ViewportUnits="Absolute">
+                    <DrawingBrush.Drawing>
+                        <DrawingGroup>
+                            <DrawingGroup.Children>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Brush>
+                                        <SolidColorBrush Color="Black" />
+                                    </GeometryDrawing.Brush>
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry Rect="0,0,50,50" />
+                                    </GeometryDrawing.Geometry>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="White" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                            </DrawingGroup.Children>
+                        </DrawingGroup>
+                    </DrawingBrush.Drawing>
+                </DrawingBrush>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="PathStyle" TargetType="Path">
+        <Setter Property="Stroke" Value="White" />
+        <Setter Property="StrokeThickness" Value="3" />
+    </Style>
+    <Style x:Key="ButtonStyle" TargetType="Button">
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Background" Value="#3448a1" />
+    </Style>
+    <Style x:Key="PathStyleForMinWindow" TargetType="Path">
+        <Setter Property="Width" Value="12" />
+        <Setter Property="Height" Value="12" />
+        <Setter Property="Data" Value="F1M0,1L12.001,1 12.001,0 0,0z" />
+        <Setter Property="Fill" Value="#FF9AA4D0" />
+    </Style>
+    <Style x:Key="PathStyleForMaXWindow" TargetType="Path">
+        <Setter Property="Width" Value="12" />
+        <Setter Property="Height" Value="12" />
+        <Setter Property="Fill" Value="#FF9AA4D0" />
+    </Style>
+    <Style x:Key="PathClose" TargetType="Path">
+        <Setter Property="Width" Value="11.707" />
+        <Setter Property="Data" Value="F1M11.706,0.706L11,0 5.852,5.146 0.706,0 -0.001,0.706 5.146,5.852 -0.001,11 0.706,11.706 5.852,6.56 11,11.706 11.706,11 6.56,5.852z" />
+        <Setter Property="Height" Value="11.707" />
+        <Setter Property="Fill" Value="#FF9AA4D0" />
+    </Style>
+    <Style x:Key="ImageStyle" TargetType="Image">
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="Height" Value="8" />
+    </Style>
+    <Style x:Key="CoordinateStyle" TargetType="Label">
+        <Setter Property="Foreground" Value="#9D9999" />
+        <Setter Property="Visibility" Value="{Binding RespectToWindow.HiddenOrVisibleOfCoordinator}" />
+    </Style>
+    <Style x:Key="PathOfTriangle" TargetType="Path">
+        <Setter Property="Width" Value="21.153" />
+        <Setter Property="Height" Value="13.5" />
+        <Setter Property="Data" Value="F1M0,13.5L21.153,13.5 10.577,0z M10.577,2.433L18.073,12 3.082,12z" />
+        <Setter Property="Fill" Value="#FF3448A1" />
+    </Style>
+    <Style x:Key="PathOfLine" TargetType="Path">
+        <Setter Property="Width" Value="15.911" />
+        <Setter Property="Height" Value="12.662" />
+        <Setter Property="Data" Value="F1M0.911,12.662L0,11.471 14.999,0 15.911,1.191z" />
+        <Setter Property="Fill" Value="#FF3448A1" />
+    </Style>
+    <Style x:Key="PathOfMaxWindow" TargetType="Path">
+        <Setter Property="Width" Value="12" />
+        <Setter Property="Height" Value="12" />
+        <Setter Property="Fill" Value="#FF9AA4D0" />
+        <Setter Property="Data" Value="F1M11,11L1,11 1,1 11,1z M11,0L1,0 0,0 0,1 0,11 0,12 1,12 11,12 12,12 12,11 12,1 12,0z" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=Win, Path=WindowState}" Value="Maximized">
+                <Setter Property="Data" Value="F1M11,8L9,8 9,4 9,3 8,3 4,3 4,1 11,1z M8,11L1,11 1,4 3,4 4,4 8,4 8,8 8,9z M11,0L4,0 3,0 3,1 3,3 1,3 0,3 0,4 0,11 0,12 1,12 8,12 9,12 9,11 9,9 11,9 12,9 12,8 12,1 12,0z" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

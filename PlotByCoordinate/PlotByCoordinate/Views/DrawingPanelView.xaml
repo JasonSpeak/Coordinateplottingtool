@@ -22,10 +22,9 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Resources/Style.xaml" />
+                <ResourceDictionary Source="../Resources/Styles/Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <cov:LocalPointToPoint x:Key="MyPointConvertToPoint" />
-            <cov:PointToImage x:Key="ToImage" />
         </ResourceDictionary>
     </Window.Resources>
     <Window.InputBindings>
@@ -92,8 +91,7 @@
                     <Path
                         Canvas.Left="-12"
                         Canvas.Top="-5"
-                        Data="{Binding RespectToWindow.OptionForm}"
-                        Style="{StaticResource ResourceKey=PathStyleForMaXWindow}" />
+                        Style="{StaticResource ResourceKey=PathOfMaxWindow}" />
                 </Canvas>
             </Button>
             <Button
@@ -139,39 +137,34 @@
             <Image
                 Canvas.Left="-13"
                 Canvas.Top="-122"
-                Source="/Resources/TriangleP1.png"
+                Source="/Resources/Images/TriangleP1.png"
                 Style="{StaticResource ImageStyle}" />
             <Image
                 Canvas.Left="-13"
                 Canvas.Top="-82"
-                Source="/Resources/TriangleP2.png"
+                Source="/Resources/Images/TriangleP2.png"
                 Style="{StaticResource ImageStyle}" />
             <Image
                 Canvas.Left="-13"
                 Canvas.Top="-42"
-                Source="/Resources/TriangleP3.png"
+                Source="/Resources/Images/TriangleP3.png"
                 Style="{StaticResource ImageStyle}" />
             <Image
                 Canvas.Left="-13"
                 Canvas.Top="70"
-                Source="/Resources/LineP1.png"
+                Source="/Resources/Images/LineP1.png"
                 Style="{StaticResource ImageStyle}" />
             <Image
                 Canvas.Left="-13"
                 Canvas.Top="110"
-                Source="/Resources/LineP2.png"
+                Source="/Resources/Images/lineP2.png"
                 Style="{StaticResource ImageStyle}" />
             <StackPanel
                 x:Name="TrianglePanel"
                 Canvas.Left="2"
                 Canvas.Top="-178">
                 <DockPanel HorizontalAlignment="Center">
-                    <Path
-                        Width="21.153"
-                        Height="13.5"
-                        Data="F1M0,13.5L21.153,13.5 10.577,0z M10.577,2.433L18.073,12 3.082,12z"
-                        DockPanel.Dock="Left"
-                        Fill="#FF3448A1" />
+                    <Path DockPanel.Dock="Left" Style="{StaticResource PathOfTriangle}" />
                     <Label Content="三角形" Foreground="#FF3448A1" />
                 </DockPanel>
                 <DockPanel>
@@ -232,11 +225,7 @@
                 Canvas.Left="2"
                 Canvas.Top="14">
                 <DockPanel HorizontalAlignment="Center">
-                    <Path
-                        Width="15.911"
-                        Height="12.662"
-                        Data="F1M0.911,12.662L0,11.471 14.999,0 15.911,1.191z"
-                        Fill="#FF3448A1" />
+                    <Path Style="{StaticResource PathOfLine}" />
                     <Label Content="直线" Foreground="#FF3448A1" />
                 </DockPanel>
                 <DockPanel>
@@ -283,137 +272,119 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Style="{StaticResource ResourceKey=CanvasStyle}">
-            <Canvas.Background>
-                <DrawingBrush
-                    TileMode="Tile"
-                    Viewport="0,0,12,12"
-                    ViewportUnits="Absolute">
-                    <DrawingBrush.Drawing>
-                        <DrawingGroup>
-                            <DrawingGroup.Children>
-                                <GeometryDrawing>
-                                    <GeometryDrawing.Brush>
-                                        <SolidColorBrush Color="Black" />
-                                    </GeometryDrawing.Brush>
-                                    <GeometryDrawing.Geometry>
-                                        <RectangleGeometry Rect="0,0,76,76" />
-                                    </GeometryDrawing.Geometry>
-                                    <GeometryDrawing.Pen>
-                                        <Pen Brush="White" />
-                                    </GeometryDrawing.Pen>
-                                </GeometryDrawing>
-                            </DrawingGroup.Children>
-                        </DrawingGroup>
-                    </DrawingBrush.Drawing>
-                </DrawingBrush>
-            </Canvas.Background>
             <Label
-                Canvas.Left="50"
+                Canvas.Left="40"
                 Content="50"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Left="100"
+                Canvas.Left="90"
                 Content="100"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Left="150"
+                Canvas.Left="140"
                 Content="150"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Left="200"
+                Canvas.Left="190"
                 Content="200"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Left="250"
+                Canvas.Left="240"
                 Content="250"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Left="300"
+                Canvas.Left="290"
                 Content="300"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Left="350"
+                Canvas.Left="340"
                 Content="350"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Left="400"
+                Canvas.Left="390"
                 Content="400"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Left="450"
+                Canvas.Left="440"
                 Content="450"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Left="500"
+                Canvas.Left="490"
                 Content="500"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Left="550"
+                Canvas.Left="540"
                 Content="550"
                 Style="{StaticResource CoordinateStyle}" />
 
             <Label
-                Canvas.Top="50"
+                Canvas.Top="40"
                 Content="50"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Top="100"
+                Canvas.Top="90"
                 Content="100"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Top="150"
+                Canvas.Top="140"
                 Content="150"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Top="200"
+                Canvas.Top="190"
                 Content="200"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Top="250"
+                Canvas.Top="240"
                 Content="250"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Top="300"
+                Canvas.Top="290"
                 Content="300"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Top="350"
+                Canvas.Top="340"
                 Content="350"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Top="400"
+                Canvas.Top="390"
                 Content="400"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Top="450"
+                Canvas.Top="440"
                 Content="450"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Top="500"
+                Canvas.Top="490"
                 Content="500"
                 Style="{StaticResource CoordinateStyle}" />
             <Label
-                Canvas.Top="550"
+                Canvas.Top="540"
                 Content="550"
                 Style="{StaticResource CoordinateStyle}" />
-            <Image
-                Canvas.Left="{Binding TriangleCoordinate.FirstPoint.X, Converter={StaticResource ToImage}}"
-                Canvas.Top="{Binding TriangleCoordinate.FirstPoint.Y, Converter={StaticResource ToImage}}"
-                Source="/Resources/TriangleP1.png"
-                Style="{StaticResource ImageStyle}"
-                Visibility="{Binding TriangleCoordinate.HiddenOrVisibleOfTriangleImage}" />
-            <Image
-                Canvas.Left="{Binding TriangleCoordinate.SecondPoint.X, Converter={StaticResource ToImage}}"
-                Canvas.Top="{Binding TriangleCoordinate.SecondPoint.Y, Converter={StaticResource ToImage}}"
-                Source="/Resources/TriangleP2.png"
-                Style="{StaticResource ImageStyle}"
-                Visibility="{Binding TriangleCoordinate.HiddenOrVisibleOfTriangleImage}" />
-            <Image
-                Canvas.Left="{Binding TriangleCoordinate.ThirdPoint.X, Converter={StaticResource ToImage}}"
-                Canvas.Top="{Binding TriangleCoordinate.ThirdPoint.Y, Converter={StaticResource ToImage}}"
-                Source="/Resources/TriangleP3.png"
-                Style="{StaticResource ImageStyle}"
-                Visibility="{Binding TriangleCoordinate.HiddenOrVisibleOfTriangleImage}" />
+            <Path Fill="#00FFAD" Visibility="{Binding TriangleCoordinate.HiddenOrVisibleOfTriangleImage}">
+                <Path.Data>
+                    <EllipseGeometry
+                        Center="{Binding TriangleCoordinate.FirstPoint, Converter={StaticResource MyPointConvertToPoint}}"
+                        RadiusX="4"
+                        RadiusY="4" />
+                </Path.Data>
+            </Path>
+            <Path Fill="#006CFF" Visibility="{Binding TriangleCoordinate.HiddenOrVisibleOfTriangleImage}">
+                <Path.Data>
+                    <EllipseGeometry
+                        Center="{Binding TriangleCoordinate.SecondPoint, Converter={StaticResource MyPointConvertToPoint}}"
+                        RadiusX="4"
+                        RadiusY="4" />
+                </Path.Data>
+            </Path>
+            <Path Fill="#D800FF" Visibility="{Binding TriangleCoordinate.HiddenOrVisibleOfTriangleImage}">
+                <Path.Data>
+                    <EllipseGeometry
+                        Center="{Binding TriangleCoordinate.ThirdPoint, Converter={StaticResource MyPointConvertToPoint}}"
+                        RadiusX="4"
+                        RadiusY="4" />
+                </Path.Data>
+            </Path>
             <Path
                 x:Name="PathTriangle"
                 Canvas.Left="{Binding TriangleCoordinate.TriangleXPos}"
@@ -448,18 +419,22 @@
                     </GeometryGroup>
                 </Path.Data>
             </Path>
-            <Image
-                Canvas.Left="{Binding LineCoordinate.StartPoint.X, Converter={StaticResource ToImage}}"
-                Canvas.Top="{Binding LineCoordinate.StartPoint.Y, Converter={StaticResource ToImage}}"
-                Source="/Resources/LineP1.png"
-                Style="{StaticResource ImageStyle}"
-                Visibility="{Binding LineCoordinate.HiddenOrVisibleOfLineImage}" />
-            <Image
-                Canvas.Left="{Binding LineCoordinate.EndPoint.X, Converter={StaticResource ToImage}}"
-                Canvas.Top="{Binding LineCoordinate.EndPoint.Y, Converter={StaticResource ToImage}}"
-                Source="/Resources/LineP2.png"
-                Style="{StaticResource ImageStyle}"
-                Visibility="{Binding LineCoordinate.HiddenOrVisibleOfLineImage}" />
+            <Path Fill="#0AFF00" Visibility="{Binding LineCoordinate.HiddenOrVisibleOfLineImage}">
+                <Path.Data>
+                    <EllipseGeometry
+                        Center="{Binding LineCoordinate.StartPoint, Converter={StaticResource MyPointConvertToPoint}}"
+                        RadiusX="4"
+                        RadiusY="4" />
+                </Path.Data>
+            </Path>
+            <Path Fill="#FBFF00" Visibility="{Binding LineCoordinate.HiddenOrVisibleOfLineImage}">
+                <Path.Data>
+                    <EllipseGeometry
+                        Center="{Binding LineCoordinate.EndPoint, Converter={StaticResource MyPointConvertToPoint}}"
+                        RadiusX="4"
+                        RadiusY="4" />
+                </Path.Data>
+            </Path>
             <Path
                 x:Name="PathLine"
                 Canvas.Left="{Binding LineCoordinate.LineXPos}"

@@ -8,11 +8,11 @@ namespace PlotByCoordinate.Models
     {
         private string hiddenOrVisibleOfLineImage;
 
-        public ObservableCollection<CanvasPoint> PointsOfLine { get; }
+        public ObservableCollection<LocalPoint> PointsOfLine { get; }
 
-        public CanvasPoint StartPoint { get; set; }
+        public LocalPoint StartPoint { get; set; }
 
-        public CanvasPoint EndPoint { get; set; }
+        public LocalPoint EndPoint { get; set; }
 
         public double LineXPos { get; set; }
 
@@ -21,15 +21,19 @@ namespace PlotByCoordinate.Models
         public string HiddenOrVisibleOfLineImage
         {
             get => hiddenOrVisibleOfLineImage;
-            set { hiddenOrVisibleOfLineImage = value; RaisePropertyChanged(() => HiddenOrVisibleOfLineImage); }
+            set
+            {
+                hiddenOrVisibleOfLineImage = value;
+                RaisePropertyChanged(() => HiddenOrVisibleOfLineImage);
+            }
         }
 
         public LineCoordinateModel()
         {
             HiddenOrVisibleOfLineImage = "Hidden";
-            StartPoint = new CanvasPoint();
-            EndPoint = new CanvasPoint();
-            PointsOfLine = new ObservableCollection<CanvasPoint>()
+            StartPoint = new LocalPoint();
+            EndPoint = new LocalPoint();
+            PointsOfLine = new ObservableCollection<LocalPoint>()
             {
                 StartPoint,EndPoint
             };
@@ -56,6 +60,9 @@ namespace PlotByCoordinate.Models
             LineYPos = 0;
         }
 
-
+        public void ShowImageOfLine()
+        {
+            HiddenOrVisibleOfLineImage = "Visible";
+        }
     }   
 }
