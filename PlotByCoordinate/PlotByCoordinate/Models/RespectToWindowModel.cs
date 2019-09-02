@@ -1,4 +1,6 @@
-﻿using GalaSoft.MvvmLight;
+﻿using System.Globalization;
+using GalaSoft.MvvmLight;
+using PlotByCoordinate.Converts;
 
 namespace PlotByCoordinate.Models
 {
@@ -7,12 +9,6 @@ namespace PlotByCoordinate.Models
         private string theWindowState;
         private string optionForm;
         private string hiddenOrVisibleOfCoordinator;
-
-        public string PathOfMaxWindow { get; set; }
-
-        public  string PathOfRestoreWindow { get; set; }
-
-        public LocalPoint ImagePoint { get; set; }
 
         public string TheWindowState
         {
@@ -41,7 +37,6 @@ namespace PlotByCoordinate.Models
         {
             HiddenOrVisibleOfCoordinator = "Hidden";
             TheWindowState = "最大化";
-            ImagePoint=new LocalPoint();
         }
     }
 }

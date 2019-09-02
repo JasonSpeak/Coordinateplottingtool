@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
@@ -11,6 +12,7 @@ namespace PlotByCoordinate.ViewModels
         private bool isDragDropForPathTriangle;
         private bool isDragDropForPathLine;
         private Point pointOfMouseDown;
+
 
         public RespectToWindowModel RespectToWindow { get; }
 
@@ -48,16 +50,11 @@ namespace PlotByCoordinate.ViewModels
 
         private void OnKeyDownCommandExecuted()
         {
-            if (TriangleCoordinate.ThirdPoint.Y != null)
-                TriangleCoordinate.ShowImageOfTriangle();
-            if(LineCoordinate.EndPoint.Y != null)
-                LineCoordinate.ShowImageOfLine();
-            RespectToWindow.ShowCoordinate();
             LineCoordinate.RestorationPathOfLine();
             LineCoordinate.RaiseLinePointChange();
+          
             TriangleCoordinate.RestorationPathOfTriangle();
             TriangleCoordinate.RaiseTrianglePointChange();
-            
         }
 
         private void OnLeftMouseDownCommandExecuted(MouseEventArgs args)
@@ -67,13 +64,12 @@ namespace PlotByCoordinate.ViewModels
             pointOfMouseDown = args.GetPosition(null);
             switch (element.Name)
             {
-                case "PathTriangle":
+                case "Triangle":
                     isDragDropForPathTriangle = true;
                     break;
-                case "PathLine":
+                case "Line":
                     isDragDropForPathLine = true;
                     break;
-
             }
         }
 
@@ -82,49 +78,45 @@ namespace PlotByCoordinate.ViewModels
             if (!(args.Source is FrameworkElement element))return;
             switch (element.Name)
             {
-                case "PathTriangle":
+                case "Triangle":
                 {
                     if (isDragDropForPathTriangle)
                     {
                         isDragDropForPathTriangle = false;
-
                     }
                     break;
                 }
-                case "PathLine":
+                case "Line":
                 {
                     if (isDragDropForPathLine)
                     {
                         isDragDropForPathLine = false;
-
                     }
                     break;
                 }
             }
             element.ReleaseMouseCapture();
-        }
+        }                   
 
         private void OnMouseMoveCommandExecuted(MouseEventArgs args)
         {
             if (!(args.Source is FrameworkElement element)) return;
             switch (element.Name)
             {
-                case "PathTriangle":
+                case "Triangle":
                 {
                     if (isDragDropForPathTriangle)
                     {
                         TriangleCoordinate.TriangleMove(args.GetPosition(null),pointOfMouseDown);
-                        TriangleCoordinate.RaiseTrianglePointChange();
                         pointOfMouseDown = args.GetPosition(null);
                     }
                     break;
                 }
-                case "PathLine":
+                case "Line":
                 {
                     if (isDragDropForPathLine)
                     {
                         LineCoordinate.LineMove(args.GetPosition(null),pointOfMouseDown);
-                        LineCoordinate.RaiseLinePointChange();
                         pointOfMouseDown = args.GetPosition(null);
                     }
                     break;

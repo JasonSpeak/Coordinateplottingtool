@@ -79,7 +79,6 @@
     </ApplicationDefinition>
     <Compile Include="Converts\LocalPointToPoint.cs" />
     <Compile Include="Models\LineCoordinateModel.cs" />
-    <Compile Include="Models\LocalPoint.cs" />
     <Compile Include="Models\RespectToWindowModel.cs" />
     <Compile Include="Models\TriangleCoordinateModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -130,21 +129,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Resource Include="Resources\Images\LineP1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\lineP2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\TriangleP1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\TriangleP2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Images\TriangleP3.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

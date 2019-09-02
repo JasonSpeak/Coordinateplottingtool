@@ -24,7 +24,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources/Styles/Style.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <cov:LocalPointToPoint x:Key="MyPointConvertToPoint" />
         </ResourceDictionary>
     </Window.Resources>
     <Window.InputBindings>
@@ -114,51 +113,6 @@
             Grid.Column="1"
             Width="110"
             VerticalAlignment="Center">
-            <Label
-                Canvas.Left="49"
-                Canvas.Top="-130"
-                Content="," />
-            <Label
-                Canvas.Left="49"
-                Canvas.Top="-90"
-                Content="," />
-            <Label
-                Canvas.Left="49"
-                Canvas.Top="61"
-                Content="," />
-            <Label
-                Canvas.Left="49"
-                Canvas.Top="101"
-                Content="," />
-            <Label
-                Canvas.Left="49"
-                Canvas.Top="-50"
-                Content="," />
-            <Image
-                Canvas.Left="-13"
-                Canvas.Top="-122"
-                Source="/Resources/Images/TriangleP1.png"
-                Style="{StaticResource ImageStyle}" />
-            <Image
-                Canvas.Left="-13"
-                Canvas.Top="-82"
-                Source="/Resources/Images/TriangleP2.png"
-                Style="{StaticResource ImageStyle}" />
-            <Image
-                Canvas.Left="-13"
-                Canvas.Top="-42"
-                Source="/Resources/Images/TriangleP3.png"
-                Style="{StaticResource ImageStyle}" />
-            <Image
-                Canvas.Left="-13"
-                Canvas.Top="70"
-                Source="/Resources/Images/LineP1.png"
-                Style="{StaticResource ImageStyle}" />
-            <Image
-                Canvas.Left="-13"
-                Canvas.Top="110"
-                Source="/Resources/Images/lineP2.png"
-                Style="{StaticResource ImageStyle}" />
             <StackPanel
                 x:Name="TrianglePanel"
                 Canvas.Left="2"
@@ -174,16 +128,15 @@
                         materialDesign:HintAssist.Hint="P1"
                         DockPanel.Dock="Left"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding TriangleCoordinate.FirstPoint.X, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoordinate.TriangleFirstPointX, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     <Label />
-
                     <TextBox
                         Name="Y1"
                         Width="48"
                         materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding TriangleCoordinate.FirstPoint.Y, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoordinate.TriangleFirstPointY, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DockPanel>
                 <DockPanel>
                     <TextBox
@@ -192,7 +145,7 @@
                         materialDesign:HintAssist.Hint="P2"
                         DockPanel.Dock="Left"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding TriangleCoordinate.SecondPoint.X, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoordinate.TriangleSecondPointX, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     <Label />
                     <TextBox
                         Name="Y2"
@@ -200,7 +153,7 @@
                         materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding TriangleCoordinate.SecondPoint.Y, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoordinate.TriangleSecondPointY, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DockPanel>
                 <DockPanel>
                     <TextBox
@@ -209,7 +162,7 @@
                         materialDesign:HintAssist.Hint="P3"
                         DockPanel.Dock="Left"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding TriangleCoordinate.ThirdPoint.X, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoordinate.TriangleThirdPointX, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     <Label />
                     <TextBox
                         Name="Ty3"
@@ -217,7 +170,7 @@
                         materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding TriangleCoordinate.ThirdPoint.Y, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding TriangleCoordinate.TriangleThirdPointY, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DockPanel>
             </StackPanel>
             <StackPanel
@@ -235,7 +188,7 @@
                         materialDesign:HintAssist.Hint="P1"
                         DockPanel.Dock="Left"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding LineCoordinate.StartPoint.X, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding LineCoordinate.LineStartPointX, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     <Label />
                     <TextBox
                         Name="Ly1"
@@ -243,7 +196,7 @@
                         materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding LineCoordinate.StartPoint.Y, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding LineCoordinate.LineStartPointY, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DockPanel>
                 <DockPanel>
                     <TextBox
@@ -252,7 +205,7 @@
                         materialDesign:HintAssist.Hint="P2"
                         DockPanel.Dock="Left"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding LineCoordinate.EndPoint.X, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding LineCoordinate.LineEndPointX, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                     <Label />
                     <TextBox
                         Name="Ly2"
@@ -260,187 +213,30 @@
                         materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding LineCoordinate.EndPoint.Y, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding LineCoordinate.LineEndPointY, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                 </DockPanel>
             </StackPanel>
-
         </Canvas>
         <Canvas
             x:Name="Canvas"
             Grid.Row="1"
             Grid.Column="0"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Stretch"
             Style="{StaticResource ResourceKey=CanvasStyle}">
-            <Label
-                Canvas.Left="40"
-                Content="50"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Left="90"
-                Content="100"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Left="140"
-                Content="150"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Left="190"
-                Content="200"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Left="240"
-                Content="250"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Left="290"
-                Content="300"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Left="340"
-                Content="350"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Left="390"
-                Content="400"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Left="440"
-                Content="450"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Left="490"
-                Content="500"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Left="540"
-                Content="550"
-                Style="{StaticResource CoordinateStyle}" />
-
-            <Label
-                Canvas.Top="40"
-                Content="50"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Top="90"
-                Content="100"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Top="140"
-                Content="150"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Top="190"
-                Content="200"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Top="240"
-                Content="250"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Top="290"
-                Content="300"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Top="340"
-                Content="350"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Top="390"
-                Content="400"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Top="440"
-                Content="450"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Top="490"
-                Content="500"
-                Style="{StaticResource CoordinateStyle}" />
-            <Label
-                Canvas.Top="540"
-                Content="550"
-                Style="{StaticResource CoordinateStyle}" />
-            <Path Fill="#00FFAD" Visibility="{Binding TriangleCoordinate.HiddenOrVisibleOfTriangleImage}">
-                <Path.Data>
-                    <EllipseGeometry
-                        Center="{Binding TriangleCoordinate.FirstPoint, Converter={StaticResource MyPointConvertToPoint}}"
-                        RadiusX="4"
-                        RadiusY="4" />
-                </Path.Data>
-            </Path>
-            <Path Fill="#006CFF" Visibility="{Binding TriangleCoordinate.HiddenOrVisibleOfTriangleImage}">
-                <Path.Data>
-                    <EllipseGeometry
-                        Center="{Binding TriangleCoordinate.SecondPoint, Converter={StaticResource MyPointConvertToPoint}}"
-                        RadiusX="4"
-                        RadiusY="4" />
-                </Path.Data>
-            </Path>
-            <Path Fill="#D800FF" Visibility="{Binding TriangleCoordinate.HiddenOrVisibleOfTriangleImage}">
-                <Path.Data>
-                    <EllipseGeometry
-                        Center="{Binding TriangleCoordinate.ThirdPoint, Converter={StaticResource MyPointConvertToPoint}}"
-                        RadiusX="4"
-                        RadiusY="4" />
-                </Path.Data>
-            </Path>
-            <Path
-                x:Name="PathTriangle"
-                Canvas.Left="{Binding TriangleCoordinate.TriangleXPos}"
-                Canvas.Top="{Binding TriangleCoordinate.TriangleYPos}"
-                Cursor="Hand"
-                Style="{DynamicResource ResourceKey=PathStyle}">
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseLeftButtonDown">
-                        <mvvm:EventToCommand Command="{Binding MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseLeftButtonUp">
-                        <mvvm:EventToCommand Command="{Binding MouseLeftButtonUpCommand}" PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
-                    <i:EventTrigger EventName="MouseMove">
-                        <mvvm:EventToCommand Command="{Binding MouseMoveCommand}" PassEventArgsToCommand="True" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
+            <Path Stroke="LawnGreen" Fill="Aqua">
                 <Path.Data>
                     <GeometryGroup>
-                        <LineGeometry
-                            x:Name="FirstPointOfTriangle"
-                            StartPoint="{Binding TriangleCoordinate.FirstPoint, Converter={StaticResource MyPointConvertToPoint}}"
-                            EndPoint="{Binding TriangleCoordinate.SecondPoint, Converter={StaticResource MyPointConvertToPoint}}" />
-                        <LineGeometry
-                            x:Name="SecondPointOfTriangle"
-                            StartPoint="{Binding TriangleCoordinate.SecondPoint, Converter={StaticResource MyPointConvertToPoint}}"
-                            EndPoint="{Binding TriangleCoordinate.ThirdPoint, Converter={StaticResource MyPointConvertToPoint}}" />
-                        <LineGeometry
-                            x:Name="ThirdPointOfTriangle"
-                            StartPoint="{Binding TriangleCoordinate.ThirdPoint, Converter={StaticResource MyPointConvertToPoint}}"
-                            EndPoint="{Binding TriangleCoordinate.FirstPoint, Converter={StaticResource MyPointConvertToPoint}}" />
+                        <EllipseGeometry Center="{Binding TriangleCoordinate.PointsOfTriangle[0]}" RadiusX="8" RadiusY="8"></EllipseGeometry>
+                        <EllipseGeometry Center="{Binding TriangleCoordinate.PointsOfTriangle[1]}" RadiusX="8" RadiusY="8"></EllipseGeometry>
+                        <EllipseGeometry Center="{Binding TriangleCoordinate.PointsOfTriangle[2]}" RadiusX="8" RadiusY="8"></EllipseGeometry>
+                        <EllipseGeometry Center="{Binding LineCoordinate.PointsOfLine[0]}" RadiusX="8" RadiusY="8"></EllipseGeometry>
+                        <EllipseGeometry Center="{Binding LineCoordinate.PointsOfLine[1]}" RadiusX="8" RadiusY="8"></EllipseGeometry>
                     </GeometryGroup>
                 </Path.Data>
             </Path>
-            <Path Fill="#0AFF00" Visibility="{Binding LineCoordinate.HiddenOrVisibleOfLineImage}">
-                <Path.Data>
-                    <EllipseGeometry
-                        Center="{Binding LineCoordinate.StartPoint, Converter={StaticResource MyPointConvertToPoint}}"
-                        RadiusX="4"
-                        RadiusY="4" />
-                </Path.Data>
-            </Path>
-            <Path Fill="#FBFF00" Visibility="{Binding LineCoordinate.HiddenOrVisibleOfLineImage}">
-                <Path.Data>
-                    <EllipseGeometry
-                        Center="{Binding LineCoordinate.EndPoint, Converter={StaticResource MyPointConvertToPoint}}"
-                        RadiusX="4"
-                        RadiusY="4" />
-                </Path.Data>
-            </Path>
-            <Path
-                x:Name="PathLine"
-                Canvas.Left="{Binding LineCoordinate.LineXPos}"
-                Canvas.Top="{Binding LineCoordinate.LineYPos}"
-                Cursor="Hand"
-                Style="{DynamicResource ResourceKey=PathStyle}">
+            <Polygon
+                Name="Triangle"
+                Points="{Binding TriangleCoordinate.PointsOfTriangle, Mode=OneWay}"
+                Style="{StaticResource Triangle}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseLeftButtonDown">
                         <mvvm:EventToCommand Command="{Binding MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
@@ -452,13 +248,23 @@
                         <mvvm:EventToCommand Command="{Binding MouseMoveCommand}" PassEventArgsToCommand="True" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-                <Path.Data>
-                    <LineGeometry
-                        x:Name="PointOfLine"
-                        StartPoint="{Binding LineCoordinate.StartPoint, Converter={StaticResource MyPointConvertToPoint}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                        EndPoint="{Binding LineCoordinate.EndPoint, Converter={StaticResource MyPointConvertToPoint}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                </Path.Data>
-            </Path>
+            </Polygon>
+            <Polyline
+                Name="Line"
+                Points="{Binding LineCoordinate.PointsOfLine, Mode=OneWay}"
+                Style="{StaticResource Line}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                        <mvvm:EventToCommand Command="{Binding MouseLeftButtonDownCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseLeftButtonUp">
+                        <mvvm:EventToCommand Command="{Binding MouseLeftButtonUpCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseMove">
+                        <mvvm:EventToCommand Command="{Binding MouseMoveCommand}" PassEventArgsToCommand="True" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Polyline>
         </Canvas>
     </Grid>
 </Window>
