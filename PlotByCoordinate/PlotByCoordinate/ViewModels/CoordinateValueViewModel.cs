@@ -1,10 +1,10 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using PlotByCoordinate.Models;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using PlotByCoordinate.Models;
-
+using RelayCommand = GalaSoft.MvvmLight.Command.RelayCommand;
 namespace PlotByCoordinate.ViewModels
 {
     public class CoordinateValueViewModel : ViewModelBase
@@ -12,8 +12,10 @@ namespace PlotByCoordinate.ViewModels
         private bool isDragDropForPathTriangle;
         private bool isDragDropForPathLine;
         private Point pointOfMouseDown;
-
-
+        private List<int> _rulerList;
+        private List<int> _tempRulerList;
+        private List<int> _rulerListForHeight;
+        private List<int> _tempRulerListForHeight;
         public RespectToWindowModel RespectToWindow { get; }
 
         public TriangleCoordinateModel TriangleCoordinate { get; }
@@ -34,6 +36,52 @@ namespace PlotByCoordinate.ViewModels
 
         public RelayCommand CloseCommand { get; }
 
+        public ICommand CreateRulerListCommand { get; }
+
+        public ICommand SizeChangedCommand { get; }
+       
+
+        public ICommand CreateRulerListForHeightCommand { get; }
+
+        public ICommand SizeChangedForHeightCommand { get; }
+
+        public List<int> RulerList
+        {
+            get => _rulerList;
+            set
+            {
+                _rulerList = value;
+                RaisePropertyChanged(() => RulerList);
+            }
+        }
+        public List<int> TempRulerList
+        {
+            get => _tempRulerList;
+            set
+            {
+                _tempRulerList = value;
+                RaisePropertyChanged(() => TempRulerList);
+            }
+        }
+        public List<int> RulerListForHeight
+        {
+            get => _rulerListForHeight;
+            set
+            {
+                _rulerListForHeight = value;
+                RaisePropertyChanged(() => RulerListForHeight);
+            }
+        }
+        public List<int> TempRulerListForHeight
+        {
+            get => _tempRulerListForHeight;
+            set
+            {
+                _tempRulerListForHeight = value;
+                RaisePropertyChanged(() => TempRulerListForHeight);
+            }
+        }
+
         public CoordinateValueViewModel()
         {
             RespectToWindow=new RespectToWindowModel();
@@ -46,15 +94,86 @@ namespace PlotByCoordinate.ViewModels
             MinWindowCommand = new RelayCommand(OnMinWindowCommandExecute);
             MaximizeOrRestoreCommand=new RelayCommand(OnMaximizeOrRestoreCommandExecute);
             CloseCommand=new RelayCommand(OnCloseCommand);
+            CreateRulerListCommand = new RelayCommand<string>(OnCreateRulerListExecuted);
+            SizeChangedCommand = new RelayCommand<string>(OnSizeChangedCommandExecute);
+            CreateRulerListForHeightCommand = new RelayCommand<string>(OnCreateRulerListForHeightExecuted);
+            SizeChangedForHeightCommand = new RelayCommand<string>(OnSizeChangedCommandForHeightExecute);
+            RulerList=new List<int>();
+            RulerListForHeight=new List<int>();
         }
 
+        private void OnSizeChangedCommandExecute(string canvasWidth)
+        {
+      
+
+            if (double.TryParse(canvasWidth, out var width))
+            {
+                TempRulerList = new List<int>();
+                for (int i = 50; i < width; i += 50)
+                {
+                    TempRulerList.Add(i);
+                }
+
+                RulerList = TempRulerList;
+            }
+        }
+        private void OnCreateRulerListExecuted(string canvasWidth)
+        {
+     
+            if (double.TryParse(canvasWidth, out var width))
+            {
+               
+                TempRulerList = new List<int>();
+                for (int i = 50; i < width; i += 50)
+                {
+                    TempRulerList.Add(i);
+                }
+
+                RulerList = TempRulerList;
+            }
+        }
+        private void OnSizeChangedCommandForHeightExecute(string canvasWidth)
+        {
+
+
+            if (double.TryParse(canvasWidth, out var width))
+            {
+                TempRulerListForHeight = new List<int>();
+                for (int i = 50; i < width-100; i += 50)
+                {
+                    TempRulerListForHeight.Add(i);
+                }
+
+                RulerListForHeight = TempRulerListForHeight;
+            }
+        }
+        private void OnCreateRulerListForHeightExecuted(string canvasWidth)
+        {
+
+            if (double.TryParse(canvasWidth, out var width))
+            {
+
+                TempRulerListForHeight = new List<int>();
+                for (int i = 50; i < width-100; i += 50)
+                {
+                    TempRulerListForHeight.Add(i);
+                }
+
+                RulerListForHeight = TempRulerListForHeight;
+            }
+        }
         private void OnKeyDownCommandExecuted()
         {
-            LineCoordinate.RestorationPathOfLine();
-            LineCoordinate.RaiseLinePointChange();
-          
-            TriangleCoordinate.RestorationPathOfTriangle();
-            TriangleCoordinate.RaiseTrianglePointChange();
+            if (LineCoordinate.LineEndPointY != null)
+            {
+                LineCoordinate.RestorationPathOfLine();
+                LineCoordinate.RaiseLinePointChange();
+            }
+            if (TriangleCoordinate.TriangleThirdPointY != null)
+            {
+                TriangleCoordinate.RestorationPathOfTriangle();
+                TriangleCoordinate.RaiseTrianglePointChange();
+            }
         }
 
         private void OnLeftMouseDownCommandExecuted(MouseEventArgs args)
@@ -145,6 +264,8 @@ namespace PlotByCoordinate.ViewModels
                     break;
             }
         }
+
+      
 
         private void OnCloseCommand()
         {

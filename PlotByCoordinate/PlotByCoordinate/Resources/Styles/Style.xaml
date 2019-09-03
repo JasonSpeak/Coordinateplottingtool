@@ -15,8 +15,8 @@
         <Setter Property="Background" Value="LightBlue" />
     </Style>
     <Style x:Key="CanvasStyle" TargetType="Canvas">
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Margin" Value="0,0,0,0" />
         <Setter Property="ClipToBounds" Value="true" />
         <Setter Property="Background">
@@ -46,10 +46,153 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style x:Key="EllipseForFirstPoint" TargetType="Path">
+        <Setter Property="Fill" Value="#03FFB3" />
+        <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry
+                    Center="{Binding TriangleCoordinate.PointsOfTriangle[0]}"
+                    RadiusX="6"
+                    RadiusY="6" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=Triangle, Path=Points.Count}" Value="3">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+
+    </Style>
+    <Style x:Key="EllipseForSecondPoint" TargetType="Path">
+        <Setter Property="Fill" Value="#0339FF" />
+        <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry
+                    Center="{Binding TriangleCoordinate.PointsOfTriangle[1]}"
+                    RadiusX="6"
+                    RadiusY="6" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=Triangle, Path=Points.Count}" Value="3">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="EllipseForThirdPoint" TargetType="Path">
+        <Setter Property="Fill" Value="#BB03FF" />
+        <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry
+                    Center="{Binding TriangleCoordinate.PointsOfTriangle[2]}"
+                    RadiusX="6"
+                    RadiusY="6" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=Triangle, Path=Points.Count}" Value="3">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="EllipseForStartPoint" TargetType="Path">
+        <Setter Property="Fill" Value="#18FF03" />
+        <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry
+                    Center="{Binding LineCoordinate.PointsOfLine[0]}"
+                    RadiusX="6"
+                    RadiusY="6" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=Line, Path=Points.Count}" Value="2">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="EllipseForEndPoint" TargetType="Path">
+        <Setter Property="Fill" Value="#FFE603" />
+        <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry
+                    Center="{Binding LineCoordinate.PointsOfLine[1]}"
+                    RadiusX="6"
+                    RadiusY="6" />
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=Line, Path=Points.Count}" Value="2">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="EllipseForFirstPointBeforeLabel" TargetType="Path">
+        <Setter Property="Fill" Value="#03FFB3" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry
+                    Center="-10,-120"
+                    RadiusX="3"
+                    RadiusY="3" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="EllipseForSecondPointBeforeLabel" TargetType="Path">
+        <Setter Property="Fill" Value="#0339FF" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry
+                    Center="-10,-80"
+                    RadiusX="3"
+                    RadiusY="3" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="EllipseForThirdPointBeforeLabel" TargetType="Path">
+        <Setter Property="Fill" Value="#BB03FF" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry
+                    Center="-10,-40"
+                    RadiusX="3"
+                    RadiusY="3" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="EllipseForStartPointBeforeLabel" TargetType="Path">
+        <Setter Property="Fill" Value="#18FF03" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry
+                    Center="-10,70"
+                    RadiusX="3"
+                    RadiusY="3" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="EllipseForEndPointBeforeLabel" TargetType="Path">
+        <Setter Property="Fill" Value="#FFE603" />
+        <Setter Property="Data">
+            <Setter.Value>
+                <EllipseGeometry
+                    Center="-10,110"
+                    RadiusX="3"
+                    RadiusY="3" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="PathStyle" TargetType="Path">
         <Setter Property="Stroke" Value="White" />
         <Setter Property="StrokeThickness" Value="3" />
-        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Cursor" Value="Hand" />
     </Style>
     <Style x:Key="ButtonStyle" TargetType="Button">
         <Setter Property="Width" Value="30" />
@@ -75,12 +218,8 @@
         <Setter Property="Fill" Value="#FF9AA4D0" />
     </Style>
     <Style x:Key="ImageStyle" TargetType="Image">
-        <Setter Property="Width" Value="8"/>
+        <Setter Property="Width" Value="8" />
         <Setter Property="Height" Value="8" />
-    </Style>
-    <Style x:Key="CoordinateStyle" TargetType="Label">
-        <Setter Property="Foreground" Value="#9D9999" />
-        <Setter Property="Visibility" Value="{Binding RespectToWindow.HiddenOrVisibleOfCoordinator}" />
     </Style>
     <Style x:Key="PathOfTriangle" TargetType="Path">
         <Setter Property="Width" Value="21.153" />
@@ -106,13 +245,13 @@
         </Style.Triggers>
     </Style>
     <Style x:Key="Line" TargetType="Polyline">
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Stroke" Value="White"/>
-        <Setter Property="StrokeThickness" Value="3"></Setter>
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Stroke" Value="White" />
+        <Setter Property="StrokeThickness" Value="3" />
     </Style>
     <Style x:Key="Triangle" TargetType="Polygon">
-        <Setter Property="Cursor" Value="Hand"/>
-        <Setter Property="Stroke" Value="White"/>
-        <Setter Property="StrokeThickness" Value="3"></Setter>
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Stroke" Value="White" />
+        <Setter Property="StrokeThickness" Value="3" />
     </Style>
 </ResourceDictionary>

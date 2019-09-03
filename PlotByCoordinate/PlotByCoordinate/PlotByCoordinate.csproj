@@ -77,7 +77,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converts\LocalPointToPoint.cs" />
     <Compile Include="Models\LineCoordinateModel.cs" />
     <Compile Include="Models\RespectToWindowModel.cs" />
     <Compile Include="Models\TriangleCoordinateModel.cs" />
@@ -87,6 +86,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CoordinateValueViewModel.cs" />
+    <Compile Include="ViewModels\InputRuleViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\DrawingPanelView.xaml.cs">
       <DependentUpon>DrawingPanelView.xaml</DependentUpon>

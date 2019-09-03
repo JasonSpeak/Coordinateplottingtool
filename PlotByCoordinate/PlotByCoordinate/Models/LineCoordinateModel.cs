@@ -1,8 +1,7 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
-using GalaSoft.MvvmLight;
 
 namespace PlotByCoordinate.Models
 {
@@ -103,19 +102,15 @@ namespace PlotByCoordinate.Models
             var lineX1 = StartPoint.X;
             lineX1 += ( positionOfControl.X - mouseDownPosition.X);
             LineStartPointX = lineX1.ToString(CultureInfo.InvariantCulture);
-
             var lineY1 = StartPoint.Y;
             lineY1 += (positionOfControl.Y - mouseDownPosition.Y);
             LineStartPointY = lineY1.ToString(CultureInfo.InvariantCulture);
-
             var lineX2 = EndPoint.X;
             lineX2 += (positionOfControl.X - mouseDownPosition.X);
             LineEndPointX = lineX2.ToString(CultureInfo.InvariantCulture);
-
             var lineY2 = EndPoint.Y;
             lineY2 += (positionOfControl.Y - mouseDownPosition.Y);
             LineEndPointY = lineY2.ToString(CultureInfo.InvariantCulture);
-
             RaiseLinePointChange();
         }
 

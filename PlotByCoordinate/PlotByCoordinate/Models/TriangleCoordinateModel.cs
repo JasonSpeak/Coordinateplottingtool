@@ -1,7 +1,7 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
-using GalaSoft.MvvmLight;
 
 namespace PlotByCoordinate.Models
 {
@@ -155,27 +155,27 @@ namespace PlotByCoordinate.Models
 
         public void TriangleMove(Point positionOfControl ,Point mouseDownPosition)
         {
-            double triangleX1 = FirstPoint.X;
+            var triangleX1 = FirstPoint.X;
             triangleX1 += (positionOfControl.X - mouseDownPosition.X);
-            TriangleFirstPointX = triangleX1.ToString();
+            TriangleFirstPointX = triangleX1.ToString(CultureInfo.InvariantCulture);
 
-            double triangleY1 = FirstPoint.Y;
+            var triangleY1 = FirstPoint.Y;
             triangleY1 += (positionOfControl.Y - mouseDownPosition.Y);
             TriangleFirstPointY = triangleY1.ToString();
 
-            double triangleX2 = SecondPoint.X;
+            var triangleX2 = SecondPoint.X;
             triangleX2 += (positionOfControl.X - mouseDownPosition.X);
             TriangleSecondPointX = triangleX2.ToString();
 
-            double triangleY2 = SecondPoint.Y;
+            var triangleY2 = SecondPoint.Y;
             triangleY2 += (positionOfControl.Y - mouseDownPosition.Y);
             TriangleSecondPointY = triangleY2.ToString();
 
-            double triangleX3 = ThirdPoint.X;
+            var triangleX3 = ThirdPoint.X;
             triangleX3 += (positionOfControl.X - mouseDownPosition.X);
             TriangleThirdPointX = triangleX3.ToString();
 
-            double triangleY3 = ThirdPoint.Y;
+            var triangleY3 = ThirdPoint.Y;
             triangleY3 += (positionOfControl.Y - mouseDownPosition.Y);
             TriangleThirdPointY = triangleY3.ToString();
 
