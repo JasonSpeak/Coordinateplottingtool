@@ -8,6 +8,13 @@
                     GlassFrameThickness="1" />
             </Setter.Value>
         </Setter>
+        <Setter Property="WindowStyle" Value="SingleBorderWindow"/>
+        <Setter Property="AllowsTransparency" Value="False"></Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self},Path=WindowState}" Value="{x:Static WindowState.Maximized}">
+                <Setter Property="BorderThickness" Value="8"/>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="TextBoxStyle" TargetType="TextBox">
         <Setter Property="Width" Value="60" />
@@ -256,7 +263,7 @@
         <Setter Property="Margin" Value="25,0,25,0" />
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="Padding" Value="-1,0,0,0" />
-        <Setter Property="ItemsSource" Value="{Binding RespectToWindow.RulerListOfHorizontal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="ItemsSource" Value="{Binding Source={StaticResource Locator},Path=Coordinate.RulerListOfHorizontal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ItemsPanel">
             <Setter.Value>
@@ -288,7 +295,7 @@
         <Setter Property="Margin" Value="0,25,0,25" />
         <Setter Property="Background" Value="{x:Null}" />
         <Setter Property="Padding" Value="-1,0,0,0" />
-        <Setter Property="ItemsSource" Value="{Binding RespectToWindow.RulerListOfVertical, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="ItemsSource" Value="{Binding Source={StaticResource Locator},Path=Coordinate.RulerListOfVertical, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="ItemsPanel">
             <Setter.Value>
