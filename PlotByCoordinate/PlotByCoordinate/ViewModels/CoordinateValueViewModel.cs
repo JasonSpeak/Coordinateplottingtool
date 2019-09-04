@@ -1,4 +1,4 @@
-﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using PlotByCoordinate.Models;
 using System;
@@ -104,14 +104,14 @@ namespace PlotByCoordinate.ViewModels
         {
             if (!(args.Source is FrameworkElement element)) return;
             element.CaptureMouse();
-            pointOfMouseDown = args.GetPosition(null);
+            _pointOfMouseDown = args.GetPosition(null);
             switch (element.Name)
             {
                 case "Triangle":
-                    isDragDropForPathTriangle = true;
+                    _isDragDropForPathTriangle = true;
                     break;
                 case "Line":
-                    isDragDropForPathLine = true;
+                    _isDragDropForPathLine = true;
                     break;
             }
         }
@@ -123,17 +123,17 @@ namespace PlotByCoordinate.ViewModels
             {
                 case "Triangle":
                 {
-                    if (isDragDropForPathTriangle)
+                    if (_isDragDropForPathTriangle)
                     {
-                        isDragDropForPathTriangle = false;
+                        _isDragDropForPathTriangle = false;
                     }
                     break;
                 }
                 case "Line":
                 {
-                    if (isDragDropForPathLine)
+                    if (_isDragDropForPathLine)
                     {
-                        isDragDropForPathLine = false;
+                        _isDragDropForPathLine = false;
                     }
                     break;
                 }
@@ -148,19 +148,19 @@ namespace PlotByCoordinate.ViewModels
             {
                 case "Triangle":
                 {
-                    if (isDragDropForPathTriangle)
+                    if (_isDragDropForPathTriangle)
                     {
-                        TriangleCoordinate.TriangleMove(args.GetPosition(null),pointOfMouseDown);
-                        pointOfMouseDown = args.GetPosition(null);
+                        TriangleCoordinate.TriangleMove(args.GetPosition(null),_pointOfMouseDown);
+                        _pointOfMouseDown = args.GetPosition(null);
                     }
                     break;
                 }
                 case "Line":
                 {
-                    if (isDragDropForPathLine)
+                    if (_isDragDropForPathLine)
                     {
-                        LineCoordinate.LineMove(args.GetPosition(null),pointOfMouseDown);
-                        pointOfMouseDown = args.GetPosition(null);
+                        LineCoordinate.LineMove(args.GetPosition(null),_pointOfMouseDown);
+                        _pointOfMouseDown = args.GetPosition(null);
                     }
                     break;
                 }
