@@ -7,17 +7,8 @@
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mvvm="http://www.galasoft.ch/mvvmlight"
-    xmlns:viewModels="clr-namespace:PlotByCoordinate.ViewModels"
-    x:Name="Win"
-    Title="DrawingPanelView"
-    Width="800"
-    Height="600"
-    AllowsTransparency="True"
-    BorderBrush="#3448a1"
-    BorderThickness="2"
     DataContext="{Binding Path=Coordinate, Source={StaticResource Locator}}"
     Style="{DynamicResource WindowStyle}"
-    WindowStyle="None"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
@@ -44,34 +35,24 @@
         <Border
             Grid.Row="0"
             Grid.Column="0"
-            Background="#3448a1"
-            BorderThickness="0" />
+            Style="{StaticResource BorderFirst}" />
         <Border
             Grid.Row="0"
             Grid.Column="1"
-            Background="#3448a1" />
+            Style="{StaticResource BorderSecond}" />
         <Border
             Grid.Row="1"
             Grid.Column="0"
-            Background="#000000"
-            BorderBrush="#3448a1" />
+            Style="{StaticResource BorderThird}" />
         <Border
             Grid.Row="1"
             Grid.Column="1"
-            Background="#f1f1f1"
-            BorderBrush="#3448a1" />
+            Style="{StaticResource BorderFourth}" />
         <StackPanel
             Grid.Row="0"
             Grid.Column="1"
-            HorizontalAlignment="Right"
-            Orientation="Horizontal">
-            <Button
-                Width="20"
-                Height="20"
-                Margin="0,0,5,0"
-                Command="{Binding MinWindowCommand}"
-                Style="{StaticResource MaterialDesignFlatButton}"
-                ToolTip="最小化">
+            Style="{StaticResource StackPanel}">
+            <Button Command="{Binding MinWindowCommand}" Style="{StaticResource MinButton}">
                 <Canvas>
                     <Path
                         Canvas.Left="-12"
@@ -79,13 +60,7 @@
                         Style="{StaticResource ResourceKey=PathStyleForMinWindow}" />
                 </Canvas>
             </Button>
-            <Button
-                Width="20"
-                Height="20"
-                Margin="0,0,5,0"
-                Command="{Binding MaximizeOrRestoreCommand}"
-                Style="{StaticResource MaterialDesignFlatButton}"
-                ToolTip="{Binding RespectToWindow.TheWindowState}">
+            <Button Command="{Binding MaximizeOrRestoreCommand}" Style="{StaticResource MaxButton}">
                 <Canvas>
                     <Path
                         Canvas.Left="-12"
@@ -93,13 +68,7 @@
                         Style="{StaticResource ResourceKey=PathOfMaxWindow}" />
                 </Canvas>
             </Button>
-            <Button
-                Width="20"
-                Height="20"
-                Margin="0,0,15,0"
-                Command="{Binding CloseCommand}"
-                Style="{StaticResource MaterialDesignFlatButton}"
-                ToolTip="关闭">
+            <Button Command="{Binding CloseCommand}" Style="{StaticResource CloseButton}">
                 <Canvas>
                     <Path
                         Canvas.Left="-12"
@@ -127,113 +96,41 @@
                 <DockPanel>
                     <TextBox
                         Name="X1"
-                        Width="48"
                         materialDesign:HintAssist.Hint="P1"
                         DockPanel.Dock="Left"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="TriangleCoordinate.TriangleFirstPointX"
-                                UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <viewModels:InputRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        Style="{StaticResource InputX1}" />
                     <Label />
                     <TextBox
                         Name="Y1"
-                        Width="48"
                         materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="TriangleCoordinate.TriangleFirstPointY"
-                                UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <viewModels:InputRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        Style="{StaticResource InputY1}" />
                 </DockPanel>
                 <DockPanel>
                     <TextBox
                         Name="X2"
-                        Width="48"
                         materialDesign:HintAssist.Hint="P2"
                         DockPanel.Dock="Left"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="TriangleCoordinate.TriangleSecondPointX"
-                                UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <viewModels:InputRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        Style="{StaticResource InputX2}" />
                     <Label />
                     <TextBox
                         Name="Y2"
-                        Width="48"
                         materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="TriangleCoordinate.TriangleSecondPointY"
-                                UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <viewModels:InputRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        Style="{StaticResource InputY2}" />
                 </DockPanel>
                 <DockPanel>
                     <TextBox
                         Name="X3"
-                        Width="48"
                         materialDesign:HintAssist.Hint="P3"
                         DockPanel.Dock="Left"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="TriangleCoordinate.TriangleThirdPointX"
-                                UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <viewModels:InputRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        Style="{StaticResource InputX3}" />
                     <Label />
                     <TextBox
                         Name="Ty3"
-                        Width="48"
                         materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="TriangleCoordinate.TriangleThirdPointY"
-                                UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <viewModels:InputRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        Style="{StaticResource InputY3}" />
                 </DockPanel>
             </StackPanel>
             <Path Style="{StaticResource EllipseForStartPointBeforeLabel}" />
@@ -249,76 +146,28 @@
                 <DockPanel>
                     <TextBox
                         Name="Lx1"
-                        Width="48"
                         materialDesign:HintAssist.Hint="P1"
                         DockPanel.Dock="Left"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="LineCoordinate.LineStartPointX"
-                                UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <viewModels:InputRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        Style="{StaticResource InputLx1}" />
                     <Label />
                     <TextBox
                         Name="Ly1"
-                        Width="48"
                         materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="LineCoordinate.LineStartPointY"
-                                UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <viewModels:InputRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        Style="{StaticResource InputLy1}" />
                 </DockPanel>
                 <DockPanel>
                     <TextBox
                         Name="Lx2"
-                        Width="48"
                         materialDesign:HintAssist.Hint="P2"
                         DockPanel.Dock="Left"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="LineCoordinate.LineEndPointX"
-                                UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <viewModels:InputRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        Style="{StaticResource InputLx2}" />
                     <Label />
                     <TextBox
                         Name="Ly2"
-                        Width="48"
                         materialDesign:HintAssist.Hint=""
                         DockPanel.Dock="Right"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}">
-                        <TextBox.Text>
-                            <Binding
-                                Mode="TwoWay"
-                                Path="LineCoordinate.LineEndPointY"
-                                UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <viewModels:InputRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        Style="{StaticResource InputLy2}" />
                 </DockPanel>
             </StackPanel>
         </Canvas>

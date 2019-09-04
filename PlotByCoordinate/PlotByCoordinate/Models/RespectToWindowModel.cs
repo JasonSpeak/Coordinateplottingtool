@@ -45,5 +45,6 @@ namespace PlotByCoordinate.Models
             RulerListOfHorizontal =new List<int>();
             RulerListOfVertical=new List<int>();
         }
+
     }
 }
