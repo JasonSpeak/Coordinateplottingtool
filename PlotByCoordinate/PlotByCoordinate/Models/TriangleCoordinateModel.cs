@@ -10,14 +10,14 @@ namespace PlotByCoordinate.Models
         private Point _firstPoint;
         private Point _secondPoint;
         private Point _thirdPoint;
+        private PointCollection _pointCollection;
         private string _triangleFirstPointX;
         private string _triangleFirstPointY;
         private string _triangleSecondPointX;
         private string _triangleSecondPointY;
         private string _triangleThirdPointX;
         private string _triangleThirdPointY;
-        private PointCollection _pointCollection;
-      
+
         public double TriangleXPos { get; set; }
 
         public double TriangleYPos { get; set; }
@@ -155,34 +155,30 @@ namespace PlotByCoordinate.Models
 
         public void TriangleMove(Point positionOfControl ,Point mouseDownPosition)
         {
+            var offsetDistanceOfX = positionOfControl.X - mouseDownPosition.X;
+            var offsetDistanceOfY = positionOfControl.Y - mouseDownPosition.Y;
             var triangleX1 = FirstPoint.X;
-            triangleX1 += (positionOfControl.X - mouseDownPosition.X);
+            triangleX1 += (offsetDistanceOfX);
             TriangleFirstPointX = triangleX1.ToString(CultureInfo.InvariantCulture);
-
             var triangleY1 = FirstPoint.Y;
-            triangleY1 += (positionOfControl.Y - mouseDownPosition.Y);
-            TriangleFirstPointY = triangleY1.ToString();
-
+            triangleY1 += (offsetDistanceOfY);
+            TriangleFirstPointY = triangleY1.ToString(CultureInfo.InvariantCulture);
             var triangleX2 = SecondPoint.X;
-            triangleX2 += (positionOfControl.X - mouseDownPosition.X);
-            TriangleSecondPointX = triangleX2.ToString();
-
+            triangleX2 += (offsetDistanceOfX);
+            TriangleSecondPointX = triangleX2.ToString(CultureInfo.InvariantCulture);
             var triangleY2 = SecondPoint.Y;
-            triangleY2 += (positionOfControl.Y - mouseDownPosition.Y);
-            TriangleSecondPointY = triangleY2.ToString();
-
+            triangleY2 += (offsetDistanceOfY);
+            TriangleSecondPointY = triangleY2.ToString(CultureInfo.InvariantCulture);
             var triangleX3 = ThirdPoint.X;
-            triangleX3 += (positionOfControl.X - mouseDownPosition.X);
-            TriangleThirdPointX = triangleX3.ToString();
-
+            triangleX3 += (offsetDistanceOfX);
+            TriangleThirdPointX = triangleX3.ToString(CultureInfo.InvariantCulture);
             var triangleY3 = ThirdPoint.Y;
-            triangleY3 += (positionOfControl.Y - mouseDownPosition.Y);
-            TriangleThirdPointY = triangleY3.ToString();
-
-            RaiseTrianglePointChange();
+            triangleY3 += (offsetDistanceOfY);
+            TriangleThirdPointY = triangleY3.ToString(CultureInfo.InvariantCulture);
+            AddPointToCollection();
         }
       
-        public void RaiseTrianglePointChange()
+        public void AddPointToCollection()
         {
             TempPointCollection=new PointCollection();
             TempPointCollection.Clear();
@@ -192,7 +188,7 @@ namespace PlotByCoordinate.Models
             PointsOfTriangle = TempPointCollection;
         }
 
-        public void RestorationPathOfTriangle()
+        public void RestorationTriangle()
         {
             TriangleXPos = 0;
             TriangleYPos = 0;

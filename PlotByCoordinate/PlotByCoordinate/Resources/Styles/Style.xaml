@@ -62,7 +62,6 @@
                 <Setter Property="Visibility" Value="Visible" />
             </DataTrigger>
         </Style.Triggers>
-
     </Style>
     <Style x:Key="EllipseForSecondPoint" TargetType="Path">
         <Setter Property="Fill" Value="#0339FF" />
@@ -165,7 +164,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="EllipseForStartPointBeforeLabel" TargetType="Path">
         <Setter Property="Fill" Value="#18FF03" />
         <Setter Property="Data">
@@ -188,7 +186,6 @@
             </Setter.Value>
         </Setter>
     </Style>
-
     <Style x:Key="PathStyle" TargetType="Path">
         <Setter Property="Stroke" Value="White" />
         <Setter Property="StrokeThickness" Value="3" />
@@ -253,5 +250,74 @@
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Stroke" Value="White" />
         <Setter Property="StrokeThickness" Value="3" />
+    </Style>
+    <Style x:Key="HorizontalListView" TargetType="ListView">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="25,0,25,0" />
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="Padding" Value="-1,0,0,0" />
+        <Setter Property="ItemsSource" Value="{Binding RespectToWindow.RulerListOfHorizontal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="HorizontalListViewItem" TargetType="ListViewItem">
+        <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Width" Value="50" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="AntiqueWhite" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=Line, Path=Points.Count}" Value="2">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ElementName=Triangle, Path=Points.Count}" Value="3">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="VerticalListView" TargetType="ListView">
+
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,25,0,25" />
+        <Setter Property="Background" Value="{x:Null}" />
+        <Setter Property="Padding" Value="-1,0,0,0" />
+        <Setter Property="ItemsSource" Value="{Binding RespectToWindow.RulerListOfVertical, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Orientation="Vertical" />
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="VerticalListViewItem" TargetType="ListViewItem">
+        <Setter Property="Visibility" Value="Hidden" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Height" Value="50" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="AntiqueWhite" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=Line, Path=Points.Count}" Value="2">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding ElementName=Triangle, Path=Points.Count}" Value="3">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="GridOfHorizontal" TargetType="Grid">
+        <Setter Property="Height" Value="30px" />
+    </Style>
+    <Style x:Key="GridOfVertical" TargetType="Grid">
+        <Setter Property="Width" Value="40px" />
     </Style>
 </ResourceDictionary>

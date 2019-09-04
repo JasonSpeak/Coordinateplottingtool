@@ -7,23 +7,31 @@ namespace PlotByCoordinate.Models
 {
     public class LineCoordinateModel : ObservableObject
     {
-
         private string _lineStartPointX;
         private string _lineStartPointY;
         private string _lineEndPointX;
         private string _lineEndPointY;
-
         private PointCollection _pointCollection;
 
         public Point StartPoint { get; set; }
 
         public Point EndPoint { get; set; }
 
+        public PointCollection TemPointCollection { get; set; }
+
         public double LineXPos { get; set; }
 
         public double LineYPos { get; set; }
 
-        public PointCollection TemPointCollection { get; set; }
+        public PointCollection PointsOfLine
+        {
+            get => _pointCollection;
+            set
+            {
+                _pointCollection = value;
+                RaisePropertyChanged(() => PointsOfLine);
+            }
+        }
 
         public string LineStartPointX
         {
@@ -81,17 +89,6 @@ namespace PlotByCoordinate.Models
             }
         }
 
-        public PointCollection PointsOfLine
-        {
-            get => _pointCollection;
-            set
-            {
-                _pointCollection = value;
-                RaisePropertyChanged(() => PointsOfLine);
-            }
-        }
-        
-    
         public LineCoordinateModel()
         {
             PointsOfLine = new PointCollection();
@@ -99,22 +96,24 @@ namespace PlotByCoordinate.Models
 
         public void LineMove(Point positionOfControl, Point mouseDownPosition)
         {
+            var offsetDistanceOfX = positionOfControl.X - mouseDownPosition.X;
+            var offsetDistanceOfY = positionOfControl.Y - mouseDownPosition.Y;
             var lineX1 = StartPoint.X;
-            lineX1 += ( positionOfControl.X - mouseDownPosition.X);
+            lineX1 += (offsetDistanceOfX);
             LineStartPointX = lineX1.ToString(CultureInfo.InvariantCulture);
             var lineY1 = StartPoint.Y;
-            lineY1 += (positionOfControl.Y - mouseDownPosition.Y);
+            lineY1 += (offsetDistanceOfY);
             LineStartPointY = lineY1.ToString(CultureInfo.InvariantCulture);
             var lineX2 = EndPoint.X;
-            lineX2 += (positionOfControl.X - mouseDownPosition.X);
+            lineX2 += (offsetDistanceOfX);
             LineEndPointX = lineX2.ToString(CultureInfo.InvariantCulture);
             var lineY2 = EndPoint.Y;
-            lineY2 += (positionOfControl.Y - mouseDownPosition.Y);
+            lineY2 += (offsetDistanceOfY);
             LineEndPointY = lineY2.ToString(CultureInfo.InvariantCulture);
-            RaiseLinePointChange();
+            AddPointToCollection();
         }
 
-        public void RaiseLinePointChange()
+        public void AddPointToCollection()
         {
             TemPointCollection = new PointCollection();
             TemPointCollection.Clear();
@@ -123,7 +122,7 @@ namespace PlotByCoordinate.Models
             PointsOfLine = TemPointCollection;
         }
 
-        public void RestorationPathOfLine()
+        public void RestorationLine()
         {
             LineXPos = 0;
             LineYPos = 0;

@@ -137,7 +137,7 @@
                                 Path="TriangleCoordinate.TriangleFirstPointX"
                                 UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <viewModels:InputRuleViewModel />
+                                    <viewModels:InputRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -155,7 +155,7 @@
                                 Path="TriangleCoordinate.TriangleFirstPointY"
                                 UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <viewModels:InputRuleViewModel />
+                                    <viewModels:InputRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -174,7 +174,7 @@
                                 Path="TriangleCoordinate.TriangleSecondPointX"
                                 UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <viewModels:InputRuleViewModel />
+                                    <viewModels:InputRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -192,7 +192,7 @@
                                 Path="TriangleCoordinate.TriangleSecondPointY"
                                 UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <viewModels:InputRuleViewModel />
+                                    <viewModels:InputRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -211,7 +211,7 @@
                                 Path="TriangleCoordinate.TriangleThirdPointX"
                                 UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <viewModels:InputRuleViewModel />
+                                    <viewModels:InputRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -229,7 +229,7 @@
                                 Path="TriangleCoordinate.TriangleThirdPointY"
                                 UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <viewModels:InputRuleViewModel />
+                                    <viewModels:InputRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -259,7 +259,7 @@
                                 Path="LineCoordinate.LineStartPointX"
                                 UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <viewModels:InputRuleViewModel />
+                                    <viewModels:InputRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -277,7 +277,7 @@
                                 Path="LineCoordinate.LineStartPointY"
                                 UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <viewModels:InputRuleViewModel />
+                                    <viewModels:InputRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -296,7 +296,7 @@
                                 Path="LineCoordinate.LineEndPointX"
                                 UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <viewModels:InputRuleViewModel />
+                                    <viewModels:InputRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -314,7 +314,7 @@
                                 Path="LineCoordinate.LineEndPointY"
                                 UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
-                                    <viewModels:InputRuleViewModel />
+                                    <viewModels:InputRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
@@ -325,74 +325,44 @@
         <Canvas
             x:Name="DrawCanvas"
             Grid.Row="1"
-            Grid.Column="0" 
+            Grid.Column="0"
             Style="{StaticResource CanvasStyle}">
-            <Grid Height="30px" Width="{Binding ElementName=DrawCanvas,Path=ActualWidth}" Canvas.Left="0" Canvas.Top="5">
-                <ListView Margin="25 0 25 0"  VerticalContentAlignment="Center" Name="RulerListView">
+            <Grid
+                Canvas.Left="0"
+                Canvas.Top="5"
+                Width="{Binding ElementName=DrawCanvas, Path=ActualWidth}"
+                Style="{StaticResource GridOfHorizontal}">
+                <ListView
+                    Name="RulerListView"
+                    ItemContainerStyle="{StaticResource HorizontalListViewItem}"
+                    Style="{StaticResource HorizontalListView}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Loaded">
-                            <mvvm:EventToCommand Command="{Binding CreateRulerListCommand}" CommandParameter="{Binding ElementName=RulerListView,Path=ActualWidth}"></mvvm:EventToCommand>
+                            <mvvm:EventToCommand Command="{Binding CreateHorizontalRulerListCommand}" CommandParameter="{Binding ElementName=RulerListView, Path=ActualWidth}" />
                         </i:EventTrigger>
                         <i:EventTrigger EventName="SizeChanged">
-                            <mvvm:EventToCommand Command="{Binding SizeChangedCommand}" CommandParameter="{Binding ElementName=RulerListView,Path=ActualWidth}"></mvvm:EventToCommand>
+                            <mvvm:EventToCommand Command="{Binding HorizontalSizeChangedCommand}" CommandParameter="{Binding ElementName=RulerListView, Path=ActualWidth}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ListView.Style>
-                        <Style TargetType="{x:Type ListView}">
-                            <Setter Property="Background" Value="{x:Null}"/>
-                            <Setter Property="Padding" Value="-1 0 0 0"/>
-                            <Setter Property="ItemsSource" Value="{Binding RulerList, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></Setter>
-                            <Setter Property="BorderThickness" Value="0"></Setter>
-                        </Style>
-                    </ListView.Style>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True" Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Margin" Value="0 0 0 0"></Setter>
-                            <Setter Property="Width" Value="50"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            <Setter Property="Foreground" Value="AntiqueWhite"></Setter>
-                            <Setter Property="IsHitTestVisible" Value="False"></Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
                 </ListView>
             </Grid>
-            <Grid  Height="{Binding ElementName=DrawCanvas,Path=ActualHeight}" Width="40px" Canvas.Left="5" Canvas.Top="0">
-                <ListView Margin="0 25 0 25"  VerticalContentAlignment="Center" Name="RulerListViewHeight" >
+            <Grid
+                Canvas.Left="5"
+                Canvas.Top="0"
+                Height="{Binding ElementName=DrawCanvas, Path=ActualHeight}"
+                Style="{StaticResource GridOfVertical}">
+                <ListView
+                    Name="RulerListViewHeight"
+                    ItemContainerStyle="{StaticResource VerticalListViewItem}"
+                    Style="{StaticResource VerticalListView}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="Loaded">
-                            <mvvm:EventToCommand Command="{Binding CreateRulerListForHeightCommand}" CommandParameter="{Binding ElementName=RulerListViewHeight,Path=ActualHeight}"></mvvm:EventToCommand>
+                            <mvvm:EventToCommand Command="{Binding CreateVerticalRulerListCommand}" CommandParameter="{Binding ElementName=RulerListViewHeight, Path=ActualHeight}" />
                         </i:EventTrigger>
                         <i:EventTrigger EventName="SizeChanged">
-                            <mvvm:EventToCommand Command="{Binding SizeChangedForHeightCommand}" CommandParameter="{Binding ElementName=RulerListViewHeight,Path=ActualHeight}"></mvvm:EventToCommand>
+                            <mvvm:EventToCommand Command="{Binding VerticalSizeChangedCommand}" CommandParameter="{Binding ElementName=RulerListViewHeight, Path=ActualHeight}" />
                         </i:EventTrigger>
                     </i:Interaction.Triggers>
-                    <ListView.Style>
-                        <Style TargetType="{x:Type ListView}">
-                            <Setter Property="Background" Value="{x:Null}"/>
-                            <Setter Property="Padding" Value="-1 0 0 0"/>
-                            <Setter Property="ItemsSource" Value="{Binding RulerList, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></Setter>
-                            <Setter Property="BorderThickness" Value="0"></Setter>
-                        </Style>
-                    </ListView.Style>
-                    <ListView.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel IsItemsHost="True" Orientation="Vertical" />
-                        </ItemsPanelTemplate>
-                    </ListView.ItemsPanel>
-                    <ListView.ItemContainerStyle>
-                        <Style TargetType="ListViewItem">
-                            <Setter Property="Margin" Value="0 0 0 0"></Setter>
-                            <Setter Property="Height" Value="60"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            <Setter Property="Foreground" Value="AntiqueWhite"></Setter>
-                            <Setter Property="IsHitTestVisible" Value="False"></Setter>
-                        </Style>
-                    </ListView.ItemContainerStyle>
                 </ListView>
             </Grid>
             <Path Style="{StaticResource EllipseForFirstPoint}" />

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 
 namespace PlotByCoordinate.ViewModels
 {
-    class InputRuleViewModel:ValidationRule
+    internal class InputRule:ValidationRule
     {
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
